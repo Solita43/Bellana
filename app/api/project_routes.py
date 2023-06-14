@@ -31,6 +31,9 @@ def create_project():
     """
     Creates a new project and returns the the new project dictionary.
     """
+
+    print("I GOT IN =========================>", current_user)
+
     form = ProjectForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     form.ownerId.data = current_user.id
@@ -44,7 +47,7 @@ def create_project():
 
         db.session.add(project)
         db.session.commit()
-        return project.to_dict()
+        return {project.id: project.to_dict()}
     else:
         return form.errors, 400
 

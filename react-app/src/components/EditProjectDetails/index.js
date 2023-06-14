@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectPost } from "../../store/projects";
 
 
-function CreateProjectModal() {
+function EditProjectDetails({projectId}) {
     const { closeModal } = useModal();
-    const [name, setName] = useState("");
-    const [details, setDetails] = useState("");
+    const project = useSelector(state => state.projects[projectId])
+    const [name, setName] = useState(project.name);
+    const [details, setDetails] = useState(project.details);
     const [errors, setErrors] = useState(null)
     const dispatch = useDispatch();
+
+
 
 
     const handleSubmit = (e) => {
@@ -42,6 +45,7 @@ function CreateProjectModal() {
                     <input
                         type="text"
                         value={name}
+                        max={30}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
@@ -61,4 +65,4 @@ function CreateProjectModal() {
     )
 }
 
-export default CreateProjectModal;
+export default EditProjectDetails;
