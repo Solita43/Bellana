@@ -1,37 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import OpenModalButton from "../OpenModalButton";
 import CreateProjectModal from "../CreateProjectModal";
-import EditProjectDetails from "../EditProjectDetails";
+import ProjectDropdown from "./ProjectDropdown";
 
 
 function MyProjects({ projects }) {
-    const [showMenu, setShowMenu] = useState(false);
-    const ulRef = useRef();
-
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
-
-    useEffect(() => {
-        if (!showMenu) return;
-
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                setShowMenu(false);
-            }
-        };
-
-        document.addEventListener("click", closeMenu);
-
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
-
-    const closeMenu = () => setShowMenu(false);
-
-    const menuClass = "dash-project-dropdown" + (showMenu ? "" : " hidden")
-
-
     return (
         <div className="dash-projects">
             <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateProjectModal />} />
@@ -43,14 +16,7 @@ function MyProjects({ projects }) {
                         </div>
                         <h3>{project.name}</h3>
                         <div className="dash-project-menu">
-                            <div className="dropdown-icon" onClick={openMenu}>
-                                <i className="fa-solid fa-ellipsis"></i>
-                            </div>
-                            <ul className={menuClass} ref={ulRef}>
-                                <li>
-                                    <OpenModalButton buttonText="Edit details" onItemClick={closeMenu} modalComponent={<EditProjectDetails projectId={project.id} />} />
-                                </li>
-                            </ul>
+                            <ProjectDropdown projectId={project.id} projectName={project.name} />
                         </div>
                     </div>
                 )

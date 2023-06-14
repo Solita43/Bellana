@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { projectPost } from "../../store/projects";
 
 
@@ -30,7 +30,7 @@ function CreateProjectModal() {
 
     return (
         <>
-            <h1>Sign Up</h1>
+            <h1>Create a New Project</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors && Object.values(errors).map((error, idx) => (

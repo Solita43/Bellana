@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { projectPost } from "../../store/projects";
+import { projectPut } from "../../store/projects";
 
 
 function EditProjectDetails({projectId}) {
@@ -12,28 +12,26 @@ function EditProjectDetails({projectId}) {
     const [errors, setErrors] = useState(null)
     const dispatch = useDispatch();
 
-
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(projectPost({
+        const project = {
             name,
             details
-        })).then(data => {
+        }
+
+        dispatch(projectPut(projectId, project)).then(data => {
             if (data) {
                 setErrors(data.errors)
             } else {
                 closeModal();
             }
         })
-
     }
 
     return (
         <>
-            <h1>Sign Up</h1>
+            <h1>Edit Project</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors && Object.values(errors).map((error, idx) => (
@@ -59,7 +57,7 @@ function EditProjectDetails({projectId}) {
                         required
                     />
                 </label>
-                <button type="submit">Create Project</button>
+                <button type="submit">Edit Project</button>
             </form>
         </>
     )
