@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import MyProjects from "./components/MyProjects";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function App() {
           <Route exact path="/" >
           </Route>
           <ProtectedRoute exact path="/dashboard">
-            <MyProjects />
+            <Dashboard />
           </ProtectedRoute>
         </Switch>
       )}

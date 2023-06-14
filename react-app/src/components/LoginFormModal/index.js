@@ -19,7 +19,7 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-        history.push('/home')
+        history.push('/dashboard')
         closeModal()
     }
   };
