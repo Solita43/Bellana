@@ -5,3 +5,31 @@
 .hidden {
   display: none;
 }
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: .07rem var(--main-pink) solid;
+  padding: 1rem;
+  list-style: none;
+  align-items: center;
+}
+
+#logo_img {
+  width: 10rem;
+  height: auto;
+}
+
+#profile-button {
+  width: 2.3rem;
+  height: 2.3rem;
+  background-color: var(--main-pink);
+  border-radius: 2.3rem;
+  border: none;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--background-color);
+}

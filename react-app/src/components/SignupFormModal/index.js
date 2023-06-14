@@ -6,27 +6,25 @@ import "./SignupForm.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+
+		dispatch(signUp(username, email, password, firstName, lastName)).then(data => {
 			if (data) {
 				setErrors(data);
 			} else {
 				closeModal();
 			}
-		} else {
-			setErrors([
-				"Confirm Password field must be the same as the Password field",
-			]);
-		}
+		})
 	};
 
 	return (
@@ -34,14 +32,32 @@ function SignupFormModal() {
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
 				<ul>
-					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+					{Object.values(errors).map((error, idx) => (
+						<li key={idx}>* {error}</li>
 					))}
 				</ul>
 				<label>
-					Email
+					First Name
 					<input
 						type="text"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+						required
+					/>
+				</label>
+				<label>
+					Last Name
+					<input
+						type="text"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+						required
+					/>
+				</label>
+				<label>
+					Email
+					<input
+						type="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
@@ -61,7 +77,22 @@ function SignupFormModal() {
 					<input
 						type="password"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={(e) => {
+							if (e.target.value.trim().length < 8) {
+								setErrors(prev => {
+									const err = { ...prev };
+									err.passwordLength = "Password must be 8 characters or more."
+									return err;
+								})
+							} else {
+								setErrors(prev => {
+									const err = { ...prev }
+									delete err.passwordLength;
+									return err;
+								})
+							}
+							setPassword(e.target.value.trim())
+						}}
 						required
 					/>
 				</label>
@@ -70,7 +101,22 @@ function SignupFormModal() {
 					<input
 						type="password"
 						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
+						onChange={(e) => {
+							if (password !== e.target.value.trim()) {
+								setErrors(prev => {
+									const err = { ...prev }
+									err.confirmPassword = "Confirm Password field must match the Password field"
+									return err;
+								});
+							} else {
+								setErrors(prev => {
+									const err = { ...prev }
+									delete err.confirmPassword;
+									return err;
+								})
+							}
+							setConfirmPassword(e.target.value.trim())
+						}}
 						required
 					/>
 				</label>
