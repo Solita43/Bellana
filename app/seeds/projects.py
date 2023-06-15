@@ -2,9 +2,9 @@ from app.models import db, Project, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_projects():
-    demo = Project(name="First Project", owner_id=2)
+    projects = [Project(name="First Project", owner_id=2), Project(name="Pinterest", owner_id=2)]
 
-    db.session.add(demo)
+    [db.session.add(project) for project in projects]
     db.session.commit()
 
 def undo_projects():

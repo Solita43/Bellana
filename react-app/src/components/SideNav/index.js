@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./SideNav.css"
 import ProjectDropdown from "../Dashboard/ProjectDropdown";
-import { useDispatch, useSelector } from "react-redux";
-import { projectsGet } from "../../store/projects";
 
 function SideNav() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
-    // const dispatch = useDispatch()
-
-    // useEffect(() => {
-    //     if (!project) {
-    //         dispatch(projectsGet())
-    //     }
-    // }, [])
 
     if (!project) return <div className="side-container"></div>
 

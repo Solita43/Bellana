@@ -1,17 +1,11 @@
-import React, {useEffect} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { projectsGet } from "../../store/projects";
+import React from "react";
+import { useSelector } from "react-redux";
 import MyProjects from "./MyProjects";
 import "./Dashboard.css"
 
 function Dashboard() {
     const projects = useSelector(state => state.projects);
 	const sessionUser = useSelector(state => state.session.user);
-    // const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(projectsGet())
-    // }, [dispatch])
 
     return (
         <div className="dash-container">
