@@ -15,8 +15,8 @@ function MyProjects({ projects }) {
             <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateProjectModal />} />
             {Object.values(projects).map(project => {
                 return (
-                    <div className="project-container" key={project.id} onClick={() => history.push(`/project/${project.id}`)}>
-                        <div className="project-icon">
+                    <div className="project-container" key={project.id} >
+                        <div className="project-icon" onClick={() => history.push(`/project/${project.id}`)}>
                             <i className="fa-solid fa-diagram-project"></i>
                         </div>
                         <h3>{project.name}</h3>
