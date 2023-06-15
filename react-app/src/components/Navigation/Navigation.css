@@ -11,6 +11,8 @@
   padding: 1rem;
   list-style: none;
   align-items: center;
+  position: fixed;
+  background-color: var(--background-color);
 
 }
 
