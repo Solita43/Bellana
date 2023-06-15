@@ -7,15 +7,27 @@
 
 :root {
   --background-color: #1d2124;
+  /* --main-pink: #B96872; */
   --main-pink: #f56879;
   --dash-boders: #3f3f41;
 }
+
 
 body {
   background-color: var(--background-color);
   color: var(--main-pink);
 }
 
+
 .hidden {
   display: none;
+}
+
+.single-project-detail-container {
+  display: flex;
+
+}
+
+li {
+  list-style: none;
 }
