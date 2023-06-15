@@ -37,3 +37,8 @@
   color: var(--background-color);
   font-size: 1.3rem;
 }
+
+.nav-right {
+  display: flex;
+  gap: .5rem;
+}

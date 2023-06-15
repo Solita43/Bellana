@@ -9,7 +9,7 @@ function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(null);
   const { closeModal } = useModal();
   const history = useHistory();
 
@@ -17,7 +17,7 @@ function LoginFormModal() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      setErrors("Invalid Credentials");
     } else {
         history.push('/dashboard')
         closeModal()
@@ -28,11 +28,7 @@ function LoginFormModal() {
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
+        {errors && <p className="errors">{errors}</p>}
         <label>
           Email
           <input
