@@ -2,7 +2,7 @@ from app.models import db, Board, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_boards():
-    boards=[Board(name="Feature Workflow", project_id=1), Board(name="Feature Workflow", project_id=2)]
+    boards=[Board(name="Feature Workflow", project_id=1, purpose="Track Feature Development"), Board(name="Feature Workflow", project_id=2, purpose="Track Feature Development")]
 
     [db.session.add(board) for board in boards]
     db.session.commit()

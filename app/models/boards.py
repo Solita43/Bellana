@@ -9,6 +9,7 @@ class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(35), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('projects.id')), nullable=False)
+    purpose = db.Column(db.String(50), nullable=False)
 
     project = db.relationship("Project", back_populates="boards")
 
@@ -16,5 +17,6 @@ class Board(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "projectId": self.project_id
+            "projectId": self.project_id,
+            "purpose": self.purpose
         }
