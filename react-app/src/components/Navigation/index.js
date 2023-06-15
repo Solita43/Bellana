@@ -1,24 +1,38 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import logo from './logo2.png'
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
+	const history = useHistory();
 
 	return (
-		<ul className='top-nav'>
-			<li>
-				<NavLink exact to="/"><img src={logo} alt='logo' id='logo_img'></img></NavLink>
-			</li>
+		<div className='top-nav'>
+			<img src={logo} alt='logo' id='logo_img' onClick={(e) => history.push('/dashboard')}></img>
 			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
+				<div>
+					{sessionUser ? <ProfileButton user={sessionUser} /> : (
+						<>
+							<OpenModalButton
+								buttonText="Log In"
+								modalComponent={<LoginFormModal />}
+							/>
+
+							<OpenModalButton
+								buttonText="Sign Up"
+								modalComponent={<SignupFormModal />}
+							/>
+						</>
+					)}
+				</div>
 			)}
-		</ul>
+		</div>
 	);
 }
 

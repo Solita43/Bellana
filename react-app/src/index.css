@@ -6,17 +6,16 @@
 }
 
 :root {
-    --background-color: #1d2124;
-    --main-pink: #F56879;
+  --background-color: #1d2124;
+  --main-pink: #f56879;
+  --dash-boders: #3f3f41;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--main-pink);
+  background-color: var(--background-color);
+  color: var(--main-pink);
 }
 
-a {
-  text-decoration: none;
-  color: var(--main-pink);
-
+.hidden {
+  display: none;
 }

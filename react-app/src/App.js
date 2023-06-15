@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,11 +18,11 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          {/* <Route path="/" >
-          </Route> */}
-          {/* <Route path="/projects">
-            <SignupFormPage />
-          </Route> */}
+          <Route exact path="/" >
+          </Route>
+          <ProtectedRoute exact path="/dashboard">
+            <Dashboard />
+          </ProtectedRoute>
         </Switch>
       )}
     </>

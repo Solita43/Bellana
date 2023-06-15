@@ -23,6 +23,7 @@ def authenticate():
     """
     Authenticates a user.
     """
+
     if current_user.is_authenticated:
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}
@@ -61,7 +62,6 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(form.data)
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
@@ -82,4 +82,6 @@ def unauthorized():
     """
     Returns unauthorized JSON when flask-login authentication fails
     """
+
+    print("HEREE")
     return {'errors': ['Unauthorized']}, 401
