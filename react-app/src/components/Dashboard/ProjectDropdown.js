@@ -3,7 +3,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditProjectDetails from "../EditProjectDetails";
 import DeleteProjectModal from "../DeleteProjectModal";
 
-function ProjectDropdown( {projectId, projectName}) {
+function ProjectDropdown( {projectId, projectName, buttonIcon}) {
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
@@ -33,7 +33,7 @@ function ProjectDropdown( {projectId, projectName}) {
     return (
         <>
             <div className="dropdown-icon" onClick={openMenu}>
-                <i className="fa-solid fa-ellipsis"></i>
+                {buttonIcon}
             </div>
             <ul className={menuClass + projectId} ref={ulRef}>
                 <li>

@@ -5,6 +5,8 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
+import SingleProjectDash from "./components/SingleProjectDash";
+import SideNav from "./components/SideNav";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +24,12 @@ function App() {
           </Route>
           <ProtectedRoute exact path="/dashboard">
             <Dashboard />
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/project/:projectId">
+            <div className="single-project-detail-container">
+              <SideNav />
+              <SingleProjectDash />
+            </div>
           </ProtectedRoute>
         </Switch>
       )}

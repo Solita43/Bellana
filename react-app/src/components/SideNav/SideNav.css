@@ -1,0 +1,17 @@
+.side-container {
+    background-color: var(--background-color);
+    width: 16%;
+    /* height: 100vh; */
+}
+
+.title-dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 3.3rem;
+    background-color: var(--main-pink);
+    opacity: .8;
+    color: var(--background-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}

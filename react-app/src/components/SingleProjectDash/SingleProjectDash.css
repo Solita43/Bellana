@@ -1,0 +1,28 @@
+.main-container {
+    background-color: whitesmoke;
+    width: 100%;
+    height: 100vh;
+}
+
+.project-nav {
+    border-bottom: var(--main-pink) solid .1rem;
+    height: 3.3rem;
+    color: var(--background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.project-details-container {
+    margin: auto;
+    background-color: #f5c1c8;
+    color: var(--background-color);
+    margin: 3rem;
+    height: 10rem;
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+.team-container {
+    color: var(--background-color)
+}

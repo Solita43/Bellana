@@ -21,7 +21,8 @@ class Project(db.Model):
             "name": self.name,
             "ownerId": self.owner_id,
             "details": self.details,
-            "createdAt": self.created_at
+            "createdAt": self.created_at,
+            "owner": self.owner.to_dict()
         }
 
 
