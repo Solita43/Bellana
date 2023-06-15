@@ -8,13 +8,13 @@ import { projectsGet } from "../../store/projects";
 function SideNav() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (!project) {
-            dispatch(projectsGet())
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!project) {
+    //         dispatch(projectsGet())
+    //     }
+    // }, [])
 
     if (!project) return <div className="side-container"></div>
 

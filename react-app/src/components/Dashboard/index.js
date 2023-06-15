@@ -7,11 +7,11 @@ import "./Dashboard.css"
 function Dashboard() {
     const projects = useSelector(state => state.projects);
 	const sessionUser = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(projectsGet())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(projectsGet())
+    // }, [dispatch])
 
     return (
         <div className="dash-container">
