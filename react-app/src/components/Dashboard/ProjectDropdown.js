@@ -37,7 +37,7 @@ function ProjectDropdown( {projectId, projectName}) {
             </div>
             <ul className={menuClass + projectId} ref={ulRef}>
                 <li>
-                    <OpenModalButton buttonText="Edit details" onItemClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
+                    <OpenModalButton buttonText="Edit details" onButtonClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
                 </li>
                 <li>
                     <OpenModalButton buttonText={(
@@ -45,7 +45,7 @@ function ProjectDropdown( {projectId, projectName}) {
                             <i className="fa-regular fa-trash-can"></i>
                             <p>Delete Project</p>
                         </>
-                    )} modalComponent={<DeleteProjectModal projectId={projectId} projectName={projectName} />} />
+                    )} onButtonClick={closeMenu} modalComponent={<DeleteProjectModal projectId={projectId} projectName={projectName} />} />
                 </li>
             </ul>
         </>

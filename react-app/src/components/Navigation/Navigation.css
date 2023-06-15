@@ -2,9 +2,6 @@
   position: absolute;
 }
 
-.hidden {
-  display: none;
-}
 
 .top-nav {
   display: flex;
@@ -33,4 +30,10 @@
   align-items: center;
   justify-content: center;
   color: var(--background-color);
+}
+
+#initials {
+  font-weight: bold;
+  color: var(--background-color);
+  font-size: 1.3rem;
 }
