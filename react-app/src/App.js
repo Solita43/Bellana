@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import SingleProjectDash from "./components/SingleProjectDash";
 import SideNav from "./components/SideNav";
+import Splash from "./components/Splash";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" >
+            <Splash />
           </Route>
           <ProtectedRoute exact path="/dashboard">
             <Dashboard />
