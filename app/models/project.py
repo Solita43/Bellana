@@ -14,6 +14,7 @@ class Project(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     owner = db.relationship("User", back_populates="projects")
+    boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all")
 
     def to_dict(self):
         return {
