@@ -6,6 +6,7 @@ import ProjectDropdown from "../Dashboard/ProjectDropdown";
 import OpenModalButton from "../OpenModalButton";
 import "./SideNav.css"
 import CreateBoardModal from "../CreateBoardModal";
+import EditBoardModal from "../EditBoardModal";
 
 function SideNav() {
     const { projectId } = useParams();
@@ -27,11 +28,16 @@ function SideNav() {
             </div>
             <div className="nav-board-list">
                 <h4 className="board-list-title">Boards</h4>
-                <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId}/>} />
+                <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId} />} />
             </div>
             <ul>
                 {boards && Object.values(boards).map(board => {
-                    return <li key={board.id}>{board.name}</li>
+                    return (
+                        <li key={board.id}>
+                            {board.name}
+                        <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
+                        </li>
+                    )
                 })}
             </ul>
         </div>

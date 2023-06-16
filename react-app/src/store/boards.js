@@ -1,5 +1,6 @@
 const GET_BOARDS = "boards/GET_BOARDS";
 const POST_BOARD = "boards/POST_BOARD";
+// const PUT_BOARD = "boards/PUT_BOARD"
 
 const getBoards = (boards) => ({
     type: GET_BOARDS,
@@ -10,6 +11,11 @@ const postBoard = (board) => ({
     type: POST_BOARD,
     payload: board
 })
+
+// const putBoard = (board) => ({
+//     type: PUT_BOARD,
+//     payload: board
+// })
 
 export const boardsGet = (projectId) => async (dispatch) => {
     const res = await fetch(`/api/boards/${projectId}`);
@@ -26,6 +32,22 @@ export const boardsGet = (projectId) => async (dispatch) => {
 export const boardPost = (projectId, board) => async (dispatch) => {
     const res = await fetch(`/api/boards/${projectId}`, {
         method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(board)
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(postBoard(data));
+    } else {
+        return data;
+    }
+}
+
+export const boardPut = (boardId, board) => async (dispatch) => {
+    const res = await fetch(`/api/boards/${boardId}`, {
+        method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(board)
     })
