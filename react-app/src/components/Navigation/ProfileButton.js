@@ -17,11 +17,13 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
+      // If the area on the page clicked does not contain the value in ulRef.current, close the menu.
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
 
+    // if show menu is set to true, add a click listener to the entire document so it can close the menu when clicking outside the menu.
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);

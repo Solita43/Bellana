@@ -63,8 +63,7 @@ export const boardPut = (boardId, board) => async (dispatch) => {
 }
 
 export const boardDelete = (board) => async (dispatch) => {
-    console.log(board.id)
-    const res = await fetch(`/api/boards/${+board.id}`, {
+    const res = await fetch(`/api/boards/${board.id}`, {
         method: "DELETE"
     })
 
