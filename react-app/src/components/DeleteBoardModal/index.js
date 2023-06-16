@@ -24,7 +24,6 @@ function DeleteBoardModal({ board }) {
             } else {
                 closeModal()
                 history.push(`/project/${board.projectId}`)
-
             }
         })
     }
