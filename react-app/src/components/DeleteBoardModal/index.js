@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { boardDelete } from "../../store/boards";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -9,6 +10,7 @@ function DeleteBoardModal({ board }) {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState(null)
+    const history = useHistory();
 
     console.log(board)
 
@@ -21,6 +23,7 @@ function DeleteBoardModal({ board }) {
                 setErrors(data.errors)
             } else {
                 closeModal()
+                history.push(`/project/${board.projectId}`)
             }
         })
     }
