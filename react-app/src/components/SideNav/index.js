@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { boardsGet } from "../../store/boards";
 import ProjectDropdown from "../Dashboard/ProjectDropdown";
 import OpenModalButton from "../OpenModalButton";
-import CreateBoardModal from "../CreateProjectModal";
+import CreateBoardModal from "../CreateBoardModal";
 import "./SideNav.css"
 
 function SideNav() {

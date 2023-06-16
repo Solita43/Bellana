@@ -30,7 +30,7 @@ function CreateBoardModal({projectId}) {
 
     return (
         <>
-            <h1>Create a New Project</h1>
+            <h1>Create a New Board</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors && Object.values(errors).map((error, idx) => (
