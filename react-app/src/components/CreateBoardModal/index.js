@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { useDispatch} from "react-redux";
 import { boardPost } from "../../store/boards";
 
 
-function CreateBoardModal({projectId}) {
+function CreateBoardModal({ projectId }) {
     const { closeModal } = useModal();
     const [name, setName] = useState("");
     const [purpose, setPurpose] = useState("");
     const [errors, setErrors] = useState(null)
     const dispatch = useDispatch();
+    const history = useHistory();
 
 
     const handleSubmit = (e) => {
@@ -19,10 +21,12 @@ function CreateBoardModal({projectId}) {
             name,
             purpose
         })).then(data => {
-            if (data) {
+            if (data && data.errors) {
                 setErrors(data.errors)
             } else {
                 closeModal();
+                history.push(`/project/${projectId}/${data}`)
+
             }
         })
 

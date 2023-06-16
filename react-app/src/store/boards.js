@@ -1,6 +1,6 @@
 const GET_BOARDS = "boards/GET_BOARDS";
 const POST_BOARD = "boards/POST_BOARD";
-const DELETE_BOARD = "boards/DELETE_BOARD"
+// const DELETE_BOARD = "boards/DELETE_BOARD"
 
 const getBoards = (boards) => ({
     type: GET_BOARDS,
@@ -12,10 +12,10 @@ const postBoard = (board) => ({
     payload: board
 })
 
-const deleteBoard = (board) => ({
-    type: DELETE_BOARD,
-    payload: board
-})
+// const deleteBoard = (board) => ({
+//     type: DELETE_BOARD,
+//     payload: board
+// })
 
 export const boardsGet = (projectId) => async (dispatch) => {
     const res = await fetch(`/api/boards/${projectId}`);
@@ -40,6 +40,7 @@ export const boardPost = (projectId, board) => async (dispatch) => {
 
     if (res.ok) {
         dispatch(postBoard(data));
+        return data.id
     } else {
         return data;
     }
@@ -62,8 +63,7 @@ export const boardPut = (boardId, board) => async (dispatch) => {
 }
 
 export const boardDelete = (board) => async (dispatch) => {
-    console.log(board.id)
-    const res = await fetch(`/api/boards/${+board.id}`, {
+    const res = await fetch(`/api/boards/${board.id}`, {
         method: "DELETE"
     })
 

@@ -11,26 +11,42 @@ function KanbanPage() {
     const [board, setBoard] = useState(null)
 
     useEffect(() => {
+
         if (!Object.values(boards).length) return
+        // Grab the board
         setBoard(boards[projectId][boardId])
-    }, [boards])
+    }, [boards, projectId, boardId])
 
     const handleClick = (e) => {
+
         e.preventDefault();
         window.alert("Feature Coming Soon...")
     }
 
     if (!board) return null;
 
+    // Grab the cards for the board
+    const cards = board.cards
+
     return (
         <div className="main-container">
-            <div>
-                <div className="project-nav">
-                    <h2>{board.purpose}</h2>
-                    <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
-                    <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
-                    <button onClick={handleClick}>My Tasks</button>
-                </div>
+
+            <div className="project-nav">
+                <h2>{board.purpose}</h2>
+                <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
+                <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
+                <button onClick={handleClick}>My Tasks</button>
+            </div>
+
+            <div className="card-container">
+                {cards && Object.values(cards).map(card => {
+                    return (
+                        <div className="card" key={card.id}>
+                            <h4 className="card-category">{card.category}</h4>
+                            <button className="add-task" onClick={handleClick}>Add new task</button>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     );
