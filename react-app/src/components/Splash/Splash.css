@@ -8,6 +8,7 @@
     top: 0;
     left: 50%;
     width: 40rem;
+    animation: transitionIn 1.5s;
 }
 
 .about {
@@ -15,30 +16,32 @@
     color: whitesmoke;
     top: 10%;
     left: 5%;
+    animation: transitionIn2 1.5s;
+
 }
 
 
 .about-title {
     font-size: 3rem;
     width: 42rem;
-    animation: transitionIn 1s;
     
 }
 
 .about-p {
     font-size: 1.4rem;
     padding: 2rem 0;
-    animation: transitionIn2 1s ease-in;
 }
 
 @keyframes transitionIn {
     from {
         opacity: 0;
         transform: translatey(100%);
+        scale: 0;
     }
     to {
         opacity: 1;
         transform: translateY(0);
+        scale: 1
     }
 }
 
@@ -52,3 +55,4 @@
         transform: translateX(0);
     }
 }
+

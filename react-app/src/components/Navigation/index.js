@@ -33,17 +33,19 @@ function Navigation({ isLoaded }) {
 							<ProfileButton user={sessionUser} />
 						</div>
 					) : (
-						<>
+						<div className='top-right'>
 							<OpenModalButton
 								buttonText="Log In"
+								className="login"
 								modalComponent={<LoginFormModal />}
 							/>
 
 							<OpenModalButton
 								buttonText="Sign Up"
+								className="signup"
 								modalComponent={<SignupFormModal />}
 							/>
-						</>
+						</div>
 					)}
 				</div>
 			)}

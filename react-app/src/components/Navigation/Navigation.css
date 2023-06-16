@@ -8,7 +8,7 @@
   justify-content: space-between;
   width: 100%;
   border-bottom: .07rem var(--main-pink) solid;
-  padding: 1rem;
+  padding: 1rem 2rem;
   list-style: none;
   align-items: center;
   height: 10%;
@@ -17,7 +17,7 @@
 }
 
 #logo_img {
-  width: 10rem;
+  width: 12rem;
   height: auto;
   cursor: pointer;
 }
@@ -44,4 +44,19 @@
 .nav-right {
   display: flex;
   gap: .5rem;
+}
+
+.login, 
+.signup {
+  background: transparent;
+  color: var(--main-pink);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer
+}
+
+.top-right {
+  display: flex;
+  gap: 1.5rem;
 }
