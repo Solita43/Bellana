@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Project, db, Board
+from app.models import Project, db, Board, Card
 from app.forms import BoardForm
 
 board_routes = Blueprint("boards", __name__)
@@ -37,6 +37,14 @@ def create_board(projectId):
         board = Board(name=form.data["name"], project_id=projectId, purpose=form.data["purpose"])
         project.boards.append(board)
         db.session.commit()
+
+        # Create default cards for the new board
+        board.cards.append(Card(category="backlog", order=0))
+        board.cards.append(Card(category="in Progress", order=1))
+        board.cards.append(Card(category="in Review", order=2))
+        board.cards.append(Card(category="Deployed", order=3))
+        db.session.commit()
+
         return board.to_dict()
     else:
         return form.errors, 400
