@@ -12,11 +12,13 @@ class Board(db.Model):
     purpose = db.Column(db.String(50), nullable=False)
 
     project = db.relationship("Project", back_populates="boards")
+    cards = db.relationship("Card", back_populates="board", cascade="delete-orphan, all")
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "projectId": self.project_id,
-            "purpose": self.purpose
+            "purpose": self.purpose,
+            "cards": {card.id: card.to_dict() for card in self.cards}
         }
