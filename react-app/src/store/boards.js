@@ -61,15 +61,16 @@ export const boardPut = (boardId, board) => async (dispatch) => {
     }
 }
 
-export const boardDelete = (boardId, board) => async (dispatch) => {
-    const res = await fetch(`/api/boards/${boardId}`, {
+export const boardDelete = (board) => async (dispatch) => {
+    console.log(board.id)
+    const res = await fetch(`/api/boards/${+board.id}`, {
         method: "DELETE"
     })
 
     const data = await res.json();
 
     if (res.ok) {
-        dispatch(deleteBoard(board));
+        dispatch(boardsGet(board.projectId));
     } else {
         return data;
     }
@@ -83,10 +84,6 @@ export default function reducer(state = initialState, action) {
             return {...state, ...action.payload}
         case POST_BOARD:
             return {...state, [action.payload.projectId]: {...state[action.payload.projectId], [action.payload.id]: {...action.payload}}}
-        case DELETE_BOARD:
-            newState = {...state}
-            delete newState[action.payload.projectId][action.payload.id]
-            return newState
         default:
             return state
     }

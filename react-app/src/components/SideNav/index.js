@@ -7,6 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import "./SideNav.css"
 import CreateBoardModal from "../CreateBoardModal";
 import EditBoardModal from "../EditBoardModal";
+import DeleteBoardModal from "../DeleteBoardModal";
 
 function SideNav() {
     const { projectId } = useParams();
@@ -35,7 +36,8 @@ function SideNav() {
                     return (
                         <li key={board.id}>
                             {board.name}
-                        <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
+                            <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
+                            <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
                         </li>
                     )
                 })}
