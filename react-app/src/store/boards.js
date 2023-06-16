@@ -1,5 +1,6 @@
 const GET_BOARDS = "boards/GET_BOARDS";
 const POST_BOARD = "boards/POST_BOARD";
+const DELETE_BOARD = "boards/DELETE_BOARD"
 
 const getBoards = (boards) => ({
     type: GET_BOARDS,
@@ -8,6 +9,11 @@ const getBoards = (boards) => ({
 
 const postBoard = (board) => ({
     type: POST_BOARD,
+    payload: board
+})
+
+const deleteBoard = (board) => ({
+    type: DELETE_BOARD,
     payload: board
 })
 
@@ -34,6 +40,37 @@ export const boardPost = (projectId, board) => async (dispatch) => {
 
     if (res.ok) {
         dispatch(postBoard(data));
+    } else {
+        return data;
+    }
+}
+
+export const boardPut = (boardId, board) => async (dispatch) => {
+    const res = await fetch(`/api/boards/${boardId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(board)
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(postBoard(data));
+    } else {
+        return data;
+    }
+}
+
+export const boardDelete = (board) => async (dispatch) => {
+    console.log(board.id)
+    const res = await fetch(`/api/boards/${+board.id}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(boardsGet(board.projectId));
     } else {
         return data;
     }
