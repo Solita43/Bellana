@@ -2,18 +2,16 @@
   position: absolute;
 }
 
-
 .top-nav {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: .07rem var(--main-pink) solid;
+  border-bottom: 0.07rem var(--main-pink) solid;
   padding: 1rem 2rem;
   list-style: none;
   align-items: center;
   height: 10%;
   background-color: var(--background-color);
-
 }
 
 #logo_img {
@@ -43,20 +41,28 @@
 
 .nav-right {
   display: flex;
-  gap: .5rem;
+  gap: 1.5rem;
 }
 
-.login, 
+.login,
 .signup {
   background: transparent;
   color: var(--main-pink);
   border: none;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .top-right {
   display: flex;
   gap: 1.5rem;
+}
+
+.create-project-button {
+  border: none;
+  background-color: transparent;
+  color: var(--main-pink);
+  cursor: pointer;
+  font-size: 1rem;
 }
