@@ -1,6 +1,6 @@
 const GET_BOARDS = "boards/GET_BOARDS";
 const POST_BOARD = "boards/POST_BOARD";
-// const PUT_BOARD = "boards/PUT_BOARD"
+const DELETE_BOARD = "boards/DELETE_BOARD"
 
 const getBoards = (boards) => ({
     type: GET_BOARDS,
@@ -12,10 +12,10 @@ const postBoard = (board) => ({
     payload: board
 })
 
-// const putBoard = (board) => ({
-//     type: PUT_BOARD,
-//     payload: board
-// })
+const deleteBoard = (board) => ({
+    type: DELETE_BOARD,
+    payload: board
+})
 
 export const boardsGet = (projectId) => async (dispatch) => {
     const res = await fetch(`/api/boards/${projectId}`);
@@ -61,6 +61,20 @@ export const boardPut = (boardId, board) => async (dispatch) => {
     }
 }
 
+export const boardDelete = (boardId, board) => async (dispatch) => {
+    const res = await fetch(`/api/boards/${boardId}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(deleteBoard(board));
+    } else {
+        return data;
+    }
+}
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
@@ -69,6 +83,10 @@ export default function reducer(state = initialState, action) {
             return {...state, ...action.payload}
         case POST_BOARD:
             return {...state, [action.payload.projectId]: {...state[action.payload.projectId], [action.payload.id]: {...action.payload}}}
+        case DELETE_BOARD:
+            newState = {...state}
+            delete newState[action.payload.projectId][action.payload.id]
+            return newState
         default:
             return state
     }

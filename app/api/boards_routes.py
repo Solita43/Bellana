@@ -12,7 +12,7 @@ def boards(projectId):
     """
     Query for all boards by project id and returns a dictionary of each board.
     """
-
+    
     return {board.id: board.to_dict() for board in Project.query.get(projectId).boards}
 
 @board_routes.route("/<int:projectId>", methods=["POST"])
@@ -71,7 +71,7 @@ def update_board(boardId):
 @login_required
 def delete_board(boardId):
     """
-    Updates a board 
+    Deletes a board from the database.
     """
     board = Board.query.get(boardId)
 
