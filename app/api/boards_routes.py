@@ -35,9 +35,9 @@ def create_board(projectId):
 
     if form.validate():
         board = Board(name=form.data["name"], project_id=projectId, purpose=form.data["purpose"])
-        project.append(board)
+        project.boards.append(board)
         db.session.commit()
-        return {board.id: board.to_dict()}
+        return board.to_dict()
     else:
         return form.errors, 400
 
