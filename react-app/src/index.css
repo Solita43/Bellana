@@ -9,7 +9,7 @@
   --background-color: #1d2124;
   /* --main-pink: #B96872; */
   --main-pink: #f56879;
-  --dash-boders: #3f3f41;
+  --dash-boders: #010101;
 }
 
 
@@ -26,8 +26,10 @@ body {
 .single-project-detail-container {
   display: flex;
 
+
 }
 
 li {
   list-style: none;
 }
+

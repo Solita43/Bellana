@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Project, db
+from app.models import Project, db, Board
 from app.forms import ProjectForm
 
 project_routes = Blueprint("projects", __name__)
@@ -46,6 +46,11 @@ def create_project():
 
         db.session.add(project)
         db.session.commit()
+
+        project.boards.append(Board(name="Feature Workflow", project_id=project.id, purpose="Track Feature Development"))
+
+        db.session.commit()
+
         return {project.id: project.to_dict()}
     else:
         return form.errors, 400

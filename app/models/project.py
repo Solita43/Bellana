@@ -23,7 +23,7 @@ class Project(db.Model):
             "ownerId": self.owner_id,
             "details": self.details,
             "createdAt": self.created_at,
-            "owner": self.owner.to_dict()
+            "owner": self.owner.to_dict(),
         }
 
 
