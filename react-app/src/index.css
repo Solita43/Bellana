@@ -36,3 +36,7 @@ li {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.errors {
+  color: red;
+}

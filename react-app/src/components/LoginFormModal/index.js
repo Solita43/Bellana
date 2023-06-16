@@ -28,7 +28,7 @@ function LoginFormModal() {
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        {errors && <p className="errors">{errors}</p>}
+        {errors && <p className="errors">*{errors}</p>}
         <label>
           Email
           <input
