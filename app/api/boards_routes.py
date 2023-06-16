@@ -67,5 +67,22 @@ def update_board(boardId):
     else:
         return form.errors, 400
 
+@board_routes.route("/<int:boardId>", methods=["DELETE"])
+@login_required
+def delete_board(boardId):
+    """
+    Updates a board 
+    """
+    board = Board.query.get(boardId)
+
+    if not board:
+        return {"error": "Board not found..."}, 404
+    
+    if (current_user.id != board.project.owner_id):
+        return {"error": "Unauthorized"}, 401
+    
+    db.session.delete(board)
+    db.session.commit()
+    return {"message": "Project has been successfully deleted."}
 
 

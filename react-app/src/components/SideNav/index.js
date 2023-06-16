@@ -16,7 +16,7 @@ function SideNav() {
 
     useEffect(() => {
         dispatch(boardsGet(projectId))
-    }, [])
+    }, [dispatch, projectId])
 
     if (!project) return <div className="side-container"></div>
 

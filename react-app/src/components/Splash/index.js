@@ -5,7 +5,7 @@ import spash_collage from "./collage.png"
 function Splash() {
     return (
         <div className="splash" style={{backgroundColor: "var(--background-color)", width: "100%"}}>
-            <img src={back}></img>
+            <img src={back} alt="svg-background"></img>
             <img src={spash_collage} alt="collage" className="spash-collage"></img>
         </div>
     )
