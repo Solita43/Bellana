@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { boardsGet } from "../../store/boards";
 import ProjectDropdown from "../Dashboard/ProjectDropdown";
 import OpenModalButton from "../OpenModalButton";
+import CreateBoardModal from "../CreateProjectModal";
 import "./SideNav.css"
-import CreateBoardModal from "../CreateBoardModal";
-import EditBoardModal from "../EditBoardModal";
-import DeleteBoardModal from "../DeleteBoardModal";
 
 function SideNav() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
     const boards = useSelector(state => state.boards[projectId])
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(boardsGet(projectId))
@@ -34,10 +33,9 @@ function SideNav() {
             <ul>
                 {boards && Object.values(boards).map(board => {
                     return (
-                        <li key={board.id}>
+                        <li key={board.id} onClick={() => history.push(`/project/${projectId}/${board.id}`)}>
                             {board.name}
-                            <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
-                            <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
+
                         </li>
                     )
                 })}
