@@ -16,7 +16,7 @@ function Splash() {
             <img src={back} alt="svg-background"></img>
             <div className="about">
                 <h2 className="about-title">Bellana brings all your tasks, teammates, and tools together.</h2>
-                <p>Make it easy for your team to focus on tasks at hand!</p>
+                <p className="about-p">Make it easy for your team to focus on tasks at hand!</p>
             </div>
             <img src={splash_collage} alt="collage" className="splash-collage"></img>
         </div>
