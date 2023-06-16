@@ -39,7 +39,7 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
+      <h1>Welcome Back!</h1>
       <form onSubmit={handleSubmit}>
         {errors && <p className="errors">*{errors}</p>}
         <label>
@@ -60,7 +60,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-form">Log In</button>
       </form>
       <button className="login-demo" onClick={loginDemo}>Login as Demo User</button>
     </>

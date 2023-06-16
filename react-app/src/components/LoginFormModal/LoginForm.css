@@ -1,0 +1,22 @@
+.login-form {
+  background-color: var(--main-pink);
+  border: none;
+  width: 75%;
+  align-self: center;
+  padding: 0 0.3rem;
+  margin-top: 0.5rem;
+  border-radius: 0.2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-demo {
+  border: none;
+  font-size: 1rem;
+  padding: 0.3rem;
+  font-weight: 600;
+  /* color: var(--main-pink); */
+  background-color: transparent;
+  cursor: pointer;
+}

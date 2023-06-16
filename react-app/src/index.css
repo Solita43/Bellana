@@ -41,4 +41,46 @@ li {
 
 .errors {
   color: red;
+  text-align: center;
+  font-size: .8rem;
+  font-weight: bold;
+}
+
+#modal-content {
+  position: absolute;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 0.6rem;
+  border-radius: 0.4rem;
+  border: 0.1rem solid var(--background-color);
+  color: var(--background-color);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 25rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 85%;
+}
+
+input {
+  border: 0.03rem solid var(--main-pink);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.2rem;
+}
+
+input:focus-visible {
+  box-shadow: var(--main-pink) 0.07rem 0.07rem 0.15rem;
+  outline: none;
+
 }
