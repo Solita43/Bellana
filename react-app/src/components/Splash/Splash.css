@@ -1,0 +1,36 @@
+
+.splash {
+    position: relative;
+}
+
+.splash-collage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 40rem;
+}
+
+.about {
+    position: absolute;
+    color: whitesmoke;
+    top: 10%;
+    left: 5%;
+}
+
+@keyframes transitionIn {
+    from {
+        opacity: 0;
+        transform: translatey(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.about-title {
+    font-size: 3rem;
+    width: 42rem;
+    animation: transitionIn 1s;
+
+}
