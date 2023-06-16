@@ -1,7 +1,8 @@
 .dash-container {
-  background-color: var(--background-color);
-  color: whitesmoke;
-  margin: 0 5%;
+  background-color: whitesmoke;
+  color: var(--background-color);
+  padding: 0 5rem;
+  min-height: 100vh;
 }
 
 .dash-projects {
@@ -10,19 +11,22 @@
   display: flex;
   flex-direction: column;
   height: auto;
-  /* padding: 1rem; */
+  padding: 1rem;
   border-radius: 1rem;
-  box-shadow: whitesmoke 0rem 0rem 0.3rem;
+  box-shadow: var(--background-color) 0rem 0rem 2rem;
   max-height: 450px;
+  background-color: var(--background-color);
+  color: whitesmoke;
 }
 
 .projects-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1rem;
-  padding: .7rem 0;
+  padding: 0.7rem 0;
   overflow: scroll;
   width: 100%;
+  justify-items: center;
 }
 
 .project-container {
@@ -31,12 +35,14 @@
   padding: 1rem;
   border-radius: 0.7rem;
   cursor: pointer;
-  gap: .5rem;
+  gap: 0.5rem;
   align-items: center;
+  word-break: break-all;
 }
 
 .dash-title {
   text-align: center;
+  font-size: 3rem;
   padding: 2rem;
 }
 
@@ -49,7 +55,7 @@
   align-self: center;
   border-radius: 0.7rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .create-project-dash:hover,
@@ -58,18 +64,17 @@
 }
 
 .project-icon {
-    background-color: var(--main-pink);
-    color: var(--background-color);
-    padding: 0.4rem;
-    border-radius: 30%;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: var(--main-pink);
+  color: var(--background-color);
+  padding: 0.4rem;
+  border-radius: 30%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dash-project-menu {
-    margin-left: auto;
+  margin-left: auto;
 }
-

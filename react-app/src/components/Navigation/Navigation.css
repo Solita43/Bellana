@@ -66,3 +66,12 @@
   cursor: pointer;
   font-size: 1rem;
 }
+
+
+#profile-button:focus-visible {
+  outline: none;
+}
+
+.profile-drop-container {
+  position: relative
+}
