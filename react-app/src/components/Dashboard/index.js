@@ -9,7 +9,7 @@ function Dashboard() {
 
     return (
         <div className="dash-container">
-            <h1>Welcome back, {sessionUser.username}</h1>
+            <h1 className="dash-title">Welcome back, {sessionUser.username}!</h1>
             <MyProjects projects={projects}/>
         </div>
     )

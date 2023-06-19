@@ -169,7 +169,7 @@ function SignupFormModal() {
 				</label>
 				{errors.confirmPassword ? <p className="errors">* {errors.confirmPassword}</p> : null}
 
-				<button type="submit">Sign Up</button>
+				<button type="submit" className="login-form">Sign Up</button>
 			</form>
 		</>
 	);

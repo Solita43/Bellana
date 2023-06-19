@@ -26,21 +26,23 @@ function Navigation({ isLoaded }) {
 		<div className='top-nav'>
 			<img src={logo} alt='logo' id='logo_img' onClick={(e) => history.push('/dashboard')}></img>
 			{isLoaded && (
-				<div>
+				<div className='top-right'>
 					{sessionUser ? (
 						<div className='nav-right'>
-							<OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateProjectModal />} />
+							<OpenModalButton className="create-project-button" buttonText={(<><i className="fa-solid fa-plus"></i> New Project</>)} modalComponent={<CreateProjectModal />} />
 							<ProfileButton user={sessionUser} />
 						</div>
 					) : (
 						<>
 							<OpenModalButton
 								buttonText="Log In"
+								className="login"
 								modalComponent={<LoginFormModal />}
 							/>
 
 							<OpenModalButton
 								buttonText="Sign Up"
+								className="signup"
 								modalComponent={<SignupFormModal />}
 							/>
 						</>

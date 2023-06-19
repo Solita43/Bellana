@@ -12,7 +12,8 @@ function MyProjects({ projects }) {
 
     return (
         <div className="dash-projects">
-            <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateProjectModal />} />
+            <OpenModalButton className="create-project-dash" buttonText={<><i className="fa-solid fa-plus"></i> Create a New Project</>} modalComponent={<CreateProjectModal />} />
+            <div className="projects-wrapper">
             {Object.values(projects).map(project => {
                 return (
                     <div className="project-container" key={project.id} >
@@ -26,6 +27,7 @@ function MyProjects({ projects }) {
                     </div>
                 )
             })}
+            </div>
         </div>
     )
 }

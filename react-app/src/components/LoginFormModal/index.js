@@ -24,9 +24,22 @@ function LoginFormModal() {
     }
   };
 
+  const loginDemo = async (e) => {
+    e.preventDefault()
+
+    dispatch(login("marnie@aa.io", "password")).then(data => {
+      if (data) {
+        setErrors("An error occured, please try again.");
+      } else {
+        history.push("/dashboard");
+        closeModal();
+      }
+    })
+  }
+
   return (
     <>
-      <h1>Log In</h1>
+      <h1>Welcome Back!</h1>
       <form onSubmit={handleSubmit}>
         {errors && <p className="errors">*{errors}</p>}
         <label>
@@ -47,8 +60,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-form">Log In</button>
       </form>
+      <button className="login-demo" onClick={loginDemo}>Login as Demo User</button>
     </>
   );
 }

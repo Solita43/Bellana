@@ -1,0 +1,58 @@
+
+.splash {
+    position: relative;
+}
+
+.splash-collage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 40rem;
+    animation: transitionIn 1.5s;
+}
+
+.about {
+    position: absolute;
+    color: whitesmoke;
+    top: 10%;
+    left: 5%;
+    animation: transitionIn2 1.5s;
+
+}
+
+
+.about-title {
+    font-size: 3rem;
+    width: 42rem;
+    
+}
+
+.about-p {
+    font-size: 1.4rem;
+    padding: 2rem 0;
+}
+
+@keyframes transitionIn {
+    from {
+        opacity: 0;
+        transform: translatey(100%);
+        scale: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        scale: 1
+    }
+}
+
+@keyframes transitionIn2 {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
