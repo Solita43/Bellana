@@ -23,17 +23,17 @@ function SideNav() {
     return (
         <div className="side-container">
             <div className="title-dropdown">
-                <p>{project.name}</p>
-                <ProjectDropdown projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />
+                <p className="dd-project-side-nav">{project.name}</p>
+                <ProjectDropdown  projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />
             </div>
             <div className="nav-board-list">
-                <h4 className="board-list-title">Boards</h4>
-                <OpenModalButton buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId} />} />
+                <h4 className="board-list-title"><i className="fa-solid fa-table-columns"></i> Boards</h4>
+                <OpenModalButton className="create-board" buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId} />} />
             </div>
             <ul>
                 {boards && Object.values(boards).map(board => {
                     return (
-                        <li key={board.id} onClick={() => history.push(`/project/${projectId}/${board.id}`)}>
+                        <li className="board-list-name" key={board.id} onClick={() => history.push(`/project/${projectId}/${board.id}`)}>
                             {board.name}
 
                         </li>

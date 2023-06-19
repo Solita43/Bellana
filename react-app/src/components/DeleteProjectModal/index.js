@@ -2,13 +2,15 @@ import React, {useState} from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { projectDelete } from "../../store/projects";
+import { useHistory } from "react-router-dom";
 
 
 
 function DeleteProjectModal({ projectId, projectName }) {
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState(null);
+    const history = useHistory();
 
 
     const handleSubmit = (e) => {
@@ -18,6 +20,7 @@ function DeleteProjectModal({ projectId, projectName }) {
             if (data) {
                 setErrors(data.errors)
             } else {
+                history.push('/dashboard');
                 closeModal()
             }
         })

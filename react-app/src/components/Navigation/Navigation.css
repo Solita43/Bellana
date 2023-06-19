@@ -14,13 +14,13 @@
   justify-content: space-between;
   width: 100%;
   border-bottom: 0.07rem var(--main-pink) solid;
-  box-shadow: var(--main-pink) 0 0 .8rem;
+  box-shadow: var(--main-pink) 0 0 .5rem;
   padding: 1rem 2rem;
   list-style: none;
   align-items: center;
   height: 10%;
   background-color: var(--background-color);
-  z-index: 2;
+  z-index: 1;
   position: relative;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .profile-drop-container {
-  position: relative
+  position: relative;
 }
 
 .dd-info {
