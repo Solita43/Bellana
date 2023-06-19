@@ -40,6 +40,8 @@ function SignupFormModal() {
 					<input
 						type="text"
 						value={firstName}
+						minLength={2}
+						maxLength={30}
 						onChange={(e) => setFirstName(e.target.value)}
 						required
 					/>
@@ -49,6 +51,8 @@ function SignupFormModal() {
 					<input
 						type="text"
 						value={lastName}
+						minLength={2}
+						maxLength={30}
 						onChange={(e) => setLastName(e.target.value)}
 						required
 					/>
@@ -58,6 +62,7 @@ function SignupFormModal() {
 					<input
 						type="email"
 						value={email}
+						maxLength={55}
 						onChange={(e) => {
 							if (!e.target.value.trim().includes('@') || !e.target.value.trim().includes('.')) {
 								setErrors(prev => {
@@ -110,6 +115,7 @@ function SignupFormModal() {
 					<input
 						type="password"
 						value={password}
+						maxLength={60}
 						onChange={(e) => {
 							if (e.target.value.trim().length < 8) {
 								setErrors(prev => {
@@ -148,6 +154,7 @@ function SignupFormModal() {
 					<input
 						type="password"
 						value={confirmPassword}
+						maxLength={60}
 						onChange={(e) => {
 							if (password !== e.target.value.trim()) {
 								setErrors(prev => {
@@ -168,7 +175,6 @@ function SignupFormModal() {
 					/>
 				</label>
 				{errors.confirmPassword ? <p className="errors">* {errors.confirmPassword}</p> : null}
-
 				<button type="submit" className="login-form">Sign Up</button>
 			</form>
 		</>

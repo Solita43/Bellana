@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectPut } from "../../store/projects";
 
 
-function EditProjectDetails({projectId}) {
+function EditProjectDetails({ projectId }) {
     const { closeModal } = useModal();
     const project = useSelector(state => state.projects[projectId])
     const [name, setName] = useState(project.name);
@@ -15,6 +15,9 @@ function EditProjectDetails({projectId}) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (Object.keys(errors).length) return
+
+
         const project = {
             name,
             details
@@ -22,7 +25,7 @@ function EditProjectDetails({projectId}) {
 
         dispatch(projectPut(projectId, project)).then(data => {
             if (data) {
-                setErrors(data.errors)
+                setErrors(data)
             } else {
                 closeModal();
             }
@@ -33,30 +36,58 @@ function EditProjectDetails({projectId}) {
         <>
             <h1>Edit Project</h1>
             <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors && Object.values(errors).map((error, idx) => (
-                        <li key={idx}>* {error}</li>
-                    ))}
-                </ul>
                 <label>
                     Project Title
                     <input
                         type="text"
                         value={name}
-                        max={30}
-                        onChange={(e) => setName(e.target.value)}
+                        maxLength={30}
+                        onChange={(e) => {
+                            if (e.target.value.length < 4) {
+                                setErrors(prev => {
+                                    const err = { ...prev };
+                                    err.name = "Name must be between 4 and 30 characters."
+                                    return err;
+                                })
+                            } else {
+                                setErrors(prev => {
+                                    const err = { ...prev }
+                                    delete err.name;
+                                    return err;
+                                })
+                            }
+                            setName(e.target.value)
+                        }}
                         required
                     />
                 </label>
+                {errors && errors.name ? <p className="errors">* {errors.name}</p> : null}
                 <label>
                     Project Details
                     <textarea
                         type="text"
                         value={details}
-                        onChange={(e) => setDetails(e.target.value)}
-                        required
+                        maxLength={500}
+                        minLength={3}
+                        onChange={(e) => {
+                            if (e.target.value.length < 3 && e.target.value.length > 0) {
+                                setErrors(prev => {
+                                    const err = { ...prev };
+                                    err.details = "Must be between 3 and 500 characters."
+                                    return err;
+                                })
+                            } else {
+                                setErrors(prev => {
+                                    const err = { ...prev }
+                                    delete err.details;
+                                    return err;
+                                })
+                            }
+                            setDetails(e.target.value)
+                        }}
                     />
                 </label>
+                {errors && errors.details ? <p className="errors">* {errors.details}</p> : null}
                 <button type="submit">Edit Project</button>
             </form>
         </>
