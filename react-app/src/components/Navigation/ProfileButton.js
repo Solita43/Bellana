@@ -47,10 +47,10 @@ function ProfileButton({ user }) {
         <p id="initials">{innerButton()}</p>
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={handleLogout}>Log Out</button>
+        <li className="dd-info">{user.username}</li>
+        <li className="dd-info">{user.email}</li>
+        <li className="log-out">
+          <button onClick={handleLogout} >Log Out</button>
         </li>
       </ul>
     </div>
