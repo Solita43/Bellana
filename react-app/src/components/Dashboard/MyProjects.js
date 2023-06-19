@@ -12,15 +12,16 @@ function MyProjects({ projects }) {
 
     return (
         <div className="dash-projects">
-            <OpenModalButton className="create-project-dash" buttonText={<><i className="fa-solid fa-plus"></i> Create a New Project</>} modalComponent={<CreateProjectModal />} />
+            <h2>Projects</h2>
             <div className="projects-wrapper">
+            <OpenModalButton className="create-project-dash" buttonText={<><i className="fa-solid fa-plus home"></i> Create Project</>} modalComponent={<CreateProjectModal />} />
             {Object.values(projects).map(project => {
                 return (
                     <div className="project-container" key={project.id} >
                         <div className="project-icon" onClick={() => history.push(`/project/${project.id}`)}>
                             <i className="fa-solid fa-diagram-project"></i>
                         </div>
-                        <h3>{project.name}</h3>
+                        <h3 className="dash-p-name" onClick={() => history.push(`/project/${project.id}`)}>{project.name}</h3>
                         <div className="dash-project-menu">
                             <ProjectDropdown projectId={project.id} projectName={project.name} buttonIcon={buttonIcon} />
                         </div>

@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Project, db, Board, Card
 from app.forms import ProjectForm
+from .auth_routes import validation_errors_to_error_messages
 
 project_routes = Blueprint("projects", __name__)
 
@@ -61,7 +62,7 @@ def create_project():
       
         return {project.id: project.to_dict()}
     else:
-        return form.errors, 400
+        return validation_errors_to_error_messages(form.errors), 400
 
 
 @project_routes.route("/<int:projectId>", methods=["PUT"])
@@ -90,7 +91,7 @@ def update_project(projectId):
         db.session.commit()
         return {project.id: project.to_dict()}, 201
     else:
-        return form.errors, 400
+        return validation_errors_to_error_messages(form.errors), 400
 
 
 @project_routes.route("/<int:projectId>", methods=["DELETE"])

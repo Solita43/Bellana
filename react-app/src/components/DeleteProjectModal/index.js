@@ -31,7 +31,7 @@ function DeleteProjectModal({ projectId, projectName }) {
                     <li key={idx}>* {error}</li>
                 ))}
             </ul>
-            <p>This will delete the project along with any associated tasks.</p>
+            <p>This will delete the project along with any associated boards and tasks.</p>
             <form onSubmit={handleSubmit}>
                 <button id="cancel-button" onClick={closeModal}>Cancel</button>
                 <button id="delete-button">Delete Project</button>

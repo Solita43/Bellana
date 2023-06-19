@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Project, db, Board, Card
 from app.forms import BoardForm
+from .auth_routes import validation_errors_to_error_messages
+
 
 board_routes = Blueprint("boards", __name__)
 
@@ -47,7 +49,7 @@ def create_board(projectId):
 
         return board.to_dict()
     else:
-        return form.errors, 400
+        return validation_errors_to_error_messages(form.errors), 400
     
 @board_routes.route("/<int:boardId>", methods=["PUT"])
 @login_required
@@ -73,7 +75,7 @@ def update_board(boardId):
         db.session.commit()
         return board.to_dict()
     else:
-        return form.errors, 400
+        return validation_errors_to_error_messages(form.errors), 400
 
 @board_routes.route("/<int:boardId>", methods=["DELETE"])
 @login_required
