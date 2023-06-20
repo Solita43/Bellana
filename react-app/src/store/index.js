@@ -3,10 +3,12 @@ import thunk from 'redux-thunk';
 import session from './session'
 import projects from './projects'
 import boards from './boards'
+import tasks from './tasks'
 
 const rootReducer = combineReducers({
   session,
   projects,
+  tasks,
   boards
 });
 

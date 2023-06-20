@@ -24,6 +24,5 @@ class Task(db.Model):
             'cardId': self.card_id,
             'createdAt': self.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
             'updatedAt': self.updated_at.strftime("%m/%d/%Y, %H:%M:%S"),
-            "assignee": self.use.to_dict(),
-            "card": self.card.to_dict()
+            "assignee": self.user.to_dict()
         }

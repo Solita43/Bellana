@@ -4,7 +4,6 @@ from .projects import seed_projects, undo_projects
 from .boards import seed_boards, undo_boards
 from .cards import seed_cards, undo_cards
 from .tasks import seed_tasks, undo_tasks
-
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
