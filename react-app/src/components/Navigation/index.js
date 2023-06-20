@@ -21,7 +21,12 @@ function Navigation({ isLoaded }) {
 
 		dispatch(projectsGet())
 		dispatch(tasksGet())
+		
 	})
+	
+
+
+
 
 
 	return (
