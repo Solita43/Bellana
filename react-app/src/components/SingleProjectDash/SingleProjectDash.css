@@ -1,13 +1,16 @@
 .main-container {
-    background-color: whitesmoke;
+    background-color: var(--white-background);
     width: 84%;
-    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+    position: relative;
 }
 
 
 
 .project-nav {
     border-bottom: var(--main-pink) solid .1rem;
+    background-color: var(--white-background);
     height: 3.3rem;
     color: var(--background-color);
     display: flex;

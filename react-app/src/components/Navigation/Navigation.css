@@ -1,5 +1,12 @@
 .profile-dropdown {
   position: absolute;
+  right: 0;
+  top: 2.5rem;
+  border: whitesmoke 1px solid;
+  background-color: var(--background-color);
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
 }
 
 .top-nav {
@@ -7,11 +14,14 @@
   justify-content: space-between;
   width: 100%;
   border-bottom: 0.07rem var(--main-pink) solid;
+  box-shadow: var(--main-pink) 0 0 .5rem;
   padding: 1rem 2rem;
   list-style: none;
   align-items: center;
   height: 10%;
   background-color: var(--background-color);
+  z-index: 1;
+  position: relative;
 }
 
 #logo_img {
@@ -26,7 +36,6 @@
   background-color: var(--main-pink);
   border-radius: 2.3rem;
   border: none;
-  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +45,7 @@
 #initials {
   font-weight: bold;
   color: var(--background-color);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .nav-right {
@@ -73,5 +82,15 @@
 }
 
 .profile-drop-container {
-  position: relative
+  position: relative;
+}
+
+.dd-info {
+  border-bottom: whitesmoke 1px solid;
+  padding: 0.3rem 0.3rem;
+}
+
+.log-out {
+  align-self: center;
+  padding: 0.3rem;
 }

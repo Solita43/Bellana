@@ -12,7 +12,7 @@ function MyProjects({ projects }) {
 
     return (
         <div className="dash-projects">
-            <h2>Projects</h2>
+            <h2 className="dash-projects-title">Projects</h2>
             <div className="projects-wrapper">
             <OpenModalButton className="create-project-dash" buttonText={<><i className="fa-solid fa-plus home"></i> Create Project</>} modalComponent={<CreateProjectModal />} />
             {Object.values(projects).map(project => {

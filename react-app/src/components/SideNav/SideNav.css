@@ -13,4 +13,39 @@
     color: var(--background-color);
     font-size: 1.5rem;
     font-weight: bold;
+    padding: 0 .7rem
+}
+
+.board-list-name {
+    cursor: pointer;
+    color: var(--dull-white);
+    padding-left: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: .5rem;
+}
+
+.nav-board-list {
+    display: flex;
+}
+
+.create-board {
+    margin-left: auto;
+    background-color: transparent;
+    color: var(--dull-white);
+    border: none;
+    cursor: pointer;
+}
+
+.nav-board-list {
+    display: flex;
+    padding: .5rem 1rem;
+    color: var(--dull-white);
+}
+
+.dd-project-side-nav {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

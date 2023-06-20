@@ -1,22 +1,28 @@
 .dash-container {
-  background-color: whitesmoke;
-  color: var(--background-color);
+  background-color: var(--background-color);
+  color: whitesmoke;
   padding: 0 5rem;
   min-height: 100vh;
+  z-index: 0;
+  position: relative
 }
 
 .dash-projects {
-  /* border: 0.1rem whitesmoke solid; */
-  width: 40%;
+  width: 48%;
   display: flex;
   flex-direction: column;
   height: auto;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 1rem;
-  box-shadow: var(--background-color) 0rem 0rem 2rem;
+  box-shadow: var(--light-gray) 0rem 0rem .5rem;
   max-height: 450px;
-  background-color: var(--background-color);
-  color: whitesmoke;
+  background-color: transparent;
+  color: var(--dull-white);
+}
+
+.dash-projects:hover {
+  border: .1rem var(--light-gray) solid;
+
 }
 
 .projects-wrapper {
@@ -41,10 +47,21 @@
 
 }
 
-.dash-title {
-  text-align: center;
-  font-size: 3rem;
+.dash-welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
+  color: var(--dull-white);
+}
+
+.dash-title {
+  font-size: 3rem;
+}
+
+.dash-today {
+  font-size: 1rem;
 }
 
 .create-project-dash {
@@ -59,13 +76,14 @@
   display: flex;
   align-items: center;
   gap: .6rem;
-  opacity: .7;
+  opacity: .8;
 }
 
 .create-project-dash:hover,
 .project-container:hover {
-  box-shadow: whitesmoke 0rem 0rem 0.3rem;
+  box-shadow: var(--light-gray) 0rem 0rem 0.3rem;
   opacity: 1;
+  color: whitesmoke
 }
 
 .project-icon {
@@ -86,13 +104,24 @@
 
 .fa-solid.fa-plus.home {
   border: whitesmoke dashed .1rem;
-  padding: .7rem;
+  color: whitesmoke;
+  padding: .8rem;
   border-radius: 0.7rem;
   width: 2.5rem;
   height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dash-p-name {
   font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
+.dash-projects-title {
+  font-size: 1.7rem;
+  text-align: center;
 }

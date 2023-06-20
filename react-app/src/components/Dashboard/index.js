@@ -5,12 +5,20 @@ import "./Dashboard.css"
 
 function Dashboard() {
     const projects = useSelector(state => state.projects);
-	const sessionUser = useSelector(state => state.session.user);
+    const sessionUser = useSelector(state => state.session.user);
+
+    const event = new Date();
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+
+    const today = event.toLocaleDateString(undefined, options)
 
     return (
         <div className="dash-container">
-            <h1 className="dash-title">Welcome back, {sessionUser.username}!</h1>
-            <MyProjects projects={projects}/>
+            <div className="dash-welcome">
+                <h2 className="dash-today">{today}</h2>
+                <h1 className="dash-title">Welcome back, {sessionUser.username}!</h1>
+            </div>
+            <MyProjects projects={projects} />
         </div>
     )
 }
