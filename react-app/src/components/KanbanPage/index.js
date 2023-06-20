@@ -4,15 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import EditBoardModal from "../EditBoardModal";
 import DeleteBoardModal from "../DeleteBoardModal";
 import OpenModalButton from "../OpenModalButton";
-import { orderUpdate } from "../../store/cards";
+import { orderUpdate, cardsGet } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
     const boards = useSelector(state => state.boards);
+    const cards = useSelector(state => state.cards[boardId])
     const [board, setBoard] = useState(null)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(cardsGet(boardId));
+    }, [dispatch])
 
     useEffect(() => {
 
@@ -41,7 +46,7 @@ function KanbanPage() {
         console.log("➡️➡️➡️SOURCE!!!➡️➡️➡️", source)
         console.log("➡️➡️➡️Destination!!!➡️➡️➡️", destination)
 
-        dispatch(orderUpdate(+draggableId, destination.index));
+        dispatch(orderUpdate(boardId, source.index, destination.index, draggableId));
 
         // Update your data based on the drag and drop result
         // ...
@@ -50,7 +55,6 @@ function KanbanPage() {
     if (!board) return null;
 
     // Grab the cards for the board
-    const cards = board.cards
 
     return (
         <div className="main-container">
@@ -63,11 +67,13 @@ function KanbanPage() {
 
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="droppable">
-                    {(provided) => (
-                        <div className="card-container" ref={provided.innerRef} {...provided.droppableProps}>
-                            {cards && Object.values(cards).map(card => {
+                    {(provided) => {
+                        console.log("😒😒😒😒😒😒😒😒", provided)
+                        return (
+                        <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
+                            {cards && Object.values(cards).map((card, index) => {
                                 return (
-                                    <Draggable key={card.id} draggableId={`${card.id}`} index={card.order}>
+                                    <Draggable key={card.id} draggableId={`${card.id}`} index={index}>
                                         {(provided) => (
                                             <div className="card" key={card.id} ref={provided.innerRef}
                                                 {...provided.draggableProps}
@@ -80,7 +86,7 @@ function KanbanPage() {
                                 )
                             })}
                         </div>
-                    )
+                    )}
                     }
                 </Droppable>
             </DragDropContext >

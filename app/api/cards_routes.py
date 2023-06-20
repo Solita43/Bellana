@@ -9,16 +9,36 @@ card_routes = Blueprint("cards", __name__)
 @card_routes.route('/<int:boardId>')
 @login_required
 def getCards(boardId):
-    return
+
+    return {boardId: {card.order: card.to_dict() for card in Board.query.get(boardId).cards}}
 
 
-@card_routes.route("/<int:cardId>", methods=["PUT"])
+@card_routes.route("/<int:boardId>", methods=["PUT"])
 @login_required
-def changeOrder(cardId):
-    print("➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️ REQUEST INFO?", request.json)
+def changeOrder(boardId):
+    
+    boardCards = Board.query.get(boardId).cards
 
-    card = Card.query.get(cardId)
-    card.order = request.json
+    source, destination, cardId = request.json.values()
+
+
+
+    
+    # dragged = [card for card in boardCards if card.id == int(cardId)][0].to_dict()
+    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source]
+
+    for card in section:
+        if card.order == source:
+            card.order=destination
+        elif source < destination:
+            card.order-=1
+        else:
+            card.order+=1
+
+
+    print("res🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in section])
+
+
     db.session.commit()
 
-    return card.to_dict(), 201
+    return {boardId: {card.order: card.to_dict() for card in boardCards}}, 201
