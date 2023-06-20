@@ -25,7 +25,7 @@ def changeOrder(boardId):
 
     
     # dragged = [card for card in boardCards if card.id == int(cardId)][0].to_dict()
-    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source]
+    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source + 1]
 
     for card in section:
         if card.order == source:
