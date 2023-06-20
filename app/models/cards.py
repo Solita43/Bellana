@@ -15,6 +15,8 @@ class Card(db.Model):
     order = db.Column(db.Integer, nullable=False)
 
     board = db.relationship("Board", back_populates="cards")
+    tasks = db.relationship("Task", back_populates="card", cascade="delete-orphan, all")
+
 
     def to_dict(self):
         return {
@@ -22,4 +24,5 @@ class Card(db.Model):
             "category": self.category,
             "boardId": self.board_id,
             "order": self.order,
+            "tasks": [task.to_dict() for task in self.tasks]
         }
