@@ -1,6 +1,8 @@
 .side-container {
     background-color: var(--background-color);
     width: 17%;
+    /* box-shadow: var(--white-background) 0 0 .3rem; */
+    height: 100vh;
 }
 
 .title-dropdown {
@@ -13,7 +15,22 @@
     color: var(--background-color);
     font-size: 1.5rem;
     font-weight: bold;
-    padding: 0 .7rem
+    padding: 0 .7rem;
+    position: relative;
+}
+
+.title-dropdown-side {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 3.3rem;
+    background-color: var(--main-pink);
+    color: var(--background-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 .7rem;
+    position: relative;
+    
 }
 
 .board-list-name {
@@ -26,9 +43,6 @@
     padding-right: .5rem;
 }
 
-.nav-board-list {
-    display: flex;
-}
 
 .create-board {
     margin-left: auto;
@@ -38,14 +52,53 @@
     cursor: pointer;
 }
 
-.nav-board-list {
+.nav-board-list,
+.user-nav {
     display: flex;
     padding: .5rem 1rem;
     color: var(--dull-white);
+}
+
+.my-tasks,
+.project-home {
+    background-color: transparent;
+    color: var(--dull-white);
+    border: none;
+    font-size: .9rem;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    cursor: pointer;
 }
 
 .dd-project-side-nav {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.user-nav {
+    box-shadow: var(--dull-white) 0 0.01rem;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.dropdown {
+    position: absolute;
+    top: 106%;
+    right: 2%;
+    box-shadow: var(--dull-white) 0 0 0.2rem;
+    background-color: var(--background-color);
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    width: max-content;
+    gap: .6rem;
+    z-index: 2;
+}
+
+.dropdown > li {
+    line-height: 1rem;
 }
