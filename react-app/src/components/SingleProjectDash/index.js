@@ -22,29 +22,29 @@ function SingleProjectDash() {
         <div className="main-container">
             <div className="project-nav">
                 <h2>{project.name} Dashboard</h2>
-                <button onClick={handleClick}>My Tasks</button>
+                
             </div>
             <div className="under-nav">
-                <h3 className="context-title">Project Context</h3>
-                <div className="project-details-container">
-                    <div style={{ opacity: "100%" }}>{project.details}</div>
+                <div className="context-container">
+                    <h3 className="context-title">Project Context</h3>
+                    <div className="project-details-container">
+                        <div style={{ opacity: "100%" }}>{project.details}</div>
+                    </div>
                 </div>
-                <div className="team-resources-wrapper">
-                    <div className="team-container">
-                        <h3 className="team-title">Project Team</h3>
-                        <div className="member-container">
-                            <div id="profile-button">
-                                <p id="initials">{innerButton()}</p>
-                            </div>
-                            <div className="member-details">
-                                <p className="member-name">{project.owner.firstName} {project.owner.lastName}</p>
-                                <p className="member-role">Project Owner</p>
-                            </div>
+                <div className="team-container">
+                    <h3 className="team-title">Project Team</h3>
+                    <div className="member-container">
+                        <div id="profile-button">
+                            <p id="initials">{innerButton()}</p>
+                        </div>
+                        <div className="member-details">
+                            <p className="member-name">{project.owner.firstName} {project.owner.lastName}</p>
+                            <p className="member-role">Project Owner</p>
                         </div>
                     </div>
-                    <div className="resources-container">
-                        <h3>Project Resources</h3>
-                    </div>
+                </div>
+                <div className="resources-container">
+                    <h3 className="team-title">Project Resources</h3>
                 </div>
             </div>
         </div >

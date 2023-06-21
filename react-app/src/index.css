@@ -88,3 +88,18 @@ input:focus-visible {
   outline: none;
 
 }
+
+.edit-button,
+.delete-button {
+  opacity: 1;
+  background-color: transparent;
+  border: none;
+  color: var(--white-background);
+  font-size: .9rem;
+}
+
+.delete-button {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

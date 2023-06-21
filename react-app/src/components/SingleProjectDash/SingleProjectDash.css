@@ -11,6 +11,7 @@
     background-color: var(--white-background);
     height: 100vh;
     padding: 0 1.5rem;
+    gap: 2rem;
 
 }
 
@@ -48,7 +49,7 @@
 .context-title {
     padding-top: 1rem;
     padding-bottom: .5rem;
-    padding-left: .2rem;
+    padding-left: .5rem;
     font-size: 1.5rem;
     color: var(--background-color)
 }
@@ -56,21 +57,19 @@
 .team-title {
     padding-bottom: .6rem;
     font-size: 1.5rem;
-    color: var(--background-color)
+    color: var(--background-color);
+    padding-left: .5rem;
+
 }
 
-/* .team-resources-wrapper {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    padding: 2rem 3rem;
-} */
 
 .member-container {
     display: flex;
     gap: .5rem;
     height: auto;
     align-items: center;
+    padding-left: .8rem;
+
 }
 
 .member-details {

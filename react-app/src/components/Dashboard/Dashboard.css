@@ -121,6 +121,7 @@
 
 .dash-project-menu {
   margin-left: auto;
+  position: relative;
 }
 
 .fa-solid.fa-plus.home {

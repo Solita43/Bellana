@@ -16,6 +16,7 @@ function Navigation({ isLoaded }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
+
 	useEffect(() => {
 		if (!sessionUser) return;
 

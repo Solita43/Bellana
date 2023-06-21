@@ -28,19 +28,21 @@ function ProjectDropdown( {projectId, projectName, buttonIcon}) {
 
     const closeMenu = () => setShowMenu(false);
 
-    const menuClass = projectId + " dropdown" + (showMenu ? "" : " hidden ")
+    const menuClass = projectId + " dropdown" + (showMenu ? "" : " hidden ") 
 
     return (
         <>
             <div className="dropdown-icon" onClick={openMenu}>
                 {buttonIcon}
             </div>
-            <ul className={menuClass + projectId} ref={ulRef}>
+            <ul className={menuClass} ref={ulRef}>
                 <li>
-                    <OpenModalButton buttonText="Edit details" onButtonClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
+                    <OpenModalButton  className="edit-button" buttonText="Edit details" onButtonClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
                 </li>
                 <li>
-                    <OpenModalButton buttonText={(
+                    <OpenModalButton 
+                        className="delete-button"
+                        buttonText={(
                         <>
                             <i className="fa-regular fa-trash-can"></i>
                             <p>Delete Project</p>
