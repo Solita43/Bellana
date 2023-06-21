@@ -21,22 +21,27 @@ def changeOrder(boardId):
 
     source, destination, cardId = request.json.values()
 
+    dragged = Card.query.get(cardId)
+
 
 
     
     # dragged = [card for card in boardCards if card.id == int(cardId)][0].to_dict()
-    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source + 1]
+    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source]
+
 
     for card in section:
-        if card.order == source:
-            card.order=destination
-        elif source < destination:
+        if source < destination:
             card.order-=1
         else:
             card.order+=1
+    
+    dragged.order = destination
 
 
-    print("res🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in section])
+
+
+    print("res🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in boardCards])
 
 
     db.session.commit()

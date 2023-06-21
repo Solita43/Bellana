@@ -66,7 +66,7 @@ function KanbanPage() {
             </div>
 
             <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId="droppable">
+                <Droppable droppableId="droppable" direction="horizontal">
                     {(provided) => {
                         console.log("😒😒😒😒😒😒😒😒", provided)
                         return (
