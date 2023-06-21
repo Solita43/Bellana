@@ -94,7 +94,7 @@ input:focus-visible {
   opacity: 1;
   background-color: transparent;
   border: none;
-  color: var(--white-background);
+  color: var(--dull-white);
   font-size: .9rem;
 }
 

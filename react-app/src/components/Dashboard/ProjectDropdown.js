@@ -37,7 +37,7 @@ function ProjectDropdown( {projectId, projectName, buttonIcon}) {
             </div>
             <ul className={menuClass} ref={ulRef}>
                 <li>
-                    <OpenModalButton  className="edit-button" buttonText="Edit details" onButtonClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
+                    <OpenModalButton  className="edit-button" buttonText={<><i className="fa-solid fa-pen"></i> Edit details</>} onButtonClick={closeMenu} modalComponent={<EditProjectDetails projectId={projectId} />} />
                 </li>
                 <li>
                     <OpenModalButton 
