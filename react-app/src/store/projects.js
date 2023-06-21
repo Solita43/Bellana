@@ -81,6 +81,22 @@ export const projectDelete = (projectId) => async (dispatch) => {
     }
 }
 
+export const resourceCreate = (projectId, resource) => async (dispatch) => {
+    const res = await fetch(`/api/resources/${projectId}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(resource)
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(putProject(data))
+    } else {
+        return data
+    }
+}
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
