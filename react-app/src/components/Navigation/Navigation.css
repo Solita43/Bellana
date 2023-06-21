@@ -1,12 +1,13 @@
 .profile-dropdown {
   position: absolute;
   right: 0;
-  top: 2.5rem;
-  border: whitesmoke 1px solid;
+  top: 120%;
+  box-shadow: var(--dull-white) 0 0 0.1rem;
   background-color: var(--background-color);
   color: whitesmoke;
   display: flex;
   flex-direction: column;
+  border-radius: 0.2rem;
 }
 
 .top-nav {
@@ -86,11 +87,25 @@
 }
 
 .dd-info {
-  border-bottom: whitesmoke 1px solid;
-  padding: 0.3rem 0.3rem;
+  border-bottom: hsla(0, 0%, 100%, 0.259) 0.01rem solid;
+  padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+  font-size: .8rem;
+  color: var(--dull-white);
+  /* opacity: .9; */
 }
 
-.log-out {
-  align-self: center;
-  padding: 0.3rem;
+
+
+.logout {
+  background-color: transparent;
+  padding: 0.3rem 0.7rem 0.3rem 0.4rem;
+  border: none;
+  color: var(--dull-white);
+  /* opacity: .9; */
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: var(--white-background);
+  font-weight: bold;
 }

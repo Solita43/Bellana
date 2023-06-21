@@ -85,7 +85,7 @@ function CreateProjectModal() {
                     />
                 </label>
                 {errors && errors.details ? <p className="errors">* {errors.details}</p> : null}
-                <button type="submit">Create Project</button>
+                <button type="submit" className="login-form">Create Project</button>
             </form>
         </>
     )

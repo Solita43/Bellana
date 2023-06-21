@@ -90,7 +90,7 @@ function CreateBoardModal({ projectId }) {
                     />
                 </label>
                 {errors.purpose ? <p className="errors">* {errors.purpose}</p> : null}
-                <button type="submit">Create Board</button>
+                <button type="submit" className="login-form">Create Board</button>
             </form>
         </>
     )
