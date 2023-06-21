@@ -37,7 +37,7 @@ function Navigation({ isLoaded }) {
 				<div className='top-right'>
 					{sessionUser ? (
 						<div className='nav-right'>
-							<OpenModalButton className="create-project-button" buttonText={(<><i className="fa-solid fa-plus"></i> New Project</>)} modalComponent={<CreateProjectModal />} />
+							<OpenModalButton className="create-project-button" buttonText={(<><i className="fa-solid fa-plus nav-plus"></i> Create</>)} modalComponent={<CreateProjectModal />} />
 							<ProfileButton user={sessionUser} />
 						</div>
 					) : (

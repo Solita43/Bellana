@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import OpenModalButton from "../OpenModalButton";
+import CreateResourceModal from "../CreateResourceModal";
 import "./SingleProjectDash.css"
 
 function SingleProjectDash() {
@@ -8,6 +10,7 @@ function SingleProjectDash() {
     const project = useSelector(state => state.projects[projectId]);
 
     if (!project) return null;
+
 
     const innerButton = () => {
         return `${project.owner.firstName[0]}${project.owner.lastName[0]}`
@@ -40,6 +43,17 @@ function SingleProjectDash() {
                 </div>
                 <div className="resources-container">
                     <h3 className="team-title">Project Resources</h3>
+                    <div className="resources-wrapper">
+                    <OpenModalButton className="add-resource" buttonText={<i className="fa-solid fa-plus resource"></i>} modalComponent={<CreateResourceModal projectId={projectId} />}/>
+                    {Object.values(project.resources).length && Object.values(project.resources).map(resource => {
+                        return (
+                            <a className="resource-link" href={resource.url} target="_blank">
+                                <p className="resource-title">{resource.title}</p>
+                            </a>
+                        )
+                        
+                    })}
+                    </div>
                 </div>
             </div>
         </div >

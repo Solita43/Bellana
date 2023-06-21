@@ -11,6 +11,10 @@ def seed_cards():
         Card(category="Content Creation", board_id=2, order=1),
         Card(category="Promotion", board_id=2, order=2),
         Card(category="Done", board_id=2, order=3),
+        Card(category="backlog", board_id=3, order=0),
+        Card(category="in Progress", board_id=3, order=1),
+        Card(category="in Review", board_id=3, order=2),
+        Card(category="Deployed", board_id=3, order=3),
         ]
 
     [db.session.add(card) for card in cards]

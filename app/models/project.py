@@ -15,6 +15,8 @@ class Project(db.Model):
 
     owner = db.relationship("User", back_populates="projects")
     boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all")
+    resources = db.relationship("ProjectResource", back_populates="project", cascade="delete-orphan, all")
+
 
     def to_dict(self):
         return {
@@ -24,6 +26,7 @@ class Project(db.Model):
             "details": self.details,
             "createdAt": self.created_at,
             "owner": self.owner.to_dict(),
+            "resources": {resource.id: resource.to_dict() for resource in self.resources}
         }
 
 
