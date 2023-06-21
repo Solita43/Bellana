@@ -43,8 +43,11 @@ function ProfileButton({ user }) {
 
   return (
     <div className="profile-drop-container">
-      <button id="profile-button" onClick={openMenu}>
-        <p id="initials">{innerButton()}</p>
+      <button id="profile-button-group" onClick={openMenu}>
+        <div id="profile-button">
+          <p id="initials">{innerButton()} </p>
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li className="dd-info">{user.username}</li>

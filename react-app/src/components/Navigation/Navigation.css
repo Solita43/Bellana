@@ -10,6 +10,16 @@
   border-radius: 0.2rem;
 }
 
+#profile-button-group {
+  display: flex;
+  background-color: transparent;
+  align-items: center;
+  border: none;
+  color: var(--dull-white);
+  gap: .3rem;
+  cursor: pointer;
+}
+
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -32,10 +42,10 @@
 }
 
 #profile-button {
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 2rem;
+  height: 2rem;
   background-color: var(--main-pink);
-  border-radius: 2.3rem;
+  border-radius: 2rem;
   border: none;
   display: flex;
   align-items: center;
@@ -46,7 +56,7 @@
 #initials {
   font-weight: bold;
   color: var(--background-color);
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .nav-right {
@@ -71,10 +81,24 @@
 
 .create-project-button {
   border: none;
+  box-shadow: var(--dull-white) 0 0 .2rem;
   background-color: transparent;
-  color: var(--main-pink);
+  color: var(--white-background);
   cursor: pointer;
+  font-size: .8rem;
+  padding: .6rem;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .3rem
+}
+
+.nav-plus {
+  background-color: var(--main-pink);
+  border-radius: 1rem;
   font-size: 1rem;
+  padding: .1rem;
 }
 
 
