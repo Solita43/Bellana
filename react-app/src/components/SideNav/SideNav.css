@@ -100,3 +100,7 @@
 .dropdown > li {
   line-height: 1rem;
 }
+
+.fa-caret-down {
+  cursor: pointer;
+}

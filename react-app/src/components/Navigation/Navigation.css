@@ -90,6 +90,8 @@
   border-bottom: hsla(0, 0%, 100%, 0.259) 0.01rem solid;
   padding: 0.3rem 0.7rem 0.3rem 0.4rem;
   font-size: .8rem;
+  color: var(--dull-white);
+  /* opacity: .9; */
 }
 
 
@@ -98,5 +100,12 @@
   background-color: transparent;
   padding: 0.3rem 0.7rem 0.3rem 0.4rem;
   border: none;
-  color: var(--dull-white)
+  color: var(--dull-white);
+  /* opacity: .9; */
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: var(--white-background);
+  font-weight: bold;
 }

@@ -1,6 +1,7 @@
 .main-container {
     background-color:transparent;
     width: 84%;
+    height:100vh;
     position: relative;
 }
 
@@ -9,7 +10,7 @@
     flex-direction: column;
     width: 100%;
     background-color: var(--white-background);
-    height: 100vh;
+    height: 90%;
     padding: 0 1.5rem;
     gap: 2rem;
 

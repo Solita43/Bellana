@@ -35,15 +35,26 @@ function KanbanPage() {
             <div className="project-nav">
                 <h2>{board.purpose}</h2>
                 <BoardDropdown board={board} />
-                
+
             </div>
             <div className="under-nav">
                 <div className="card-container">
                     {cards && Object.values(cards).map(card => {
                         return (
-                            <div className="card" key={card.id}>
+                            <div className="column-area">
                                 <h4 className="card-category">{card.category}</h4>
-                                <button className="add-task" onClick={handleClick}>Add new task</button>
+                                <div className="card" key={card.id}>
+                                    <div className="card-info-wrapper">
+                                        {Object.values(card.tasks).map(task => {
+                                            return (
+                                                <div className="kanban-task-container" onClick={handleClick}>
+                                                    <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
+                                                </div>
+                                            )
+                                        })}
+                                        <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                                    </div>
+                                </div>
                             </div>
                         )
                     })}
