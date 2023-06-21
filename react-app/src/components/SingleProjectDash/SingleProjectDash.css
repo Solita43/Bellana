@@ -18,15 +18,12 @@
 
 
 .project-nav {
-    /* box-shadow: var(--white-background) .15rem 0 .3rem; */
-    /* border-top: var(--main-pink) solid .07rem; */
     border-bottom: var(--main-pink) solid .1rem;
-
     background-color: #ffffff0f;
     height: 3.3rem;
     color: var(--white-background);
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     align-items: center;
     padding: 1.5rem;
 }

@@ -5,6 +5,7 @@ import EditBoardModal from "../EditBoardModal";
 import DeleteBoardModal from "../DeleteBoardModal";
 import OpenModalButton from "../OpenModalButton";
 import './KanbanPage.css'
+import BoardDropdown from "./BoardDropdown";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
@@ -33,9 +34,8 @@ function KanbanPage() {
         <div className="main-container">
             <div className="project-nav">
                 <h2>{board.purpose}</h2>
-                <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
-                <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
-                <button onClick={handleClick}>My Tasks</button>
+                <BoardDropdown board={board} />
+                
             </div>
             <div className="under-nav">
                 <div className="card-container">

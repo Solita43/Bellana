@@ -32,7 +32,7 @@ function EditBoardModal({ boardId, board }) {
 
     return (
         <>
-            <h1>Create a New Project</h1>
+            <h1>Edit Board Information</h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     Board Name

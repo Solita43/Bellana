@@ -95,11 +95,21 @@ input:focus-visible {
   background-color: transparent;
   border: none;
   color: var(--dull-white);
-  font-size: .9rem;
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  color: var(--white-background)
 }
 
 .delete-button {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+.dropdown-icon {
+  position: relative;
 }
