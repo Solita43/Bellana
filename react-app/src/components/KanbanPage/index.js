@@ -15,17 +15,29 @@ function KanbanPage() {
     const cards = useSelector(state => state.cards[boardId])
     const [board, setBoard] = useState(null)
     const dispatch = useDispatch();
+    const [columnOrder, setColumnOrder] = useState(null);
+    const [columns, setColumns] = useState(null)
+
 
     useEffect(() => {
-        dispatch(cardsGet(boardId));
-    }, [dispatch])
+        dispatch(cardsGet(boardId)).then(data => {
+            setColumns(Object.values(data[boardId]))
+            setColumnOrder(Object.values(data[boardId]).map(column => column.id));
+        })
+        return () => {
+            setColumnOrder(null)
+            setColumns(null)
+        }
+    }, [boardId])
 
     useEffect(() => {
-
         if (!Object.values(boards).length) return
         // Grab the board
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
+
+
+    console.log("COLUMN ORDER 🦄🦄🦄🦄🦄🦄🦄🦄🦄 ", columnOrder)
 
     const handleClick = (e) => {
 
@@ -34,26 +46,35 @@ function KanbanPage() {
     }
 
     const handleDragEnd = (result) => {
-        if (!result.destination) {
-            return;
-        }
+        if (!result.destination) return;
 
         console.log("➡️➡️➡️RESULT!!!➡️➡️➡️", result)
-
-        
         // Retrieve the necessary information from the result
-        const { source, destination, draggableId } = result;
-        
-        console.log("➡️➡️➡️SOURCE!!!➡️➡️➡️", source)
-        console.log("➡️➡️➡️Destination!!!➡️➡️➡️", destination)
+        const { source, destination } = result;
 
-        dispatch(orderUpdate(boardId, source.index, destination.index, draggableId));
+        if (source.index === destination.index) return;
+
+        const newOrder = [...columnOrder];
+        const [moving] = newOrder.splice(source.index, 1);
+        newOrder.splice(destination.index, 0, moving);
+
+        console.log("newOrder 🦄🦄🦄🦄🦄🦄 ", newOrder)
+        console.log("MOVING ➡️➡️➡️➡️➡️➡️ ", moving)
+        setColumnOrder(newOrder)
+
+        const columns = {}
+        for (let id in newOrder) {
+            columns[id] = newOrder[id]
+            console.log("🤬🤬🤬🤬🤬🤬🤬🤬 ",columns)
+        }
+
+        dispatch(orderUpdate(boardId, columns));
 
         // Update your data based on the drag and drop result
         // ...
     };
 
-    if (!board) return null;
+    if (!board || !cards || !columnOrder || !columns) return null;
 
     // Grab the cards for the board
 
@@ -66,41 +87,42 @@ function KanbanPage() {
             </div>
             <div className="under-nav">
                 <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId="droppable" direction="horizontal">
-                    {(provided) => {
-                        console.log("😒😒😒😒😒😒😒😒", provided)
-                        return (
-                        <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
-                                {cards && Object.values(cards).map((card, index) => {
-                                    return (
-                                    <Draggable key={card.id} draggableId={`${card.id}`} index={index}>
-                                        {(provided) => (
-                                                <div className="column-area">
-                                <h4 className="card-category">{card.category}</h4>
-                                <div className="card" key={card.id} ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}>
-                                                        <div className="card-info-wrapper">
-                                        {Object.values(card.tasks).map(task => {
-                                            return (
-                                                <div className="kanban-task-container" onClick={handleClick}>
-                                                    <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
-                                                                    </div>
-                                            )
-                                        })}
-                                        <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                    <Droppable droppableId="column-droppable" direction="horizontal">
+                        {(provided) => {
+                            return (
+                                <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
+                                    {columnOrder.length && columnOrder.map((columnId, index) => {
+                                        const column = columns.find((column) => column.id === columnId);
+                                        return (
+                                            <Draggable key={column.id} draggableId={`${column.id}`} index={index}>
+                                                {(provided) => (
+                                                    <div className="column-area" key={column.id} ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}>
+                                                        <h4 className="card-category">{column.category}</h4>
+                                                        <div className="card">
+                                                            <div className="card-info-wrapper">
+                                                                {Object.values(column.tasks).map(task => {
+                                                                    return (
+                                                                        <div key={task.id} className="kanban-task-container" onClick={handleClick}>
+                                                                            <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                                <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        )
+                                    })}
                                 </div>
-                            </div>
-                                        )}
-                                    </Draggable>
-                                    )
-                                })}
-                            </div>
-                    )}
-                    }
-                </Droppable>
-            </DragDropContext >
+                            )
+                        }
+                        }
+                    </Droppable>
+                </DragDropContext >
             </div>
         </div>
     );

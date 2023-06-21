@@ -17,33 +17,30 @@ def getCards(boardId):
 @login_required
 def changeOrder(boardId):
     
-    boardCards = Board.query.get(boardId).cards
+    data = request.get_json()
+    print("🦄🦄🦄🦄🦄🦄🤬🤬🤬🤬🤬🤬🤬🤬➡️➡️➡️➡️ DATA", data)
 
-    source, destination, cardId = request.json.values()
-
-    dragged = Card.query.get(cardId)
-
-
-
+    for key,value in data.items():
+        card = Card.query.get(value)
+        card.order = key
     
     # dragged = [card for card in boardCards if card.id == int(cardId)][0].to_dict()
-    section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source]
+    # section =  boardCards[source:destination+1] if source < destination else boardCards[destination:source]
 
 
-    for card in section:
-        if source < destination:
-            card.order-=1
-        else:
-            card.order+=1
+    # for card in section:
+    #     if source < destination:
+    #         card.order-=1
+    #     else:
+    #         card.order+=1
     
-    dragged.order = destination
+    # dragged.order = destination
 
 
 
 
-    print("res🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in boardCards])
 
 
     db.session.commit()
 
-    return {boardId: {card.order: card.to_dict() for card in boardCards}}, 201
+    return {"message": "success"}, 201

@@ -13,23 +13,20 @@ export const cardsGet = (boardId) => async (dispatch) => {
 
     if (res.ok) {
         dispatch(getCards(data));
+        return data
     }
 }
 
-export const orderUpdate = (boardId, source, destination, cardId) => async (dispatch) => {
+export const orderUpdate = (boardId, newOrder) => async (dispatch) => {
     const res = await fetch(`/api/cards/${boardId}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            source, 
-            destination,
-            cardId
-        })
+        body: JSON.stringify(newOrder)
     })
     const data = await res.json()
 
     if(res.ok) {
-        dispatch(getCards(data));
+        return data
     }
 }
 
