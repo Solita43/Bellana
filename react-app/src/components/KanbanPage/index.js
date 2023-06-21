@@ -7,6 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import { orderUpdate, cardsGet } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
+import BoardDropdown from "./BoardDropdown";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
@@ -60,36 +61,47 @@ function KanbanPage() {
         <div className="main-container">
             <div className="project-nav">
                 <h2>{board.purpose}</h2>
-                <OpenModalButton buttonText={<i className="fa-regular fa-trash-can"></i>} modalComponent={<DeleteBoardModal board={board} />} />
-                <OpenModalButton buttonText={<i className="fa-solid fa-pen"></i>} modalComponent={<EditBoardModal boardId={board.id} board={board} />} />
-                <button onClick={handleClick}>My Tasks</button>
-            </div>
+                <BoardDropdown board={board} />
 
-            <DragDropContext onDragEnd={handleDragEnd}>
+            </div>
+            <div className="under-nav">
+                <DragDropContext onDragEnd={handleDragEnd}>
                 <Droppable droppableId="droppable" direction="horizontal">
                     {(provided) => {
                         console.log("😒😒😒😒😒😒😒😒", provided)
                         return (
                         <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
-                            {cards && Object.values(cards).map((card, index) => {
-                                return (
+                                {cards && Object.values(cards).map((card, index) => {
+                                    return (
                                     <Draggable key={card.id} draggableId={`${card.id}`} index={index}>
                                         {(provided) => (
-                                            <div className="card" key={card.id} ref={provided.innerRef}
+                                                <div className="column-area">
+                                <h4 className="card-category">{card.category}</h4>
+                                <div className="card" key={card.id} ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}>
-                                                <h4 className="card-category">{card.category}</h4>
-                                                <button className="add-task" onClick={handleClick}>Add new task</button>
-                                            </div>
+                                                        <div className="card-info-wrapper">
+                                        {Object.values(card.tasks).map(task => {
+                                            return (
+                                                <div className="kanban-task-container" onClick={handleClick}>
+                                                    <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
+                                                                    </div>
+                                            )
+                                        })}
+                                        <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                                                        </div>
+                                </div>
+                            </div>
                                         )}
                                     </Draggable>
-                                )
-                            })}
-                        </div>
+                                    )
+                                })}
+                            </div>
                     )}
                     }
                 </Droppable>
             </DragDropContext >
+            </div>
         </div>
     );
 }

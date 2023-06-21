@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { projectsGet } from "../../store/projects";
+import { tasksGet } from '../../store/tasks';
 import CreateProjectModal from '../CreateProjectModal';
 
 function Navigation({ isLoaded }) {
@@ -15,11 +16,18 @@ function Navigation({ isLoaded }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
+
 	useEffect(() => {
 		if (!sessionUser) return;
 
 		dispatch(projectsGet())
+		dispatch(tasksGet())
+		
 	})
+	
+
+
+
 
 
 	return (

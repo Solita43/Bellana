@@ -4,19 +4,24 @@
   padding: 0 5rem;
   min-height: 100vh;
   z-index: 0;
-  position: relative
+  position: relative;
+}
+
+.dash-bubbles {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
 .dash-projects {
-  width: 48%;
+  width: 46%;
   display: flex;
   flex-direction: column;
-  height: auto;
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: var(--light-gray) 0rem 0rem .5rem;
-  max-height: 450px;
-  background-color: transparent;
+  height: 28rem;
+  background-color: #ffffff0f;
   color: var(--dull-white);
 }
 
@@ -44,6 +49,21 @@
   gap: 0.5rem;
   align-items: center;
   word-break: break-all;
+
+}
+
+.task-container {
+  display: flex;
+  width: 90%;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  gap: 0.5rem;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 5rem;
 
 }
 
@@ -80,7 +100,8 @@
 }
 
 .create-project-dash:hover,
-.project-container:hover {
+.project-container:hover,
+.task-container:hover {
   box-shadow: var(--light-gray) 0rem 0rem 0.3rem;
   opacity: 1;
   color: whitesmoke
@@ -100,6 +121,7 @@
 
 .dash-project-menu {
   margin-left: auto;
+  position: relative;
 }
 
 .fa-solid.fa-plus.home {

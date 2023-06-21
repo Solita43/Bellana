@@ -1,51 +1,106 @@
 .side-container {
-    background-color: var(--background-color);
-    width: 17%;
+  background-color: var(--background-color);
+  width: 17%;
+  /* box-shadow: var(--white-background) 0 0 .3rem; */
+  height: 100vh;
 }
 
 .title-dropdown {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 3.3rem;
-    background-color: var(--main-pink);
-    opacity: .8;
-    color: var(--background-color);
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 0 .7rem
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 3.3rem;
+  background-color: var(--main-pink);
+  opacity: 0.8;
+  color: var(--background-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0 0.7rem;
+  position: relative;
+}
+
+.title-dropdown-side {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 3.3rem;
+  background-color: var(--main-pink);
+  color: var(--background-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0 0.7rem;
+  position: relative;
 }
 
 .board-list-name {
-    cursor: pointer;
-    color: var(--dull-white);
-    padding-left: 1.3rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-right: .5rem;
-}
-
-.nav-board-list {
-    display: flex;
+  cursor: pointer;
+  color: var(--dull-white);
+  padding-left: 1.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 0.5rem;
 }
 
 .create-board {
-    margin-left: auto;
-    background-color: transparent;
-    color: var(--dull-white);
-    border: none;
-    cursor: pointer;
+  margin-left: auto;
+  background-color: transparent;
+  color: var(--dull-white);
+  border: none;
+  cursor: pointer;
 }
 
-.nav-board-list {
-    display: flex;
-    padding: .5rem 1rem;
-    color: var(--dull-white);
+.nav-board-list,
+.user-nav {
+  display: flex;
+  padding: 0.5rem 1rem;
+  color: var(--dull-white);
+}
+
+.my-tasks,
+.project-home {
+  background-color: transparent;
+  color: var(--dull-white);
+  border: none;
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
 }
 
 .dd-project-side-nav {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-nav {
+  box-shadow: var(--dull-white) 0 0.01rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 106%;
+  right: 2%;
+  box-shadow: var(--dull-white) 0 0 0.2rem;
+  background-color: var(--background-color);
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  width: max-content;
+  gap: 0.6rem;
+  z-index: 2;
+  border-radius: 0.2rem;
+}
+
+.dropdown > li {
+  line-height: 1rem;
+}
+
+.fa-caret-down {
+  cursor: pointer;
 }

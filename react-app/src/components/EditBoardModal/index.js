@@ -32,7 +32,7 @@ function EditBoardModal({ boardId, board }) {
 
     return (
         <>
-            <h1>Create a New Project</h1>
+            <h1>Edit Board Information</h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     Board Name
@@ -86,7 +86,7 @@ function EditBoardModal({ boardId, board }) {
                     />
                 </label>
                 {errors.purpose ? <p className="errors">* {errors.purpose}</p> : null}
-                <button type="submit">Edit Board</button>
+                <button type="submit" className="login-form">Edit Board</button>
             </form>
         </>
     )

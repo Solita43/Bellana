@@ -88,7 +88,7 @@ function EditProjectDetails({ projectId }) {
                     />
                 </label>
                 {errors && errors.details ? <p className="errors">* {errors.details}</p> : null}
-                <button type="submit">Edit Project</button>
+                <button type="submit" className="login-form">Edit Project</button>
             </form>
         </>
     )
