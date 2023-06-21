@@ -35,11 +35,23 @@
 .board-list-name {
   cursor: pointer;
   color: var(--dull-white);
-  padding-left: 1.3rem;
+  padding: 0.5rem;
+  padding-left: 1.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 0.5rem;
+  font-size: 0.8rem;
+}
+
+
+.nav-board-list {
+  padding: 0.5rem 1rem .3rem .5rem;
+}
+
+.board-list-name:hover,
+.my-tasks:hover,
+.project-home:hover {
+  background-color: #2a2e31;
 }
 
 .create-board {
@@ -53,7 +65,6 @@
 .nav-board-list,
 .user-nav {
   display: flex;
-  padding: 0.5rem 1rem;
   color: var(--dull-white);
 }
 
@@ -67,6 +78,7 @@
   gap: 0.5rem;
   align-items: center;
   cursor: pointer;
+  padding: .5rem;
 }
 
 .dd-project-side-nav {
@@ -78,7 +90,7 @@
 .user-nav {
   box-shadow: var(--dull-white) 0 0.01rem;
   flex-direction: column;
-  gap: 0.5rem;
+  padding-bottom: .5rem;
 }
 
 .dropdown {

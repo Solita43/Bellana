@@ -15,7 +15,6 @@ function SignupFormModal() {
 	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
 
-	console.log(errors)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

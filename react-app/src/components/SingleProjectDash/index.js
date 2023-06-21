@@ -7,11 +7,6 @@ function SingleProjectDash() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        window.alert("Feature Coming Soon...")
-    }
-
     if (!project) return null;
 
     const innerButton = () => {
@@ -21,7 +16,7 @@ function SingleProjectDash() {
     return (
         <div className="main-container">
             <div className="project-nav">
-                <h2>{project.name} Dashboard</h2>
+                <h2 className="single-project-title">{project.name} Dashboard</h2>
                 
             </div>
             <div className="under-nav">
