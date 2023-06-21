@@ -35,9 +35,10 @@
   grid-template-columns: 1fr 1fr;
   row-gap: 1rem;
   padding: 0.7rem 0;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
   justify-items: center;
+  height: 100%;
 }
 
 .project-container {
@@ -48,7 +49,7 @@
   cursor: pointer;
   gap: 0.5rem;
   align-items: center;
-  word-break: break-all;
+  height: max-content;
 
 }
 
@@ -97,6 +98,8 @@
   align-items: center;
   gap: .6rem;
   opacity: .8;
+  height: max-content;
+
 }
 
 .create-project-dash:hover,
