@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import EditBoardModal from "../EditBoardModal";
-import DeleteBoardModal from "../DeleteBoardModal";
-import OpenModalButton from "../OpenModalButton";
 import { orderUpdate, cardsGet } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
@@ -28,16 +25,13 @@ function KanbanPage() {
             setColumnOrder(null)
             setColumns(null)
         }
-    }, [boardId])
+    }, [boardId, dispatch])
 
     useEffect(() => {
         if (!Object.values(boards).length) return
         // Grab the board
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
-
-
-    console.log("COLUMN ORDER 🦄🦄🦄🦄🦄🦄🦄🦄🦄 ", columnOrder)
 
     const handleClick = (e) => {
 
@@ -48,7 +42,6 @@ function KanbanPage() {
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
-        console.log("➡️➡️➡️RESULT!!!➡️➡️➡️", result)
         // Retrieve the necessary information from the result
         const { source, destination } = result;
 
@@ -58,14 +51,11 @@ function KanbanPage() {
         const [moving] = newOrder.splice(source.index, 1);
         newOrder.splice(destination.index, 0, moving);
 
-        console.log("newOrder 🦄🦄🦄🦄🦄🦄 ", newOrder)
-        console.log("MOVING ➡️➡️➡️➡️➡️➡️ ", moving)
         setColumnOrder(newOrder)
 
         const columns = {}
         for (let id in newOrder) {
             columns[id] = newOrder[id]
-            console.log("🤬🤬🤬🤬🤬🤬🤬🤬 ",columns)
         }
 
         dispatch(orderUpdate(boardId, columns));
@@ -81,7 +71,7 @@ function KanbanPage() {
     return (
         <div className="main-container">
             <div className="project-nav">
-                <h2>{board.purpose}</h2>
+                <h2 className="board-purpose-nav">{board.purpose}</h2>
                 <BoardDropdown board={board} />
 
             </div>

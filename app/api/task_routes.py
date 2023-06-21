@@ -1,6 +1,5 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Project, db, Task
 
 task_routes = Blueprint("tasks", __name__)
 

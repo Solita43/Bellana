@@ -117,3 +117,60 @@ input:focus-visible {
 textarea {
   resize: none;
 }
+
+
+.delete-form {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  width: 93%;
+}
+
+.delete-warning {
+  background-color: #f0b132;
+  padding: 1rem;
+  color: var(--dash-boders);
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  width: 93%;
+  font-weight: bold;
+}
+
+#delete-button {
+  background-color: red;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+
+}
+
+#cancel-button {
+  background-color: transparent;
+  border: none;
+  color: var(--main-pink);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+}
+
+#cancel-button:hover {
+  box-shadow: var(--main-pink) 0 0 0.2rem;
+}
+
+#delete-button:hover {
+  box-shadow: var(--background-color) 0 0 0.2rem;
+}
+
+
+.delete-form-title {
+  font-size: 1.7rem;
+  padding: 0.5rem;
+}

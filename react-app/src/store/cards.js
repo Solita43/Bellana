@@ -1,4 +1,3 @@
-const ORDER_CHANGE = "cards/ORDER_CHANGE";
 const GET_CARDS = "cards/GET_CARDS";
 
 const getCards = (cards) => ({

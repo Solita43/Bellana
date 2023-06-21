@@ -12,9 +12,6 @@ function DeleteBoardModal({ board }) {
     const [errors, setErrors] = useState(null)
     const history = useHistory();
 
-    console.log(board)
-
-
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -30,14 +27,14 @@ function DeleteBoardModal({ board }) {
 
     return (
         <>
-            <h1>Delete the "{board.name}" Board?</h1>
+            <h1 className="delete-form-title">Delete the "{board.name}" Board?</h1>
             <ul>
                 {errors && Object.values(errors).map((error, idx) => (
                     <li key={idx}>* {error}</li>
                 ))}
             </ul>
-            <p>This will delete the Board along with any associated tasks.</p>
-            <form onSubmit={handleSubmit}>
+            <p className="delete-warning">This will delete the Board along with any associated tasks.</p>
+            <form onSubmit={handleSubmit} className="delete-form">
                 <button id="cancel-button" onClick={closeModal}>Cancel</button>
                 <button id="delete-button">Delete Board</button>
             </form>

@@ -28,14 +28,14 @@ function DeleteProjectModal({ projectId, projectName }) {
 
     return (
         <>
-            <h1>Delete the "{projectName}" Project?</h1>
+            <h1 className="delete-form-title">Delete the "{projectName}" Project?</h1>
             <ul>
                 {errors && Object.values(errors).map((error, idx) => (
                     <li key={idx}>* {error}</li>
                 ))}
             </ul>
-            <p>This will delete the project along with any associated boards and tasks.</p>
-            <form onSubmit={handleSubmit}>
+            <p className="delete-warning">This will delete the project along with any associated boards and tasks.</p>
+            <form onSubmit={handleSubmit} className="delete-form">
                 <button id="cancel-button" onClick={closeModal}>Cancel</button>
                 <button id="delete-button">Delete Project</button>
             </form>
