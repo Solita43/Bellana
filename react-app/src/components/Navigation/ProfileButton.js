@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
         <div id="profile-button">
           <p id="initials">{innerButton()} </p>
         </div>
-        <i class="fa-solid fa-chevron-down"></i>
+        <i className="fa-solid fa-chevron-down"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li className="dd-info">{user.username}</li>
