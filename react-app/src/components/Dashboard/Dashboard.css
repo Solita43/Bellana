@@ -3,7 +3,6 @@
   color: whitesmoke;
   padding: 0 5rem;
   min-height: 100vh;
-  z-index: 0;
   position: relative;
 }
 
@@ -14,7 +13,7 @@
 }
 
 .dash-projects {
-  width: 46%;
+  width: 47%;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -43,7 +42,7 @@
 
 .project-container {
   display: flex;
-  width: 90%;
+  width: 16.5rem;
   padding: 1rem;
   border-radius: 0.7rem;
   cursor: pointer;
@@ -55,7 +54,7 @@
 
 .task-container {
   display: flex;
-  width: 90%;
+  width: 16.5rem;
   padding: 1rem;
   border-radius: 0.7rem;
   cursor: pointer;
@@ -64,7 +63,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  height: 5rem;
+  height: 4.5rem;
 
 }
 
@@ -115,8 +114,8 @@
   color: var(--background-color);
   padding: 0.4rem;
   border-radius: 30%;
-  width: 2.5rem;
-  height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,6 +143,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex-grow: 0;
 }
 
 .dash-projects-title {
