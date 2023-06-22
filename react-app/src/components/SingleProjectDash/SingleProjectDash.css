@@ -132,3 +132,36 @@
 .single-project-title {
   font-size: 1.4rem;
 }
+
+.no-resources {
+  display: flex;
+  box-shadow: var(--background-color) 0 0 .3rem;
+  padding: .4rem;
+  margin: auto;
+  width: 100%;
+  justify-content: center;
+  color: var(--background-color);
+  align-items: center;
+  border-radius: .5rem;
+}
+
+.resource-icon {
+  width: 10rem;
+}
+
+.add-first-resource {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  opacity: .7;
+  font-size: 1rem;
+  padding: .5rem;
+  cursor: pointer;
+}
+
+.add-first-resource:hover {
+  opacity: 1;
+  font-weight: bold;
+}
