@@ -97,6 +97,20 @@ export const resourceCreate = (projectId, resource) => async (dispatch) => {
     }
 }
 
+export const resourceDelete = (resourceId) => async (dispatch) => {
+    const res = await fetch(`/api/resources/${resourceId}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(putProject(data))
+    } else {
+        return data
+    }
+}
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {

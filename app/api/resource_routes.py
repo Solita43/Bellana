@@ -31,3 +31,22 @@ def create_resource(projectId):
         return {project.id: project.to_dict()}, 201
     else:
         return validation_errors_to_error_messages(form.errors), 400
+    
+@resource_routes.route('/<int:resourceId>', methods=["DELETE"])
+@login_required
+def delete_resource(resourceId):
+    resource = ProjectResource.query.get(resourceId)
+
+    project = resource.project
+
+    if not resource:
+        return {"error": "Project not found..."}, 404
+
+    if current_user.id != resource.project.owner_id:
+        return {"error": "Unauthorized"}, 401
+
+    db.session.delete(resource)
+
+    db.session.commit()
+
+    return {project.id: project.to_dict()}, 200
