@@ -42,7 +42,7 @@ export const boardPost = (projectId, board) => async (dispatch) => {
         dispatch(postBoard(data));
         return data.id
     } else {
-        return {errors: data};
+        return {data};
     }
 }
 
