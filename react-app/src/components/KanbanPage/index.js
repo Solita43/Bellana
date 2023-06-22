@@ -77,7 +77,7 @@ function KanbanPage() {
             </div>
             <div className="under-nav">
                 <DragDropContext onDragEnd={handleDragEnd}>
-                    <Droppable droppableId="column-droppable" direction="horizontal">
+                    <Droppable droppableId="column-droppable" direction="horizontal" >
                         {(provided) => {
                             return (
                                 <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
@@ -107,6 +107,7 @@ function KanbanPage() {
                                             </Draggable>
                                         )
                                     })}
+                                    {provided.placeholder}
                                 </div>
                             )
                         }

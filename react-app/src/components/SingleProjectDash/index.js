@@ -57,12 +57,12 @@ function SingleProjectDash() {
                                     <OpenModalButton className="add-resource" buttonText={<i className="fa-solid fa-plus resource"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} />
                                     {Object.values(project.resources).map(resource => {
                                         return (
-                                            <div className="resource-container">
-                                                <a key={resource.id} className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
+                                            <div key={resource.id} className="resource-container">
+                                                <a  className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
                                                     <p className="resource-title">{resource.title}</p>
                                                 </a>
                                                 {/* <OpenModalButton buttonText={<i className="fa-solid fa-trash-can"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} /> */}
-                                                <i class="fa-solid fa-trash-can" onClick={() => handleDelete(resource.id)}></i>
+                                                <i className="fa-solid fa-trash-can delete-resource" onClick={() => handleDelete(resource.id)}></i>
                                             </div>
                                         )
 
