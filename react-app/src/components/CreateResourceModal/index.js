@@ -17,7 +17,7 @@ function CreateResourceModal({ projectId }) {
 
         dispatch(resourceCreate(projectId, {
             title,
-            url
+            url: url.includes("https://") ? url : "https://" + url
         })).then(data => {
             if (data) {
                 setErrors(data)
