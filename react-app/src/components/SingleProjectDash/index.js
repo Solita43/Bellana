@@ -62,7 +62,7 @@ function SingleProjectDash() {
                                                     <p className="resource-title">{resource.title}</p>
                                                 </a>
                                                 {/* <OpenModalButton buttonText={<i className="fa-solid fa-trash-can"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} /> */}
-                                                <i class="fa-solid fa-trash-can" onClick={() => handleDelete(resource.id)}></i>
+                                                <i class="fa-solid fa-trash-can delete-resource" onClick={() => handleDelete(resource.id)}></i>
                                             </div>
                                         )
 

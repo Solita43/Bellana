@@ -112,6 +112,7 @@ input:focus-visible {
 
 .dropdown-icon {
   position: relative;
+  cursor: pointer;
 }
 
 textarea {

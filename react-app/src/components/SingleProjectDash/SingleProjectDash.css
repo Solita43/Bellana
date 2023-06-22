@@ -27,6 +27,11 @@
   align-items: center;
 }
 
+.resource:hover {
+  border: var(--main-pink) dashed 0.1rem;
+
+}
+
 .add-resource {
     display: flex;
     background-color: transparent;
@@ -36,10 +41,14 @@
     font-size: 1rem;
     cursor: pointer;
     border-radius: .3rem;
+    opacity: .6;
 }
 
-.resource:hover {
+.resource:hover,
+.add-resource:hover {
     font-weight: bold;
+    opacity: 1;
+    color: var(--main-pink)
 }
 
 .resources-wrapper {
@@ -60,15 +69,34 @@
   align-items: center;
   padding: 1.5rem;
 }
+
+.resource-container {
+  height: 2.5rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--background-color) 0 0 .2rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+.delete-resource {
+  color: var(--background-color);
+  opacity: .5;
+  cursor: pointer;
+  font-size: .85rem;
+}
+
+.delete-resource:hover {
+  color: rgb(255, 0, 0);
+  opacity: 1;
+}
+
 .resource-link {
     height: 2.5rem;
     width: max-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--background-color) 0 0 .2rem;
     padding: .5rem;
-    border-radius: .5rem;
     text-decoration: none;
     color: var(--main-pink);
     font-size: 1rem;
