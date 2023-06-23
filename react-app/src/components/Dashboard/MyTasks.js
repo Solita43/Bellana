@@ -4,7 +4,7 @@ import OpenModalButton from "../OpenModalButton";
 
 
 function MyTasks() {
-    const tasks = useSelector(state => state.tasks)
+    const tasks = useSelector(state => state.myTasks)
 
     return (
         <div className="dash-projects">

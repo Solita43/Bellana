@@ -24,5 +24,5 @@ class Card(db.Model):
             "category": self.category,
             "boardId": self.board_id,
             "order": self.order,
-            "tasks": [task.to_dict() for task in self.tasks]
+            "tasks": {task.order: task.to_dict() for task in self.tasks}
         }
