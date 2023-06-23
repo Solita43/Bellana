@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 import BoardDropdown from "./BoardDropdown";
 import TaskDrag from "./TaskDrag";
+import { taskOrderUpdate } from "../../store/tasks";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
@@ -15,20 +16,24 @@ function KanbanPage() {
     const dispatch = useDispatch();
     const [columnOrder, setColumnOrder] = useState(null);
     const [columns, setColumns] = useState(null);
-
-
-
-
-
+    const [tasksOrders, setTasksOrders] = useState(null);
 
     useEffect(() => {
         dispatch(cardsGet(boardId)).then(data => {
-            setColumns(Object.values(data[boardId]))
             setColumnOrder(Object.values(data[boardId]).map(column => column.id));
+            setColumns(Object.values(data[boardId]))
+            const tasks = {}
+            for (let column of Object.values(data[boardId])) {
+                tasks[column.id] = Object.values(column.tasks).map(task => task.id);
+            }
+
+            
+            setTasksOrders(tasks)
         })
         return () => {
             setColumnOrder(null)
             setColumns(null)
+            setTasksOrders(null)
         }
     }, [boardId, dispatch])
 
@@ -38,43 +43,64 @@ function KanbanPage() {
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
 
-    const handleClick = (e) => {
+    // const handleClick = (e) => {
 
-        e.preventDefault();
-        window.alert("Feature Coming Soon...")
-    }
+    //     e.preventDefault();
+    //     window.alert("Feature Coming Soon...")
+    // }
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
         console.log("RESULT", result)
-
-
         // Retrieve the necessary information from the result
         const { source, destination } = result;
+        
+        if (result.type === "card") {
+            // If the draggable was dropped in the same location it started do nothing
+            if (source.index === destination.index) return;
 
-        if (source.index === destination.index) return;
-
-        if (result.type === "card"){
+            // Copy the order array for columns
             const newOrder = [...columnOrder];
+            // Remove the id at the index of the source index
             const [moving] = newOrder.splice(source.index, 1);
+            // Add the id back to the array at the destination index
             newOrder.splice(destination.index, 0, moving);
-    
+
+            // Set the new order of the columns so the frontend stays updated while the database updates
             setColumnOrder(newOrder)
-    
+            
+            // Create an object with the new position as the key and the column id as the value to send to the api.
             const columns = {}
             for (let id in newOrder) {
                 columns[id] = newOrder[id]
             }
     
-            dispatch(orderUpdate(boardId, columns));
+            return dispatch(orderUpdate(boardId, columns));
+
+        } else if (result.type === "task") {
+            if (destination.droppableId === source.droppableId) {
+                const taskArray = [...tasksOrders[source.droppableId]]
+                const [moving] = taskArray.splice(source.index, 1)
+                taskArray.splice(destination.index, 0, moving)
+
+                const newTasksOrder = {...tasksOrders}
+                newTasksOrder[destination.droppableId] = [...taskArray]
+                setTasksOrders(newTasksOrder)
+
+                const tasks = {}
+                for (let id in taskArray) {
+                    tasks[id] = taskArray[id]
+                }
+                console.log("🤬🤬🤬Tasks object?🤬🤬🤬🤬🤬", tasks)
+
+                dispatch(taskOrderUpdate(tasks))
+            }
         }
 
-        // Update your data based on the drag and drop result
-        // ...
     };
 
-    if (!board || !cards || !columnOrder || !columns) return null;
+    if (!board || !cards || !columnOrder || !columns || !tasksOrders) return null;
 
     // Grab the cards for the board
 
@@ -103,7 +129,7 @@ function KanbanPage() {
                                                         >
                                                         <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
                                                         <div className="card">
-                                                            <TaskDrag tasks={column.tasks} column={column.id} />
+                                                            <TaskDrag tasks={Object.values(column.tasks)} taskOrder={tasksOrders[column.id]} column={column.id} />
                                                         </div>
                                                     </div>
                                                 )}}

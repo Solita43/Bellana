@@ -17,6 +17,20 @@ export const tasksGet = () => async (dispatch) => {
     }
 }
 
+export const taskOrderUpdate = (newOrder) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/dragged`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newOrder)
+    })
+    const data = await res.json()
+
+    if(res.ok) {
+        return data
+    }
+}
+
+
 const initialState = {}
 
 export default function reducer(state = initialState, action) {

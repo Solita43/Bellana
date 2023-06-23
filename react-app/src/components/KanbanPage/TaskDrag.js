@@ -1,43 +1,40 @@
-import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import React from "react";
+import { Droppable, Draggable } from "react-beautiful-dnd"
 
-function TaskDrag({ tasks, column }) {
-    const [tasksArray, setTasksArray] = useState(Object.values(tasks))
+function TaskDrag({ tasks, taskOrder, column }) {
 
+    // const taskDragEnd = (result) => {
+    //     if (!result.destination) return;
 
+    //     const { source, destination } = result;
 
-    const taskDragEnd = (result) => {
-        if (!result.destination) return;
+    //     console.log("RESULT", result)
 
-        const { source, destination } = result;
+    //     if (source.index === destination.index) return;
 
-        console.log("RESULT", result)
+    //     const newOrder = [...taskOrder];
+    //     const [moving] = newOrder.splice(source.index, 1);
+    //     newOrder.splice(destination.index, 0, moving);
 
-        if (source.index === destination.index) return;
+    //     setTaskOrder(newOrder)
 
-        const newOrder = [...taskOrder];
-        const [moving] = newOrder.splice(source.index, 1);
-        newOrder.splice(destination.index, 0, moving);
+    //     return
+    // }
 
-        setTaskOrder(newOrder)
+    // const handleClick = (e) => {
 
-        return
-    }
+    //     e.preventDefault();
+    //     window.alert("Feature Coming Soon...")
+    // }
 
-    const handleClick = (e) => {
-
-        e.preventDefault();
-        window.alert("Feature Coming Soon...")
-    }
-
-    if (!tasksArray.length || !taskOrder.length) return null
+    if (!tasks.length || !taskOrder.length) return null
     return (
-            <Droppable droppableId={"column" + column} type="task">
+            <Droppable droppableId={`${column}`} type="task">
                 {(provided, snapshot) => {
                     return (
                         <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}>
                             {taskOrder.length && taskOrder.map((taskId, index) => {
-                                const task = tasksArray.find((task) => task.id === taskId);
+                                const task = tasks.find((task) => task.id === taskId);
                                 return (
                                     <Draggable key={task.id} draggableId={`task-${task.id}`} index={index}>
                                         {(provided) => (
