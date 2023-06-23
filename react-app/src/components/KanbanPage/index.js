@@ -5,15 +5,20 @@ import { orderUpdate, cardsGet } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 import BoardDropdown from "./BoardDropdown";
+import TaskDrag from "./TaskDrag";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
     const boards = useSelector(state => state.boards);
-    const cards = useSelector(state => state.cards[boardId])
-    const [board, setBoard] = useState(null)
+    const cards = useSelector(state => state.cards[boardId]);
+    const [board, setBoard] = useState(null);
     const dispatch = useDispatch();
     const [columnOrder, setColumnOrder] = useState(null);
-    const [columns, setColumns] = useState(null)
+    const [columns, setColumns] = useState(null);
+
+
+
+
 
 
     useEffect(() => {
@@ -42,23 +47,28 @@ function KanbanPage() {
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
+        console.log("RESULT", result)
+
+
         // Retrieve the necessary information from the result
         const { source, destination } = result;
 
         if (source.index === destination.index) return;
 
-        const newOrder = [...columnOrder];
-        const [moving] = newOrder.splice(source.index, 1);
-        newOrder.splice(destination.index, 0, moving);
-
-        setColumnOrder(newOrder)
-
-        const columns = {}
-        for (let id in newOrder) {
-            columns[id] = newOrder[id]
+        if (result.type === "card"){
+            const newOrder = [...columnOrder];
+            const [moving] = newOrder.splice(source.index, 1);
+            newOrder.splice(destination.index, 0, moving);
+    
+            setColumnOrder(newOrder)
+    
+            const columns = {}
+            for (let id in newOrder) {
+                columns[id] = newOrder[id]
+            }
+    
+            dispatch(orderUpdate(boardId, columns));
         }
-
-        dispatch(orderUpdate(boardId, columns));
 
         // Update your data based on the drag and drop result
         // ...
@@ -77,46 +87,39 @@ function KanbanPage() {
             </div>
             <div className="under-nav">
                 <DragDropContext onDragEnd={handleDragEnd}>
-                    <Droppable droppableId="column-droppable" direction="horizontal" >
+                    <Droppable droppableId="column-droppable" direction="horizontal" type="card" >
                         {(provided) => {
                             return (
                                 <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
                                     {columnOrder.length && columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
                                         return (
-                                            <Draggable key={column.id} draggableId={`${column.id}`} index={index}>
-                                                {(provided) => (
+
+                                            <Draggable key={column.id} draggableId={`card-${column.id}`} index={index}>
+                                                {(provided) => {
+                                                    return (
                                                     <div className="column-area" key={column.id} ref={provided.innerRef}
                                                         {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}>
-                                                        <h4 className="card-category">{column.category}</h4>
+                                                        >
+                                                        <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
                                                         <div className="card">
-                                                            <div className="card-info-wrapper">
-                                                                {Object.values(column.tasks).map(task => {
-                                                                    return (
-                                                                        <div key={task.id} className="kanban-task-container" onClick={handleClick}>
-                                                                            <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
-                                                                        </div>
-                                                                    )
-                                                                })}
-                                                                <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
-                                                            </div>
+                                                            <TaskDrag tasks={column.tasks} column={column.id} />
                                                         </div>
                                                     </div>
-                                                )}
+                                                )}}
                                             </Draggable>
+
                                         )
                                     })}
                                     {provided.placeholder}
                                 </div>
                             )
-                        }
-                        }
+                        }}
                     </Droppable>
                 </DragDropContext >
             </div>
-        </div>
-    );
+        </div>)
+
 }
 
 export default KanbanPage;

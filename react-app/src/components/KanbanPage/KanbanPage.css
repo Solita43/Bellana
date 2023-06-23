@@ -6,7 +6,7 @@
 }
 
 .card-info-wrapper {
-  height: 100%;
+  height: max-content;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -28,10 +28,9 @@
 }
 
 .card {
-  /* box-shadow: var(--background-color) 0 0 .3rem; */
-
-  /* align-items: center; */
-
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
   width: 100%;
   max-height: 80vh;
   height: 80vh;
