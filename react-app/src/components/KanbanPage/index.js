@@ -55,7 +55,6 @@ function KanbanPage() {
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
-        console.log("RESULT ➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️", result)
         // Retrieve the necessary information from the result
         const { source, destination } = result;
 
@@ -117,11 +116,8 @@ function KanbanPage() {
                     tasks[destination.droppableId][taskArrayDestination[id]] = id
                 }
 
-                console.log("tasks🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", tasks)
 
                 dispatch(taskColumOrderUpdate(tasks))
-                console.log("SOURCE ARRAY 🦄🦄🦄🦄🦄 ", taskArraySource)
-                console.log("DESTINATION ARRAY 🦄🦄🦄🦄🦄🦄🦄➡️ ", taskArrayDestination)
 
 
             }

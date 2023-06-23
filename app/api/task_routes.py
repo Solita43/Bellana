@@ -38,11 +38,8 @@ def dragged_task_different():
 
     data = request.get_json()
 
-    print("DATA 🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", data)
 
     for column, array in data.items():
-        print("COLUMN🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", column)
-        print("ARRAY 🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", array)
         for key,value in array.items():
             task = Task.query.get(key)
             task.order = value
