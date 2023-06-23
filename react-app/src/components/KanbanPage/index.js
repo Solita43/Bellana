@@ -6,12 +6,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 import BoardDropdown from "./BoardDropdown";
 import TaskDrag from "./TaskDrag";
-import { taskOrderUpdate } from "../../store/tasks";
+import { taskOrderUpdate } from "../../store/myTasks";
+import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
     const boards = useSelector(state => state.boards);
     const cards = useSelector(state => state.cards[boardId]);
+    const tasks = useSelector(state => state.boardTasks)
     const [board, setBoard] = useState(null);
     const dispatch = useDispatch();
     const [columnOrder, setColumnOrder] = useState(null);
@@ -19,6 +21,7 @@ function KanbanPage() {
     const [tasksOrders, setTasksOrders] = useState(null);
 
     useEffect(() => {
+        dispatch(boardTasksGet(boardId))
         dispatch(cardsGet(boardId)).then(data => {
             setColumnOrder(Object.values(data[boardId]).map(column => column.id));
             setColumns(Object.values(data[boardId]))
@@ -27,7 +30,7 @@ function KanbanPage() {
                 tasks[column.id] = Object.values(column.tasks).map(task => task.id);
             }
 
-            
+
             setTasksOrders(tasks)
         })
         return () => {
@@ -43,19 +46,19 @@ function KanbanPage() {
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
 
-    // const handleClick = (e) => {
+    const handleClick = (e) => {
 
-    //     e.preventDefault();
-    //     window.alert("Feature Coming Soon...")
-    // }
+        e.preventDefault();
+        window.alert("Feature Coming Soon...")
+    }
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
-        console.log("RESULT", result)
+        console.log("RESULT ➡️➡️➡️➡️➡️➡️➡️➡️➡️➡️", result)
         // Retrieve the necessary information from the result
         const { source, destination } = result;
-        
+
         if (result.type === "card") {
             // If the draggable was dropped in the same location it started do nothing
             if (source.index === destination.index) return;
@@ -69,13 +72,13 @@ function KanbanPage() {
 
             // Set the new order of the columns so the frontend stays updated while the database updates
             setColumnOrder(newOrder)
-            
+
             // Create an object with the new position as the key and the column id as the value to send to the api.
             const columns = {}
             for (let id in newOrder) {
                 columns[id] = newOrder[id]
             }
-    
+
             return dispatch(orderUpdate(boardId, columns));
 
         } else if (result.type === "task") {
@@ -84,25 +87,49 @@ function KanbanPage() {
                 const [moving] = taskArray.splice(source.index, 1)
                 taskArray.splice(destination.index, 0, moving)
 
-                const newTasksOrder = {...tasksOrders}
+                const newTasksOrder = { ...tasksOrders }
                 newTasksOrder[destination.droppableId] = [...taskArray]
                 setTasksOrders(newTasksOrder)
 
                 const tasks = {}
                 for (let id in taskArray) {
-                    tasks[id] = taskArray[id]
+                    tasks[taskArray[id]] = id
                 }
-                console.log("🤬🤬🤬Tasks object?🤬🤬🤬🤬🤬", tasks)
-
                 dispatch(taskOrderUpdate(tasks))
+            } else {
+                const taskArraySource = [...tasksOrders[source.droppableId]]
+                const [moving] = taskArraySource.splice(source.index, 1)
+                const taskArrayDestination = [...tasksOrders[destination.droppableId]]
+                taskArrayDestination.splice(destination.index, 0, moving)
+
+                const newTasksOrder = { ...tasksOrders }
+                newTasksOrder[source.droppableId] = [...taskArraySource]
+                newTasksOrder[destination.droppableId] = [...taskArrayDestination]
+
+                setTasksOrders(newTasksOrder)
+
+                const tasks = {[source.droppableId]:{}, [destination.droppableId]:{}}
+                for (let id in taskArraySource) {
+                    tasks[source.droppableId][taskArraySource[id]] = id
+                }
+
+                for (let id in taskArrayDestination) {
+                    tasks[destination.droppableId][taskArrayDestination[id]] = id
+                }
+
+                console.log("tasks🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", tasks)
+
+                dispatch(taskColumOrderUpdate(tasks))
+                console.log("SOURCE ARRAY 🦄🦄🦄🦄🦄 ", taskArraySource)
+                console.log("DESTINATION ARRAY 🦄🦄🦄🦄🦄🦄🦄➡️ ", taskArrayDestination)
+
+
             }
         }
 
     };
 
-    if (!board || !cards || !columnOrder || !columns || !tasksOrders) return null;
-
-    // Grab the cards for the board
+    if (!board || !cards || !columnOrder || !columns || !tasksOrders || !tasks) return null;
 
     return (
         <div className="main-container">
@@ -124,15 +151,17 @@ function KanbanPage() {
                                             <Draggable key={column.id} draggableId={`card-${column.id}`} index={index}>
                                                 {(provided) => {
                                                     return (
-                                                    <div className="column-area" key={column.id} ref={provided.innerRef}
-                                                        {...provided.draggableProps}
+                                                        <div className="column-area" key={column.id} ref={provided.innerRef}
+                                                            {...provided.draggableProps}
                                                         >
-                                                        <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
-                                                        <div className="card">
-                                                            <TaskDrag tasks={Object.values(column.tasks)} taskOrder={tasksOrders[column.id]} column={column.id} />
+                                                            <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
+                                                            <div className="card">
+                                                                <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
+                                                                <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}}
+                                                    )
+                                                }}
                                             </Draggable>
 
                                         )

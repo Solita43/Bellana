@@ -1,12 +1,12 @@
-const GET_TASKS = "tasks/GET_TASKS";
+const GET_TASKS = "boardTasks/GET_TASKS";
 
 const getTasks = (tasks) => ({
     type: GET_TASKS,
     payload: tasks
 })
 
-export const tasksGet = () => async (dispatch) => {
-    const res = await fetch('/api/tasks/my_tasks');
+export const boardTasksGet = (boardId) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${boardId}`);
 
     const data = await res.json();
 
@@ -17,8 +17,8 @@ export const tasksGet = () => async (dispatch) => {
     }
 }
 
-export const taskOrderUpdate = (newOrder) => async (dispatch) => {
-    const res = await fetch(`/api/tasks/dragged`, {
+export const taskColumOrderUpdate = (newOrder) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/dragged_different`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(newOrder)
@@ -29,7 +29,6 @@ export const taskOrderUpdate = (newOrder) => async (dispatch) => {
         return data
     }
 }
-
 
 const initialState = {}
 
