@@ -8,7 +8,7 @@ function TaskDrag({ tasks, taskOrder, column }) {
         window.alert("Feature Coming Soon...")
     }
 
-    if (!Object.values(tasks).length || !taskOrder.length) {
+    if (!tasks || !taskOrder || !taskOrder.length) {
         return (
             <Droppable droppableId={`${column}`} type="task">
                 {(provided, snapshot) => {
