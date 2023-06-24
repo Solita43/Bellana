@@ -142,6 +142,7 @@ function KanbanPage() {
                                 <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
                                     {columnOrder.length && columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
+                                        if (!column) return null;
                                         return (
 
                                             <Draggable key={column.id} draggableId={`card-${column.id}`} index={index}>
