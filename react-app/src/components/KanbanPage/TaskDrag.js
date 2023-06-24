@@ -29,6 +29,7 @@ function TaskDrag({ tasks, taskOrder, column }) {
                     <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)' }}>
                         {taskOrder.length && taskOrder.map((taskId, index) => {
                             const task = tasks[taskId];
+                            if (!task) return null;
                             return (
                                 <Draggable key={task.id} draggableId={`task-${task.id}`} index={index}>
                                     {(provided) => (
