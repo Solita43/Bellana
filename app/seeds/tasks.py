@@ -69,6 +69,44 @@ def seed_tasks():
 
     [done_board_2.tasks.append(task) for task in tasks_done_board_2]
 
+    # Tasks for board 3 Property Acquisition category
+    pa_board_3 = Card.query.filter(Card.board_id == 3, Card.category == 'Property Acquisition').first()
+
+    tasks_pa_board_3 = [Task(details='Research potential properties', user_id=2, order=0, board_id=3),
+                        Task(details='Conduct property viewings', user_id=2, order=1, board_id=3),
+                        Task(details='Evaluate investment opportunities', user_id=2, order=2, board_id=3)]
+
+    [pa_board_3.tasks.append(task) for task in tasks_pa_board_3]
+
+    # Tasks for board 3 Listing Setup category
+    ls_board_3 = Card.query.filter(Card.board_id == 3, Card.category == 'Listing Setup').first()
+
+    tasks_ls_board_3 = [Task(details='Take high-quality property photos', user_id=2, order=0, board_id=3),
+                        Task(details='Write a compelling property description', user_id=2, order=1, board_id=3),
+                        Task(details='Set pricing and availability', user_id=2, order=2, board_id=3)]
+
+    [ls_board_3.tasks.append(task) for task in tasks_ls_board_3]
+
+    # Tasks for board 3 Guest Communication category
+    gc_board_3 = Card.query.filter(Card.board_id == 3, Card.category == 'Guest Communication').first()
+
+    tasks_gc_board_3 = [Task(details='Respond to inquiries and booking requests', user_id=2, order=0, board_id=3),
+                        Task(details='Provide pre-arrival instructions', user_id=2, order=1, board_id=3),
+                        Task(details="Offer assistance during the guest's stay", user_id=2, order=2, board_id=3)]
+
+    [gc_board_3.tasks.append(task) for task in tasks_gc_board_3]
+
+    db.session.commit()
+
+    # Tasks for board 3 Reviews and Feedback category
+    rf_board_3 = Card.query.filter(Card.board_id == 3, Card.category == 'Reviews and Feedback').first()
+
+    tasks_rf_board_3 = [Task(details='Monitor guest reviews and ratings', user_id=2, order=0, board_id=3),
+                        Task(details='Respond to guest feedback and address concerns', user_id=2, order=1, board_id=3),
+                        Task(details="Implement improvements based on feedback", user_id=2, order=2, board_id=3)]
+
+    [rf_board_3.tasks.append(task) for task in tasks_rf_board_3]
+
     db.session.commit()
 
 def undo_tasks():

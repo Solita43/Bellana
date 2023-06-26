@@ -41,11 +41,13 @@ export const projectPost = (project) => async (dispatch) => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(project)
     })
-
+    
     const data = await res.json();
-
+    
+    
     if (res.ok) {
         dispatch(postProject(data))
+        return data
     } else {
         return data
     }

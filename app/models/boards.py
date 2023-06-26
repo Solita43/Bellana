@@ -14,7 +14,7 @@ class Board(db.Model):
     project_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False
     )
-    purpose = db.Column(db.String(100), nullable=False)
+    purpose = db.Column(db.String(255), nullable=False)
 
     project = db.relationship("Project", back_populates="boards")
     cards = db.relationship("Card", back_populates="board", cascade="delete-orphan, all")
