@@ -94,4 +94,7 @@
 
 .board-purpose-nav {
   font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

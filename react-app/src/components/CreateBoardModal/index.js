@@ -76,12 +76,12 @@ function CreateBoardModal({ projectId }) {
                     <input
                         type="text"
                         value={purpose}
-                        maxLength={150}
+                        maxLength={100}
                         onChange={(e) => {
                             if (e.target.value.length < 4) {
                                 setErrors(prev => {
                                     const err = { ...prev };
-                                    err.purpose = "Purpose must be between 4 and 150 characters."
+                                    err.purpose = "Purpose must be between 4 and 100 characters."
                                     return err;
                                 })
                             } else {
