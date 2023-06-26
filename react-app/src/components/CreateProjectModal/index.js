@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { projectPost } from "../../store/projects";
+import {useHistory} from "react-router-dom"
 
 
 function CreateProjectModal() {
@@ -10,6 +11,7 @@ function CreateProjectModal() {
     const [details, setDetails] = useState("");
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,9 +22,10 @@ function CreateProjectModal() {
             name,
             details
         })).then(data => {
-            if (data) {
+            if (data && data.errors) {
                 setErrors(data)
             } else {
+                history.push(`/project/${Object.keys(data)[0]}`)
                 closeModal();
             }
         })
