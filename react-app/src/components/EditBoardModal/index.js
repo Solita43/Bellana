@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { boardPut } from "../../store/boards";
 
 
 function EditBoardModal({ boardId, board }) {
     const { closeModal } = useModal();
+    const boards = useSelector(state => state.boards[board.projectId])
     const [name, setName] = useState(board.name);
     const [purpose, setPurpose] = useState(board.purpose);
     const [errors, setErrors] = useState({})
@@ -45,6 +46,12 @@ function EditBoardModal({ boardId, board }) {
                                 setErrors(prev => {
                                     const err = { ...prev };
                                     err.name = "Name must be between 4 and 30 characters."
+                                    return err;
+                                })
+                            } else if (Object.values(boards).filter(board => board.name === e.target.value).length){
+                                setErrors(prev => {
+                                    const err = { ...prev };
+                                    err.name = "Board name must be unique to this project."
                                     return err;
                                 })
                             } else {
