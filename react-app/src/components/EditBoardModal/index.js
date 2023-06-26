@@ -65,12 +65,12 @@ function EditBoardModal({ boardId, board }) {
                     <input
                         type="text"
                         value={purpose}
-                        maxLength={50}
+                        maxLength={150}
                         onChange={(e) => {
                             if (e.target.value.length < 4) {
                                 setErrors(prev => {
                                     const err = { ...prev };
-                                    err.purpose = "Name must be between 4 and 50 characters."
+                                    err.purpose = "Purpose must be between 4 and 150 characters."
                                     return err;
                                 })
                             } else {
