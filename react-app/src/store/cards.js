@@ -5,6 +5,7 @@ const getCards = (cards) => ({
     payload: cards
 })
 
+
 export const cardsGet = (boardId) => async (dispatch) => {
     const res = await fetch(`/api/cards/${boardId}`)
 
@@ -16,8 +17,8 @@ export const cardsGet = (boardId) => async (dispatch) => {
     }
 }
 
-export const orderUpdate = (boardId, newOrder) => async (dispatch) => {
-    const res = await fetch(`/api/cards/${boardId}`, {
+export const orderUpdate = (newOrder) => async (dispatch) => {
+    const res = await fetch(`/api/cards/`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(newOrder)
@@ -28,6 +29,22 @@ export const orderUpdate = (boardId, newOrder) => async (dispatch) => {
         return data
     }
 }
+
+export const categoryUpdate = (cardId, category) => async (dispatch) => {
+    const res = await fetch(`/api/cards/${cardId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(category)
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+    } else {
+        return data;
+    }
+}
+
 
 const initialState = {};
 

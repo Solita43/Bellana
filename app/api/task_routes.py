@@ -52,7 +52,7 @@ def dragged_task_different():
 
     return {"message": "success"}, 201
 
-@task_routes('/<int:cardId>', methods=["POST"])
+@task_routes.route('/<int:cardId>', methods=["POST"])
 @login_required
 def create_task(cardId):
 

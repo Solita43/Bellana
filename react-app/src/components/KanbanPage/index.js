@@ -8,6 +8,7 @@ import BoardDropdown from "./BoardDropdown";
 import TaskDrag from "./TaskDrag";
 import { taskOrderUpdate } from "../../store/myTasks";
 import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
+import CategoryInputHeader from "./CategoryInputHeader";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
@@ -78,7 +79,7 @@ function KanbanPage() {
                 columns[id] = newOrder[id]
             }
 
-            return dispatch(orderUpdate(boardId, columns));
+            return dispatch(orderUpdate(columns));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {
@@ -151,7 +152,8 @@ function KanbanPage() {
                                                         <div className="column-area" key={column.id} ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                         >
-                                                            <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
+                                                            {/* <h4 {...provided.dragHandleProps}>{column.category}</h4> */}
+                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} />
                                                             <div className="card">
                                                                 <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
                                                                 <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>

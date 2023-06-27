@@ -11,9 +11,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: .4rem;
-  border-radius: .5rem;
-  flex-grow: .2;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  flex-grow: 0.2;
 }
 
 .column-area {
@@ -45,8 +45,19 @@
 }
 
 .card-category {
-  width: 100%;
-  font-size: 1.3rem;
+  width: 75%;
+  font-size: 1.1rem;
+  background-color: transparent;
+  border: none;
+  color: var(--main-pink);
+  font-weight: bold;
+  cursor: pointer;
+}
+.card-category:focus-visible {
+  box-shadow: var(--main-pink) 0.07rem 0.07rem 0.15rem;
+  outline: var(--main-pink) .01rem solid;
+  padding: .2rem .5rem;
+  cursor: text;
 }
 
 .add-task {
@@ -97,4 +108,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.input-header {
+  display: flex;
+  width: 95%;
 }
