@@ -1,7 +1,9 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import db, Task, Board
+from app.models import db, Task, Board, Card
 from app.forms import TaskForm
+from .auth_routes import validation_errors_to_error_messages
+
 
 task_routes = Blueprint("tasks", __name__)
 
@@ -54,14 +56,24 @@ def dragged_task_different():
 @login_required
 def create_task(cardId):
 
+    card = Card.query.get(cardId)
+
+    if not card:
+        return {"error": "Card not found..."}, 404
+
     form = TaskForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate():
         task = Task(
             details=form.data["details"],
-            card_id=form.data["cardId"]
+            board_id=card.board_id,
+            user_id=current_user.id
         )
 
+        card.tasks.append(task)
+        db.session.commit()
 
-    return "success", 201
+        return {task.id: task.to_dict()}, 201
+    else:
+        return validation_errors_to_error_messages(form.errors), 400
