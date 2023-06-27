@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import db, Task, Board
+from app.forms import TaskForm
 
 task_routes = Blueprint("tasks", __name__)
 
@@ -48,3 +49,19 @@ def dragged_task_different():
     db.session.commit()
 
     return {"message": "success"}, 201
+
+@task_routes('/<int:cardId>', methods=["POST"])
+@login_required
+def create_task(cardId):
+
+    form = TaskForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate():
+        task = Task(
+            details=form.data["details"],
+            card_id=form.data["cardId"]
+        )
+
+
+    return "success", 201
