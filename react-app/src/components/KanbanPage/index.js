@@ -153,7 +153,7 @@ function KanbanPage() {
                                                             {...provided.draggableProps}
                                                         >
                                                             {/* <h4 {...provided.dragHandleProps}>{column.category}</h4> */}
-                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} />
+                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} setColumns={setColumns} />
                                                             <div className="card">
                                                                 <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
                                                                 <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>

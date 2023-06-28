@@ -49,3 +49,23 @@ def update_category(cardId):
 
 
     return{card.board_id:{card.order: card.to_dict()}}, 201
+
+@card_routes.route('/<int:cardId>', methods=["DELETE"])
+@login_required
+def delete_card(cardId):
+
+    card = Card.query.get(cardId)
+
+    if not card:
+        return {"error": "Card not found..."}, 404
+    
+    if (current_user.id != card.board.project.owner_id):
+        return {"error": "Unauthorized"}, 401
+    
+    db.session.delete(card)
+    db.session.commit()
+
+    return {"message" : "Column successfully deleted"}, 200
+
+
+

@@ -45,19 +45,36 @@
 }
 
 .card-category {
-  width: 75%;
+  width: 100%;
   font-size: 1.1rem;
   background-color: transparent;
   border: none;
   color: var(--main-pink);
   font-weight: bold;
-  cursor: pointer;
+  cursor: drag;
 }
+
+.delete-category {
+  font-size: 0.8rem;
+  color: red;
+  cursor: pointer;
+  opacity: 0.9;
+  font-weight: bold;
+  text-align: center;
+}
+
+.delete-category:hover {
+  background-color: #3d3e40;
+}
+
+.category-container {
+  width: 75%;
+}
+
 .card-category:focus-visible {
   box-shadow: var(--main-pink) 0.07rem 0.07rem 0.15rem;
-  outline: var(--main-pink) .01rem solid;
-  padding: .2rem .5rem;
-  cursor: text;
+  outline: var(--main-pink) 0.01rem solid;
+  padding: 0.2rem 0.5rem;
 }
 
 .add-task {

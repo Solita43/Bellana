@@ -45,6 +45,18 @@ export const categoryUpdate = (cardId, category) => async (dispatch) => {
     }
 }
 
+export const deleteCard = (cardId) => async (dispatch) => {
+    const res = await fetch(`/api/cards/${cardId}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+        return data
+    }
+}
+
 
 const initialState = {};
 
