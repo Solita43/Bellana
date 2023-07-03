@@ -16,7 +16,8 @@
   flex-grow: 0.2;
 }
 
-.column-area {
+.column-area,
+.add-section {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -63,9 +64,6 @@
   text-align: center;
 }
 
-.delete-category:hover {
-  background-color: #3d3e40;
-}
 
 .category-container {
   width: 75%;

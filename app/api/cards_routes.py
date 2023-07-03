@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import db, Board, Card
+from app.forms import CardForm
 
 card_routes = Blueprint("cards", __name__)
 
@@ -66,6 +67,28 @@ def delete_card(cardId):
     db.session.commit()
 
     return {"message" : "Column successfully deleted"}, 200
+
+@card_routes.route('/', methods=["POST"])
+@login_required
+def create_card():
+
+    print("HERE 🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬")
+
+    form = CardForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate():
+        column = Card(
+            category=form.data["category"],
+            board_id=form.data["boardId"],
+            order=form.data["order"]
+        )
+
+        db.session.add(column)
+        db.session.commit()
+
+        
+    return {column.order: column.to_dict()}, 201
 
 
 

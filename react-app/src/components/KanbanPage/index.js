@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { orderUpdate, cardsGet } from "../../store/cards";
+import { orderUpdate, cardsGet, cardPost } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 import BoardDropdown from "./BoardDropdown";
@@ -13,25 +13,23 @@ import CategoryInputHeader from "./CategoryInputHeader";
 function KanbanPage() {
     const { boardId, projectId } = useParams();
     const boards = useSelector(state => state.boards);
-    const cards = useSelector(state => state.cards[boardId]);
+    const cards = useSelector(state => state.cards);
     const tasks = useSelector(state => state.boardTasks)
     const [board, setBoard] = useState(null);
     const dispatch = useDispatch();
     const [columnOrder, setColumnOrder] = useState(null);
     const [columns, setColumns] = useState(null);
     const [tasksOrders, setTasksOrders] = useState(null);
+    const [newCategory, setNewCategory] = useState("");
+    const [inFocus, setInFocus] = useState(false);
 
     useEffect(() => {
         dispatch(boardTasksGet(boardId))
         dispatch(cardsGet(boardId)).then(data => {
-            setColumnOrder(Object.values(data[boardId]).map(column => column.id));
-            setColumns(Object.values(data[boardId]))
             const tasks = {}
             for (let column of Object.values(data[boardId])) {
                 tasks[column.id] = Object.values(column.tasks).map(task => task.id);
             }
-
-
             setTasksOrders(tasks)
         })
         return () => {
@@ -42,13 +40,22 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
+        if (!Object.values(cards).length) return
+        setColumnOrder(Object.values(cards[boardId]).map(column => column.id));
+        setColumns(Object.values(cards[boardId]))
+    }, [cards])
+
+    useEffect(() => {
         if (!Object.values(boards).length) return
         // Grab the board
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
 
-    const handleClick = (e) => {
+    useEffect(() => {
+        if (inFocus) document.getElementById("add-section").focus()
+    }, [inFocus])
 
+    const handleClick = (e) => {
         e.preventDefault();
         window.alert("Feature Coming Soon...")
     }
@@ -108,7 +115,7 @@ function KanbanPage() {
 
                 setTasksOrders(newTasksOrder)
 
-                const tasks = {[source.droppableId]:{}, [destination.droppableId]:{}}
+                const tasks = { [source.droppableId]: {}, [destination.droppableId]: {} }
                 for (let id in taskArraySource) {
                     tasks[source.droppableId][taskArraySource[id]] = id
                 }
@@ -124,6 +131,25 @@ function KanbanPage() {
             }
         }
 
+    };
+
+    const handleInputBlur = () => {
+        // Send the updated information to the database
+        setInFocus(false)
+        if (newCategory.trim().length < 2) return
+        else {
+            dispatch(cardPost({
+                category: newCategory,
+                boardId,
+                order: columns.length
+            }))
+        }
+    };
+
+    const handleInputKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.target.blur();
+        }
     };
 
     if (!board || !cards || !columnOrder || !columns || !tasksOrders || !tasks) return null;
@@ -165,6 +191,25 @@ function KanbanPage() {
 
                                         )
                                     })}
+                                    {columns.length < 4 && (
+                                        <div className="add-section">
+                                            <div className="category-container">
+                                                {inFocus ? <input
+                                                    type="text"
+                                                    value={newCategory}
+                                                    maxLength={20}
+                                                    onChange={(e) => setNewCategory(e.target.value)}
+                                                    onBlur={handleInputBlur}
+                                                    onKeyPress={handleInputKeyPress}
+                                                    className="card-category"
+                                                    id="add-section"
+                                                    placeholder="New Column"
+
+                                                /> :
+                                                    (<h4 style={{ cursor: "pointer" }} onClick={() => setInFocus(true)} ><i className="fa-solid fa-plus"></i> Add Section</h4>)}
+                                            </div>
+                                        </div>
+                                    )}
                                     {provided.placeholder}
                                 </div>
                             )
