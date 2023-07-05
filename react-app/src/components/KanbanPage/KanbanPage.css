@@ -26,6 +26,8 @@
   width: 25%;
   padding: 0.6rem;
   border-radius: 0.4rem;
+  background-color: var(--white-background);
+
 }
 
 .column-area:hover {
@@ -43,6 +45,7 @@
   background-color: transparent;
   color: var(--white-background);
   border-radius: 0.3rem;
+
 }
 
 .card-category {

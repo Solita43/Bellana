@@ -3,7 +3,7 @@ import { categoryUpdate, deleteCard } from '../../store/cards';
 import { useDispatch } from 'react-redux';
 
 
-function CategoryInputHeader({ column, props, columns, setColumns }) {
+function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrder }) {
     const [category, setCategory] = useState(column.category);
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
@@ -21,10 +21,25 @@ function CategoryInputHeader({ column, props, columns, setColumns }) {
     };
 
     const handleDelete = () => {
-        dispatch(deleteCard(column.id))
-        const newColumns = [...columns];
-        newColumns.splice(column.order, 1)
-        setColumns(newColumns);
+         // Copy the order array for columns
+         const newOrder = [...columnOrder];
+         // Remove the id
+         newOrder.splice(column.order, 1);
+         console.log(column.order)
+         // Set the new order of the columns so the frontend stays updated while the database updates
+         setColumnOrder(newOrder)
+         console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", newOrder)
+
+
+         // Create an object with the new position as the key and the column id as the value to send to the api.
+         const columns = {}
+         for (let id in newOrder) {
+             console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", id)
+             columns[id] = newOrder[id]
+         }
+
+        dispatch(deleteCard(column.id, columns))
+
     }
 
     useEffect(() => {

@@ -51,14 +51,18 @@ export const categoryUpdate = (cardId, category) => async (dispatch) => {
     }
 }
 
-export const deleteCard = (cardId) => async (dispatch) => {
+export const deleteCard = (cardId, columns) => async (dispatch) => {
     const res = await fetch(`/api/cards/${cardId}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(columns)
     })
 
     const data = await res.json()
 
-    if (!res.ok) {
+    if (res.ok) {
+        console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", data)
+        dispatch(getCards(data))
         return data
     }
 }
@@ -89,9 +93,6 @@ export default function reducer(state = initialState, action) {
             return {...state, ...action.payload}
         case CREATE_CARD:
             const newState = {...state, [action.payload.boardId]: {...state[action.payload.boardId], ...action.payload.card}}
-            console.log(state === newState)
-
-
             return newState
         default:
             return state;

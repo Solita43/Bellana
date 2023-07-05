@@ -22,6 +22,7 @@ function KanbanPage() {
     const [tasksOrders, setTasksOrders] = useState(null);
     const [newCategory, setNewCategory] = useState("");
     const [inFocus, setInFocus] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         dispatch(boardTasksGet(boardId))
@@ -135,14 +136,19 @@ function KanbanPage() {
 
     const handleInputBlur = () => {
         // Send the updated information to the database
-        setInFocus(false)
-        if (newCategory.trim().length < 2) return
+        if (newCategory.trim().length === 1) {
+            setError("Must be 2 or more characters.");
+            document.getElementById("add-section").focus()
+            return
+        }
         else {
+            setError('')
+            setInFocus(false)
             dispatch(cardPost({
                 category: newCategory,
                 boardId,
                 order: columns.length
-            }))
+            })).then(() => setNewCategory(""))
         }
     };
 
@@ -166,7 +172,7 @@ function KanbanPage() {
                     <Droppable droppableId="column-droppable" direction="horizontal" type="card" >
                         {(provided) => {
                             return (
-                                <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
+                                <div className="card-container" ref={provided.innerRef} {...provided.droppableProps}>
                                     {columnOrder.length && columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
                                         if (!column) return null;
@@ -178,11 +184,9 @@ function KanbanPage() {
                                                         <div className="column-area" key={column.id} ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                         >
-                                                            {/* <h4 {...provided.dragHandleProps}>{column.category}</h4> */}
-                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} setColumns={setColumns} />
+                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
                                                                 <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
-                                                                <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
                                                             </div>
                                                         </div>
                                                     )
@@ -198,6 +202,7 @@ function KanbanPage() {
                                                     type="text"
                                                     value={newCategory}
                                                     maxLength={20}
+                                                    minLength={2}
                                                     onChange={(e) => setNewCategory(e.target.value)}
                                                     onBlur={handleInputBlur}
                                                     onKeyPress={handleInputKeyPress}
@@ -208,6 +213,7 @@ function KanbanPage() {
                                                 /> :
                                                     (<h4 style={{ cursor: "pointer" }} onClick={() => setInFocus(true)} ><i className="fa-solid fa-plus"></i> Add Section</h4>)}
                                             </div>
+                                            {error && <p className="errors" style={{textAlign: "left"}}>* {error}</p>}
                                         </div>
                                     )}
                                     {provided.placeholder}

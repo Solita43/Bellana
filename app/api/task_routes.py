@@ -68,7 +68,8 @@ def create_task(cardId):
         task = Task(
             details=form.data["details"],
             board_id=card.board_id,
-            user_id=current_user.id
+            user_id=current_user.id,
+            order=len(card.tasks)
         )
 
         card.tasks.append(task)

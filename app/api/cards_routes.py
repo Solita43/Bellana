@@ -55,18 +55,26 @@ def update_category(cardId):
 @login_required
 def delete_card(cardId):
 
-    card = Card.query.get(cardId)
+    deleting = Card.query.get(cardId)
+    board = deleting.board
 
-    if not card:
+    if not deleting:
         return {"error": "Card not found..."}, 404
     
-    if (current_user.id != card.board.project.owner_id):
+    if (current_user.id != deleting.board.project.owner_id):
         return {"error": "Unauthorized"}, 401
     
-    db.session.delete(card)
+    data = request.get_json()
+
+    db.session.delete(deleting)
+
+    for key,value in data.items():
+        card = Card.query.get(value)
+        card.order = key
+    
     db.session.commit()
 
-    return {"message" : "Column successfully deleted"}, 200
+    return {board.id: {card.order: card.to_dict() for card in board.cards}}, 200
 
 @card_routes.route('/', methods=["POST"])
 @login_required
