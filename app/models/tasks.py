@@ -10,7 +10,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     details = db.Column(db.String(255), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("cards.id")), nullable=False)
-    status = db.Column(db.String, nullable=False, default="Not started")
+    status = db.Column(db.String, default="Not started")
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     board_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("boards.id")), nullable=False)
     order = db.Column(db.Integer, nullable=False)
