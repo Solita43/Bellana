@@ -43,9 +43,8 @@
   font-size: 0.8rem;
 }
 
-
 .nav-board-list {
-  padding: 0.5rem 1rem .3rem .5rem;
+  padding: 0.5rem 1rem 0.3rem 0.5rem;
 }
 
 .board-list-name:hover,
@@ -78,7 +77,7 @@
   gap: 0.5rem;
   align-items: center;
   cursor: pointer;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .dd-project-side-nav {
@@ -90,13 +89,12 @@
 .user-nav {
   box-shadow: var(--dull-white) 0 0.01rem;
   flex-direction: column;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 
 .dropdown {
   position: absolute;
-  top: 106%;
-  right: 2%;
+  left: 0;
   box-shadow: var(--dull-white) 0 0 0.2rem;
   background-color: var(--background-color);
   opacity: 1;

@@ -45,7 +45,6 @@ function SideNav() {
                     return (
                         <li className="board-list-name" key={board.id} onClick={() => history.push(`/project/${projectId}/${board.id}`)}>
                             {board.name}
-
                         </li>
                     )
                 })}

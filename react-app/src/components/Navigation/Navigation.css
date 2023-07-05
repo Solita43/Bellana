@@ -26,10 +26,10 @@
   width: 100%;
   border-bottom: 0.07rem var(--main-pink) solid;
   /* box-shadow: var(--main-pink) 0 0 .5rem; */
-  padding: 1rem 2rem;
+  padding: .6rem 2rem;
   list-style: none;
   align-items: center;
-  height: 10%;
+  max-height: fit-content;
   background-color: var(--background-color);
   z-index: 1;
   position: relative;
@@ -81,7 +81,6 @@
 
 .create-project-button {
   border: none;
-  box-shadow: var(--dull-white) 0 0 .2rem;
   background-color: transparent;
   color: var(--white-background);
   cursor: pointer;
@@ -91,7 +90,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .3rem
+  gap: .3rem;
+  opacity: .9;
+}
+
+.create-project-button:hover {
+  box-shadow: var(--dull-white) 0 0 .2rem;
+  opacity: 1;
+  font-weight: bold;
+  
 }
 
 .nav-plus {

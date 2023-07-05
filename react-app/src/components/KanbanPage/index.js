@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { orderUpdate, cardsGet } from "../../store/cards";
+import { orderUpdate, cardsGet, cardPost } from "../../store/cards";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './KanbanPage.css'
 import BoardDropdown from "./BoardDropdown";
 import TaskDrag from "./TaskDrag";
 import { taskOrderUpdate } from "../../store/myTasks";
 import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
+import CategoryInputHeader from "./CategoryInputHeader";
 
 function KanbanPage() {
     const { boardId, projectId } = useParams();
     const boards = useSelector(state => state.boards);
-    const cards = useSelector(state => state.cards[boardId]);
+    const cards = useSelector(state => state.cards);
     const tasks = useSelector(state => state.boardTasks)
     const [board, setBoard] = useState(null);
     const dispatch = useDispatch();
     const [columnOrder, setColumnOrder] = useState(null);
     const [columns, setColumns] = useState(null);
     const [tasksOrders, setTasksOrders] = useState(null);
+    const [newCategory, setNewCategory] = useState("");
+    const [inFocus, setInFocus] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         dispatch(boardTasksGet(boardId))
         dispatch(cardsGet(boardId)).then(data => {
-            setColumnOrder(Object.values(data[boardId]).map(column => column.id));
-            setColumns(Object.values(data[boardId]))
             const tasks = {}
             for (let column of Object.values(data[boardId])) {
                 tasks[column.id] = Object.values(column.tasks).map(task => task.id);
             }
-
-
             setTasksOrders(tasks)
         })
         return () => {
@@ -41,13 +41,22 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
+        if (!Object.values(cards).length) return
+        setColumnOrder(Object.values(cards[boardId]).map(column => column.id));
+        setColumns(Object.values(cards[boardId]))
+    }, [cards])
+
+    useEffect(() => {
         if (!Object.values(boards).length) return
         // Grab the board
         setBoard(boards[projectId][boardId])
     }, [boards, projectId, boardId])
 
-    const handleClick = (e) => {
+    useEffect(() => {
+        if (inFocus) document.getElementById("add-section").focus()
+    }, [inFocus])
 
+    const handleClick = (e) => {
         e.preventDefault();
         window.alert("Feature Coming Soon...")
     }
@@ -78,7 +87,7 @@ function KanbanPage() {
                 columns[id] = newOrder[id]
             }
 
-            return dispatch(orderUpdate(boardId, columns));
+            return dispatch(orderUpdate(columns));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {
@@ -107,7 +116,7 @@ function KanbanPage() {
 
                 setTasksOrders(newTasksOrder)
 
-                const tasks = {[source.droppableId]:{}, [destination.droppableId]:{}}
+                const tasks = { [source.droppableId]: {}, [destination.droppableId]: {} }
                 for (let id in taskArraySource) {
                     tasks[source.droppableId][taskArraySource[id]] = id
                 }
@@ -125,6 +134,30 @@ function KanbanPage() {
 
     };
 
+    const handleInputBlur = () => {
+        // Send the updated information to the database
+        if (newCategory.trim().length === 1) {
+            setError("Must be 2 or more characters.");
+            document.getElementById("add-section").focus()
+            return
+        }
+        else {
+            setError('')
+            setInFocus(false)
+            dispatch(cardPost({
+                category: newCategory,
+                boardId,
+                order: columns.length
+            })).then(() => setNewCategory(""))
+        }
+    };
+
+    const handleInputKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.target.blur();
+        }
+    };
+
     if (!board || !cards || !columnOrder || !columns || !tasksOrders || !tasks) return null;
 
     return (
@@ -139,7 +172,7 @@ function KanbanPage() {
                     <Droppable droppableId="column-droppable" direction="horizontal" type="card" >
                         {(provided) => {
                             return (
-                                <div className="card-container" ref={provided.innerRef} {...provided.droppableProps} >
+                                <div className="card-container" ref={provided.innerRef} {...provided.droppableProps}>
                                     {columnOrder.length && columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
                                         if (!column) return null;
@@ -151,10 +184,9 @@ function KanbanPage() {
                                                         <div className="column-area" key={column.id} ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                         >
-                                                            <h4 className="card-category"{...provided.dragHandleProps}>{column.category}</h4>
+                                                            <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
                                                                 <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
-                                                                <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
                                                             </div>
                                                         </div>
                                                     )
@@ -163,6 +195,27 @@ function KanbanPage() {
 
                                         )
                                     })}
+                                    {columns.length < 4 && (
+                                        <div className="add-section">
+                                            <div className="category-container">
+                                                {inFocus ? <input
+                                                    type="text"
+                                                    value={newCategory}
+                                                    maxLength={20}
+                                                    minLength={2}
+                                                    onChange={(e) => setNewCategory(e.target.value)}
+                                                    onBlur={handleInputBlur}
+                                                    onKeyPress={handleInputKeyPress}
+                                                    className="card-category"
+                                                    id="add-section"
+                                                    placeholder="New Column"
+
+                                                /> :
+                                                    (<h4 style={{ cursor: "pointer" }} onClick={() => setInFocus(true)} ><i className="fa-solid fa-plus"></i> Add Section</h4>)}
+                                            </div>
+                                            {error && <p className="errors" style={{textAlign: "left"}}>* {error}</p>}
+                                        </div>
+                                    )}
                                     {provided.placeholder}
                                 </div>
                             )

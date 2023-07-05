@@ -15,16 +15,16 @@ def seed_tasks():
     # Tasks for board 1 in progress category
     inprogress_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Progress').first()
 
-    tasks_inprogress_board_1 = [Task(details='Refactoring database structure', user_id=2, order=0, board_id=1),
-                             Task(details='Implementing payment gateway', user_id=2, order=1, board_id=1)]
+    tasks_inprogress_board_1 = [Task(details='Refactoring database structure', user_id=2, order=0, board_id=1, status='in progress'),
+                             Task(details='Implementing payment gateway', user_id=2, order=1, board_id=1, status='in progress')]
 
     [inprogress_board_1.tasks.append(task) for task in tasks_inprogress_board_1]
 
     # Tasks for board 1 in review category
     inreview_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Review').first()
 
-    tasks_inreview_board_1 = [Task(details='Test cases for new feature', user_id=2, order=0, board_id=1),
-                             Task(details='Cross-browser compatibility testing', user_id=2, order=1, board_id=1)]
+    tasks_inreview_board_1 = [Task(details='Test cases for new feature', user_id=2, order=0, board_id=1, status='in progress'),
+                             Task(details='Cross-browser compatibility testing', user_id=2, order=1, board_id=1, status='complete')]
 
     [inreview_board_1.tasks.append(task) for task in tasks_inreview_board_1]
 
