@@ -109,7 +109,6 @@ function TaskDrag({ taskOrder, column }) {
                                                     <div className={task.status === "complete" ? "task-complete" : "not-complete"}>
                                                         <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
                                                             e.stopPropagation()
-                                                            console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", e)
                                                             changeStatus(task.id)
                                                         }}></i>
                                                     </div>
