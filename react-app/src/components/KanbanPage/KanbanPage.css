@@ -6,7 +6,7 @@
 }
 
 .card-info-wrapper {
-  height: 100%;
+  height: max-content;
   /* min-height: 5rem; */
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   padding: 0.4rem;
   border-radius: 0.5rem;
   flex-grow: 0.2;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .column-area,
@@ -92,7 +92,9 @@
   color: var(--background-color);
   padding: 0.3rem;
   opacity: 0.7;
-  width: 100%;
+  width: 95%;
+  margin: auto;
+  margin-top: .5rem;
 }
 
 .add-task:hover {
@@ -101,7 +103,8 @@
 }
 
 .kanban-task-container {
-  width: 100%;
+  width: 95%;
+  margin: auto;
   align-self: center;
   cursor: pointer;
   padding: 0.6rem;
@@ -138,4 +141,10 @@
   background-color: transparent;
   border: none;
   box-shadow: none;
+  width: 80%;
+}
+.scroll-wrapper {
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
 }

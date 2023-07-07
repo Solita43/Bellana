@@ -22,7 +22,7 @@ function TaskDrag({ taskOrder, column }) {
 
     const handleInputBlur = () => {
         // Send the updated information to the database
-        if (!setNewTask) return 
+        if (!setNewTask) return
         else {
             dispatch(taskPost({
                 details: newTask,
@@ -32,7 +32,7 @@ function TaskDrag({ taskOrder, column }) {
                 setInFocus(false)
                 setNewTask("")
             })
-            
+
         }
     };
 
@@ -51,7 +51,20 @@ function TaskDrag({ taskOrder, column }) {
                             <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)', paddingTop: "0" }}>
                                 {provided.placeholder}
                             </div>
-                            <button className="add-task" onClick={handleClick}><i className="fa-solid fa-plus"></i> Add new task</button>
+                            {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
+                            type="text"
+                            value={newTask}
+                            maxLength={20}
+                            minLength={1}
+                            onChange={(e) => setNewTask(e.target.value)}
+                            onBlur={handleInputBlur}
+                            onKeyPress={handleInputKeyPress}
+                            className="task-details"
+                            id="add-task"
+                            placeholder="New Task"
+
+                        /></div>) : null}
+                            <button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>
                         </>
                     )
                 }}
@@ -63,7 +76,7 @@ function TaskDrag({ taskOrder, column }) {
         <Droppable droppableId={`${column}`} type="task">
             {(provided, snapshot) => {
                 return (
-                    <>
+                    <div class="scroll-wrapper">
                         <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)' }}>
                             {taskOrder.length && taskOrder.map((taskId, index) => {
                                 const task = tasks[taskId];
@@ -81,10 +94,12 @@ function TaskDrag({ taskOrder, column }) {
                                     </Draggable>
                                 )
                             })}
+                            {provided.placeholder}
+                        </div>
                         {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
                             type="text"
                             value={newTask}
-                            maxLength={20}
+                            maxLength={255}
                             minLength={1}
                             onChange={(e) => setNewTask(e.target.value)}
                             onBlur={handleInputBlur}
@@ -96,9 +111,7 @@ function TaskDrag({ taskOrder, column }) {
                         /></div>) : null}
 
                         <button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>
-                            {provided.placeholder}
-                        </div>
-                    </>
+                    </div>
                 )
             }}
 
