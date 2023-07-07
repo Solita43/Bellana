@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost, taskStatus } from "../../store/boardTasks";
+import Portal from "../Portal";
 
 function TaskDrag({ taskOrder, column }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
     const tasks = useSelector(state => state.boardTasks)
+    const [coords, setCoords] = useState({}); // takes current button coordinates
+    const [isOn, setOn] = useState(false); // toggles button visibility
 
     const dispatch = useDispatch();
 
@@ -47,10 +50,10 @@ function TaskDrag({ taskOrder, column }) {
     const changeStatus = (taskId) => {
         dispatch(taskStatus(taskId)).then(data => {
             if (data) {
-                const err = {...errors}
+                const err = { ...errors }
                 err.status = data.error
                 setErrors(err)
-            } 
+            }
         })
     }
 
@@ -120,15 +123,36 @@ function TaskDrag({ taskOrder, column }) {
                                                         }}></i>
                                                     </div>
                                                     <p className="task-details"> {task.details}</p>
-                                                    <button id={`ellipse-${task.id}`} className="hidden" onClick={handleClick}>
+                                                    <button id={`ellipse-${task.id}`} className="hidden" onClick={e => {
+                                                        e.stopPropagation()
+                                                        const rect = e.target.getBoundingClientRect();
+                                                        setCoords({
+                                                            left: rect.x - 7,
+                                                            top: rect.y + 20
+                                                        });
+                                                        setOn(!isOn); // [ 3 ]
+                                                    }}>
                                                         <i className="fa-solid fa-ellipsis"></i>
                                                     </button>
+
                                                 </div>
                                             </div>
                                         )}
                                     </Draggable>
                                 )
                             })}
+                            {
+                                isOn &&
+                                <Portal>
+                                    <div className="task-dropdown" style={{ top: coords.top, left: coords.left, zIndex: '3', position: 'absolute' }}>
+                                        <ul>
+                                            <li className="task-li">
+                                                <i className="fa-solid fa-pen"></i> Edit Task
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </Portal>
+                            }
                             {provided.placeholder}
                         </div>
                         {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
