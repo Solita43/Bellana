@@ -47,6 +47,7 @@ export const taskPost = (task, cardId) => async (dispatch) => {
 
     if (res.ok) {
         dispatch(addTask(data));
+        return data
     } else {
         return data;
     }

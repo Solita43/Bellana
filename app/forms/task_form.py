@@ -19,6 +19,6 @@ def valid_status(form, field):
 
 
 class TaskForm(FlaskForm):
-    details = StringField("details", validators=[DataRequired(), user_exists])
-    status = IntegerField("status", validators=[DataRequired(), valid_status])
-    userId = StringField("userId", validators=[DataRequired()])
+    details = StringField("details", validators=[DataRequired()])
+    status = StringField("status", validators=[DataRequired(), valid_status])
+    # userId = StringField("userId", validators=[DataRequired()])
