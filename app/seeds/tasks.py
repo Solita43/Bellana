@@ -15,7 +15,7 @@ def seed_tasks():
     # Tasks for board 1 in progress category
     inprogress_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Progress').first()
 
-    tasks_inprogress_board_1 = [Task(details='Create a task', user_id=2, order=0, board_id=1, status='in progress')]
+    tasks_inprogress_board_1 = [Task(details='Create a task', user_id=2, order=0, board_id=1)]
 
     [inprogress_board_1.tasks.append(task) for task in tasks_inprogress_board_1]
 

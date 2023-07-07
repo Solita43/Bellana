@@ -43,6 +43,10 @@ function TaskDrag({ taskOrder, column }) {
         }
     };
 
+    const changeStatus = (taskId) => {
+
+    }
+
     if (!tasks || !taskOrder || !taskOrder.length) {
         return (
             <Droppable droppableId={`${column}`} type="task">
@@ -101,10 +105,19 @@ function TaskDrag({ taskOrder, column }) {
                                                         buttonbox.className = "hidden"
                                                     }
                                                 }}>
-                                                <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
-                                                <button id={`ellipse-${task.id}`} className="hidden" onClick={handleClick}>
-                                                    <i className="fa-solid fa-ellipsis"></i>
-                                                </button>
+                                                <div className="task-details">
+                                                    <div className={task.status === "complete" ? "task-complete" : "not-complete"}>
+                                                        <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", e)
+                                                            changeStatus(task.id)
+                                                        }}></i>
+                                                    </div>
+                                                    <p > {task.details}</p>
+                                                    <button id={`ellipse-${task.id}`} className="hidden" onClick={handleClick}>
+                                                        <i className="fa-solid fa-ellipsis"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         )}
                                     </Draggable>

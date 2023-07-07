@@ -13,7 +13,7 @@ def user_exists(form, field):
 def valid_status(form, field):
     # Checking if user exists
     status = field.data
-    options = ['Not started', 'in progress', 'complete']
+    options = ['Not Complete', 'complete']
     if status not in options:
         raise ValidationError('That is not a valid status. Please choose from Not started, in progress, or complete')
 

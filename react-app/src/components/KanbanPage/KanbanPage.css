@@ -125,6 +125,10 @@
   color: var(--dull-white);
   word-wrap: break-word;
   font-size: 0.8rem;
+  word-break: break-all;
+  display: flex;
+  gap: .3rem;
+  align-items: center;
 }
 
 .board-purpose-nav {
@@ -175,4 +179,37 @@
 .task-ellipse:hover {
   background-color: #454547;
 
+}
+
+.fa-circle-check {
+  cursor: pointer;
+}
+
+.task-complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  color: whitesmoke;
+  border-radius: 50%;
+  width: .9rem;
+  height: .9rem;
+  font-size: .6rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.not-complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--dull-white);
+  border-radius: 50%;
+  border: solid .1rem var(--dull-white);
+  width: .9rem;
+  height: .9rem;
+  font-size: .5rem;
+  font-weight: bold;
+  cursor: pointer;
 }
