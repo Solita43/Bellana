@@ -49,7 +49,7 @@ def update_category(cardId):
     print("card end 🦄🦄🦄🦄🦄🦄 ", card.to_dict())
 
 
-    return{card.board_id:{card.order: card.to_dict()}}, 201
+    return card.to_dict(), 201
 
 @card_routes.route('/<int:cardId>', methods=["DELETE"])
 @login_required

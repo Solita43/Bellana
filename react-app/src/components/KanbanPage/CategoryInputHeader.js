@@ -65,8 +65,9 @@ function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrd
     const handleInputBlur = () => {
         if (category === column.category) return setInFocus(false);
         // Send the updated information to the database
-        dispatch(categoryUpdate(column.id, { category }))
-        setInFocus(false)
+        dispatch(categoryUpdate(column.id, { category })).then(() => {
+            setInFocus(false)
+        })
     };
 
     const handleInputKeyPress = (event) => {

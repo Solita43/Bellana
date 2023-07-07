@@ -77,7 +77,7 @@ function TaskDrag({ taskOrder, column }) {
         <Droppable droppableId={`${column}`} type="task">
             {(provided, snapshot) => {
                 return (
-                    <div class="scroll-wrapper">
+                    <div className="scroll-wrapper">
                         <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)' }}>
                             {taskOrder.length && taskOrder.map((taskId, index) => {
                                 const task = tasks[taskId];
