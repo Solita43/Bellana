@@ -63,6 +63,7 @@ def create_task(cardId):
 
     form = TaskForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
+    form["status"].data = "Not started"
 
     if form.validate():
         task = Task(
