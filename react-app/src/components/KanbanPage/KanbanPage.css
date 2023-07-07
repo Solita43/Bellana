@@ -112,7 +112,9 @@
   background-color: #2a2e31;
   box-shadow: var(--background-color) 0 0 0.5rem;
   border-radius: 0.3rem;
+  position: relative;
 }
+
 
 .kanban-task-container:hover {
   border: solid var(--main-pink) 0.01rem;
@@ -147,4 +149,30 @@
   height: 100%;
   overflow-y: scroll;
   width: 100%;
+}
+
+.task-ellipse {
+  display: flex;
+  position: absolute;
+  width: auto;
+  height: auto;
+  align-items: center;
+  padding: .4rem;
+  justify-content: center;
+  background-color: transparent;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dull-white);
+  cursor: pointer;
+  border: none;
+  border-radius: .5rem;
+  box-shadow: var(--dull-white) 0rem 0rem .1rem;
+  z-index: 3;
+  margin: auto;
+}
+
+.task-ellipse:hover {
+  background-color: #454547;
+
 }

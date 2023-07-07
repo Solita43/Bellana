@@ -13,6 +13,7 @@ function TaskDrag({ taskOrder, column }) {
     const handleClick = (e) => {
 
         e.preventDefault();
+        e.stopPropagation()
         window.alert("Feature Coming Soon...")
     }
 
@@ -52,18 +53,18 @@ function TaskDrag({ taskOrder, column }) {
                                 {provided.placeholder}
                             </div>
                             {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
-                            type="text"
-                            value={newTask}
-                            maxLength={20}
-                            minLength={1}
-                            onChange={(e) => setNewTask(e.target.value)}
-                            onBlur={handleInputBlur}
-                            onKeyPress={handleInputKeyPress}
-                            className="task-details"
-                            id="add-task"
-                            placeholder="New Task"
+                                type="text"
+                                value={newTask}
+                                maxLength={20}
+                                minLength={1}
+                                onChange={(e) => setNewTask(e.target.value)}
+                                onBlur={handleInputBlur}
+                                onKeyPress={handleInputKeyPress}
+                                className="task-details"
+                                id="add-task"
+                                placeholder="New Task"
 
-                        /></div>) : null}
+                            /></div>) : null}
                             <button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>
                         </>
                     )
@@ -87,8 +88,23 @@ function TaskDrag({ taskOrder, column }) {
                                             <div key={task.id} className="kanban-task-container" ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
-                                                onClick={handleClick}>
+                                                onClick={handleClick}
+                                                onMouseOver={() => {
+                                                    const buttonbox = document.getElementById(`ellipse-${task.id}`);
+                                                    if (buttonbox) {
+                                                        buttonbox.className = "task-ellipse"
+                                                    }
+                                                }}
+                                                onMouseLeave={() => {
+                                                    const buttonbox = document.getElementById(`ellipse-${task.id}`);
+                                                    if (buttonbox) {
+                                                        buttonbox.className = "hidden"
+                                                    }
+                                                }}>
                                                 <p className="task-details"><i className="fa-regular fa-circle-check"></i> {task.details}</p>
+                                                <button id={`ellipse-${task.id}`} className="hidden" onClick={handleClick}>
+                                                    <i className="fa-solid fa-ellipsis"></i>
+                                                </button>
                                             </div>
                                         )}
                                     </Draggable>
