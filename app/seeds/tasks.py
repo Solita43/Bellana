@@ -6,33 +6,42 @@ def seed_tasks():
     
     # Tasks for board 1 backlog category
     backlog_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'backlog').first()
-    tasks_backlog_board_1 = [Task(details='User authentication feature', user_id=2, order=0, board_id=1),
-                             Task(details='API integration with third-party service', user_id=2, order=1, board_id=1),
-                             Task(details='Allow user to add and update profile picture', user_id=2, order=3, board_id=1)]
+    tasks_backlog_board_1 = [Task(details='Edit a task', user_id=2, order=0, board_id=1),
+                             Task(details='Delete a task', user_id=2, order=1, board_id=1),
+                             Task(details='Mark task as complete', user_id=2, order=3, board_id=1)]
 
     [backlog_board_1.tasks.append(task) for task in tasks_backlog_board_1]
 
     # Tasks for board 1 in progress category
     inprogress_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Progress').first()
 
-    tasks_inprogress_board_1 = [Task(details='Refactoring database structure', user_id=2, order=0, board_id=1, status='in progress'),
-                             Task(details='Implementing payment gateway', user_id=2, order=1, board_id=1, status='in progress')]
+    tasks_inprogress_board_1 = [Task(details='Create a task', user_id=2, order=0, board_id=1, status='in progress')]
 
     [inprogress_board_1.tasks.append(task) for task in tasks_inprogress_board_1]
 
     # Tasks for board 1 in review category
     inreview_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Review').first()
 
-    tasks_inreview_board_1 = [Task(details='Test cases for new feature', user_id=2, order=0, board_id=1, status='in progress'),
-                             Task(details='Cross-browser compatibility testing', user_id=2, order=1, board_id=1, status='complete')]
+    tasks_inreview_board_1 = [Task(details='Creating a column', user_id=2, order=0, board_id=1, status='complete'),
+                             Task(details='Deleting a column', user_id=2, order=1, board_id=1, status='complete'),
+                             Task(details='Dragging Tasks', user_id=2, order=2, board_id=1, status='complete')]
 
     [inreview_board_1.tasks.append(task) for task in tasks_inreview_board_1]
 
     # Tasks for board 1 deployed category
     deployed_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'Deployed').first()
 
-    tasks_deployed_board_1 = [Task(details='Release version 1.0', user_id=2, order=0, board_id=1),
-                             Task(details='Documentation updates', user_id=2, order=1, board_id=1)]
+    tasks_deployed_board_1 = [Task(details='Create a project', user_id=2, order=0, board_id=1),
+                             Task(details='Create a board', user_id=2, order=1, board_id=1),
+                             Task(details='Edit a project', user_id=2, order=2, board_id=1),
+                             Task(details='Edit a board', user_id=2, order=3, board_id=1),
+                             Task(details='Delete a project', user_id=2, order=4, board_id=1),
+                             Task(details='Delete a board', user_id=2, order=5, board_id=1),
+                             Task(details='Home dashboard with projects widget', user_id=2, order=6, board_id=1),
+                             Task(details='Projec dashboard', user_id=2, order=7, board_id=1),
+                             Task(details='Project resources section on dashboard', user_id=2, order=8, board_id=1),
+                             Task(details='Kanban columns for boards', user_id=2, order=9, board_id=1),
+                             Task(details='Drag and drop columns', user_id=2, order=10, board_id=1),]
 
     [deployed_board_1.tasks.append(task) for task in tasks_deployed_board_1]
 
