@@ -53,6 +53,20 @@ export const taskPost = (task, cardId) => async (dispatch) => {
     }
 }
 
+export const taskStatus = (taskId) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/status/${taskId}`, {
+        method: "PUT"
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(addTask(data));
+    } else {
+        return data
+    }
+}
+
 const initialState = {}
 
 export default function reducer(state = initialState, action) {

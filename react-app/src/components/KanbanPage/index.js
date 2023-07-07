@@ -44,7 +44,7 @@ function KanbanPage() {
         if (!Object.values(cards).length || !cards[boardId]) return
         setColumnOrder(Object.values(cards[boardId]).map(column => column.id));
         setColumns(Object.values(cards[boardId]))
-    }, [cards])
+    }, [cards, boardId])
 
     useEffect(() => {
         if (!Object.values(boards).length) return
