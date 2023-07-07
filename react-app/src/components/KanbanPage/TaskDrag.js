@@ -59,7 +59,7 @@ function TaskDrag({ taskOrder, column }) {
                             {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
                                 type="text"
                                 value={newTask}
-                                maxLength={20}
+                                maxLength={255}
                                 minLength={1}
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onBlur={handleInputBlur}
