@@ -10,8 +10,8 @@ def seed_tasks():
                              Task(details='Delete a task', user_id=2, order=1, board_id=1),
                              Task(details='Mark task as complete', user_id=2, order=3, board_id=1),
                              Task(details='View a Task', user_id=2, order=3, board_id=1),
-                             Task(details='Fix styling of user dropdown on nav', user_id=4, order=1, board_id=1),
-                             Task(details='Fix bug with updating a column category', user_id=5, order=1, board_id=1)]
+                             Task(details='Fix styling of user dropdown on nav', user_id=2, order=4, board_id=1),
+                             Task(details='Fix bug with updating a column category', user_id=2, order=5, board_id=1)]
 
     [backlog_board_1.tasks.append(task) for task in tasks_backlog_board_1]
 

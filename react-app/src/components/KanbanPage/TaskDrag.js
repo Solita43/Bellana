@@ -105,14 +105,14 @@ function TaskDrag({ taskOrder, column }) {
                                                         buttonbox.className = "hidden"
                                                     }
                                                 }}>
-                                                <div className="task-details">
-                                                    <div className={task.status === "complete" ? "task-complete" : "not-complete"}>
+                                                <div className="task-wrapper">
+                                                    <div className={task.status ? "task-complete" : "not-complete"}>
                                                         <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
                                                             e.stopPropagation()
                                                             changeStatus(task.id)
                                                         }}></i>
                                                     </div>
-                                                    <p > {task.details}</p>
+                                                    <p className="task-details"> {task.details}</p>
                                                     <button id={`ellipse-${task.id}`} className="hidden" onClick={handleClick}>
                                                         <i className="fa-solid fa-ellipsis"></i>
                                                     </button>

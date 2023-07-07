@@ -125,10 +125,15 @@
   color: var(--dull-white);
   word-wrap: break-word;
   font-size: 0.8rem;
-  word-break: break-all;
+  width: 85%
+  
+}
+
+.task-wrapper {
   display: flex;
   gap: .3rem;
   align-items: center;
+  flex-grow: 0;
 }
 
 .board-purpose-nav {
