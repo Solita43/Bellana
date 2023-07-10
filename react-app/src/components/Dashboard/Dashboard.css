@@ -2,7 +2,8 @@
   background-color: var(--background-color);
   color: whitesmoke;
   padding: 0 5rem;
-  min-height: 100vh;
+  min-height: 90vh;
+  max-height: 90vh;
   position: relative;
 }
 

@@ -9,7 +9,8 @@ def seed_tasks():
     tasks_backlog_board_1 = [Task(details='Delete a task', user_id=2, order=0, board_id=1),
                              Task(details='View a Task', user_id=2, order=1, board_id=1),
                              Task(details='Fix styling of user dropdown on nav', user_id=2, order=2, board_id=1),
-                             Task(details='Fix bug with updating a column category', user_id=2, order=3, board_id=1)]
+                             Task(details='Fix bug with updating a column category', user_id=2, order=3, board_id=1),
+                             Task(details='Create a portal for task menus', user_id=2, order=4, board_id=1)]
 
     [backlog_board_1.tasks.append(task) for task in tasks_backlog_board_1]
 

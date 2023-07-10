@@ -5,16 +5,23 @@
   padding: 1rem;
 }
 
+.task-main-container {
+  background-color: transparent;
+  width: 84%;
+  height: 100%;
+  max-height: 85.5vh;
+  position: relative;
+}
+
+
 .card-info-wrapper {
   height: max-content;
-  /* min-height: 5rem; */
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 0.4rem;
   border-radius: 0.5rem;
   flex-grow: 0.2;
-  /* overflow-y: scroll; */
 }
 
 .column-area,
@@ -28,7 +35,6 @@
   padding: 0.6rem;
   border-radius: 0.4rem;
   background-color: var(--white-background);
-
 }
 
 .column-area:hover {
@@ -41,12 +47,11 @@
   /* align-items: center; */
 
   width: 100%;
-  max-height: 80vh;
-  height: 80vh;
+  /* max-height: 100%; */
+  height: 75vh;
   background-color: transparent;
   color: var(--white-background);
   border-radius: 0.3rem;
-
 }
 
 .card-category {
@@ -67,7 +72,6 @@
   font-weight: bold;
   text-align: center;
 }
-
 
 .category-container {
   width: 75%;
@@ -94,7 +98,7 @@
   opacity: 0.7;
   width: 95%;
   margin: auto;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .add-task:hover {
@@ -115,7 +119,6 @@
   position: relative;
 }
 
-
 .kanban-task-container:hover {
   border: solid var(--main-pink) 0.01rem;
   box-shadow: var(--main-pink) 0 0 0.4rem;
@@ -125,13 +128,12 @@
   color: var(--dull-white);
   word-wrap: break-word;
   font-size: 0.8rem;
-  width: 85%
-  
+  width: 85%;
 }
 
 .task-wrapper {
   display: flex;
-  gap: .3rem;
+  gap: 0.3rem;
   align-items: center;
   flex-grow: 0;
 }
@@ -166,7 +168,7 @@
   width: auto;
   height: auto;
   align-items: center;
-  padding: .4rem;
+  padding: 0.4rem;
   justify-content: center;
   background-color: transparent;
   right: 5%;
@@ -175,15 +177,14 @@
   color: var(--dull-white);
   cursor: pointer;
   border: none;
-  border-radius: .5rem;
-  box-shadow: var(--dull-white) 0rem 0rem .1rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--dull-white) 0rem 0rem 0.1rem;
   z-index: 3;
   margin: auto;
 }
 
 .task-ellipse:hover {
   background-color: #454547;
-
 }
 
 .fa-circle-check {
@@ -197,9 +198,9 @@
   background-color: green;
   color: whitesmoke;
   border-radius: 50%;
-  width: .9rem;
-  height: .9rem;
-  font-size: .6rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  font-size: 0.6rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -211,10 +212,10 @@
   background-color: transparent;
   color: var(--dull-white);
   border-radius: 50%;
-  border: solid .1rem var(--dull-white);
-  width: .9rem;
-  height: .9rem;
-  font-size: .5rem;
+  border: solid 0.1rem var(--dull-white);
+  width: 0.9rem;
+  height: 0.9rem;
+  font-size: 0.5rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -223,16 +224,21 @@
   background-color: var(--background-color);
   color: var(--dull-white);
   box-shadow: var(--dull-white) 0 0 0.2rem;
-  border-radius: .2rem;
-  padding: .2rem 0;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0;
+  position: absolute;
 }
- 
+
 li:hover {
   background-color: #454547;
 }
 
 .task-li {
-  padding: .2rem .6rem;
+  padding: 0.2rem 0.6rem;
   cursor: pointer;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
+.task-menu {
+  position: relative;
+}
+

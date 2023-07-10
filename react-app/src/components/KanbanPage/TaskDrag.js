@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost, taskStatus } from "../../store/boardTasks";
 import Portal from "../Portal";
+import Task from "./Task";
 
-function TaskDrag({ taskOrder, column }) {
+function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
-    const tasks = useSelector(state => state.boardTasks)
-    const [coords, setCoords] = useState({}); // takes current button coordinates
-    const [isOn, setOn] = useState(false); // toggles button visibility
 
     const dispatch = useDispatch();
 
@@ -20,6 +18,7 @@ function TaskDrag({ taskOrder, column }) {
         e.stopPropagation()
         window.alert("Feature Coming Soon...")
     }
+    
 
     useEffect(() => {
         if (inFocus) document.getElementById("add-task").focus()
@@ -47,17 +46,10 @@ function TaskDrag({ taskOrder, column }) {
         }
     };
 
-    const changeStatus = (taskId) => {
-        dispatch(taskStatus(taskId)).then(data => {
-            if (data) {
-                const err = { ...errors }
-                err.status = data.error
-                setErrors(err)
-            }
-        })
-    }
+    
 
-    if (!tasks || !taskOrder || !taskOrder.length) {
+
+    if (!taskOrder || !taskOrder.length) {
         return (
             <Droppable droppableId={`${column}`} type="task">
                 {(provided, snapshot) => {
@@ -91,68 +83,35 @@ function TaskDrag({ taskOrder, column }) {
         <Droppable droppableId={`${column}`} type="task">
             {(provided, snapshot) => {
                 return (
-                    <div className="scroll-wrapper">
+                    <div className="scroll-wrapper" id="scroll-wrapper">
                         <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)' }}>
                             {taskOrder.length && taskOrder.map((taskId, index) => {
-                                const task = tasks[taskId];
-                                if (!task) return null;
                                 return (
-                                    <Draggable key={task.id} draggableId={`task-${task.id}`} index={index}>
+                                    <Draggable key={taskId} draggableId={`task-${taskId}`} index={index}>
                                         {(provided) => (
-                                            <div key={task.id} className="kanban-task-container" ref={provided.innerRef}
+                                            <div key={taskId} className="kanban-task-container" ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 onClick={handleClick}
                                                 onMouseOver={() => {
-                                                    const buttonbox = document.getElementById(`ellipse-${task.id}`);
+                                                    const buttonbox = document.getElementById(`ellipse-${taskId}`);
                                                     if (buttonbox) {
                                                         buttonbox.className = "task-ellipse"
                                                     }
                                                 }}
                                                 onMouseLeave={() => {
-                                                    const buttonbox = document.getElementById(`ellipse-${task.id}`);
+                                                    const buttonbox = document.getElementById(`ellipse-${taskId}`);
                                                     if (buttonbox) {
                                                         buttonbox.className = "hidden"
                                                     }
                                                 }}>
-                                                <div className="task-wrapper">
-                                                    <div className={task.status ? "task-complete" : "not-complete"}>
-                                                        <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            changeStatus(task.id)
-                                                        }}></i>
-                                                    </div>
-                                                    <p className="task-details"> {task.details}</p>
-                                                    <button id={`ellipse-${task.id}`} className="hidden" onClick={e => {
-                                                        e.stopPropagation()
-                                                        const rect = e.target.getBoundingClientRect();
-                                                        setCoords({
-                                                            left: rect.x - 7,
-                                                            top: rect.y + 20
-                                                        });
-                                                        setOn(!isOn); // [ 3 ]
-                                                    }}>
-                                                        <i className="fa-solid fa-ellipsis"></i>
-                                                    </button>
-
-                                                </div>
+                                                <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} />
                                             </div>
                                         )}
                                     </Draggable>
                                 )
                             })}
-                            {
-                                isOn &&
-                                <Portal>
-                                    <div className="task-dropdown" style={{ top: coords.top, left: coords.left, zIndex: '3', position: 'absolute' }}>
-                                        <ul>
-                                            <li className="task-li">
-                                                <i className="fa-solid fa-pen"></i> Edit Task
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </Portal>
-                            }
+                            
                             {provided.placeholder}
                         </div>
                         {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input

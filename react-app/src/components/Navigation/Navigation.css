@@ -30,6 +30,7 @@
   list-style: none;
   align-items: center;
   max-height: fit-content;
+  height: 7vh;
   background-color: var(--background-color);
   z-index: 1;
   position: relative;

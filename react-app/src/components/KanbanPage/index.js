@@ -23,6 +23,8 @@ function KanbanPage() {
     const [newCategory, setNewCategory] = useState("");
     const [inFocus, setInFocus] = useState(false);
     const [error, setError] = useState("");
+    const [currentTask, setCurrentTask] = useState(null);
+
 
     useEffect(() => {
         dispatch(boardTasksGet(boardId))
@@ -161,7 +163,7 @@ function KanbanPage() {
     if (!board || !cards || !columnOrder || !columns || !tasksOrders || !tasks) return null;
 
     return (
-        <div className="main-container">
+        <div className="task-main-container">
             <div className="project-nav">
                 <h2 className="board-purpose-nav">{board.purpose}</h2>
                 <BoardDropdown board={board} />
@@ -186,7 +188,7 @@ function KanbanPage() {
                                                         >
                                                             <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
-                                                                <TaskDrag tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
+                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
                                                             </div>
                                                         </div>
                                                     )
