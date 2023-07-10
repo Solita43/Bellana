@@ -170,7 +170,7 @@
   align-items: center;
   padding: 0.4rem;
   justify-content: center;
-  background-color: transparent;
+  background-color: var(--background-color);
   right: 5%;
   top: 50%;
   transform: translateY(-50%);
@@ -227,6 +227,8 @@
   border-radius: 0.2rem;
   padding: 0.2rem 0;
   position: absolute;
+  opacity: 1;
+  z-index: 5;
 }
 
 li:hover {
@@ -237,8 +239,29 @@ li:hover {
   padding: 0.2rem 0.6rem;
   cursor: pointer;
   font-size: 0.8rem;
+  
 }
 .task-menu {
   position: relative;
 }
+
+.task-ellipse-portal {
+  display: flex;
+  position: absolute;
+  width: auto;
+  height: auto;
+  align-items: center;
+  padding: 0.4rem;
+  justify-content: center;
+  background-color: #454547;
+  color: var(--dull-white);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--dull-white) 0rem 0rem 0.08rem;
+  z-index: 5;
+  margin: auto;
+}
+
+
 

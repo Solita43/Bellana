@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost, taskStatus } from "../../store/boardTasks";
-import Portal from "../Portal";
 import Task from "./Task";
 
 function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {

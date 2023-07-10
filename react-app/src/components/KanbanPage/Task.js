@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost, taskStatus } from "../../store/boardTasks";
-import Portal from "../Portal";
 import { TaskMenu } from "../../context/Modal";
 
 function Task({ taskId, currentTask, setCurrentTask }) {
@@ -26,10 +24,6 @@ function Task({ taskId, currentTask, setCurrentTask }) {
     const showHandler = (id) => (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // const buttonbox = document.getElementById(`ellipse-${taskId}`);
-        // if (buttonbox) {
-        //     buttonbox.className = "hidden"
-        // }
         if (showMenu) {
             return setShowMenu(false)
         }
@@ -41,11 +35,12 @@ function Task({ taskId, currentTask, setCurrentTask }) {
         console.log(rect)
         setCoords({
             left: rect.x,
-            top: rect.y + 20 + window.scrollY
+            top: rect.y + 25 + window.scrollY
         });
     }
 
     const leaveHandler = (e) => {
+        e.stopPropagation();
         setCurrentTask(null);
         setShowMenu(false);
     }
@@ -56,6 +51,10 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                 <div className={task.status ? "task-complete" : "not-complete"}>
                     <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
                         e.stopPropagation()
+                        const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                        if (buttonbox) {
+                            buttonbox.className = "hidden"
+                        }
                         changeStatus(task.id)
                     }}></i>
                 </div>
@@ -68,7 +67,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
 
             </div>
             {showMenu && currentTask === task.id && (
-                <TaskMenu top={coords.top} left={coords.left} onClose={(e) => {
+                <TaskMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
                     e.stopPropagation()
                     const buttonbox = document.getElementById(`ellipse-${taskId}`);
                     if (buttonbox) {
@@ -76,25 +75,19 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                     }
                     setShowMenu(false)
                 }}>
+                    <button className="task-ellipse-portal" style={{ top: coords.top - 25, left: coords.left + .5 }} onClick={leaveHandler}>
+                        <i className="fa-solid fa-ellipsis"></i>
+                    </button>
                     <ul className="task-dropdown" style={{ top: coords.top, left: coords.left }}>
-                        <li className="task-li">
+                        <li className="task-li" style={{borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid'}}>
                             <i className="fa-solid fa-pen"></i> Edit Task
+                        </li>
+                        <li className='delete-category task-li'>
+                            <i className="fa-regular fa-trash-can"></i> Delete Task
                         </li>
                     </ul>
                 </TaskMenu>
             )}
-            {/* {
-                showMenu &&
-                <Portal>
-                    <div className={`task-dropdown task-${taskId}`} style={{ top: coords.top, left: coords.left, zIndex: '3', position: 'absolute' }} ref={taskRef}>
-                        <ul>
-                            <li className="task-li">
-                                <i className="fa-solid fa-pen"></i> Edit Task
-                            </li>
-                        </ul>
-                    </div>
-                </Portal>
-            } */}
         </>
     )
 }
