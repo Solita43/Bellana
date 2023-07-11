@@ -9,6 +9,15 @@ function Task({ taskId, currentTask, setCurrentTask }) {
     const task = useSelector(state => state.boardTasks[taskId]);
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
+    const [editFocus, setEditFocus] = useState(false);
+    const [taskdetail, setTaskDetail] = useState(task.details);
+
+    useEffect(() => {
+        if (!editFocus) return;
+
+        document.getElementById('edit-task').focus();
+
+    }, [editFocus])
 
 
 
@@ -47,7 +56,41 @@ function Task({ taskId, currentTask, setCurrentTask }) {
 
     return (
         <>
-            <div className="task-wrapper">
+            {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
+                type="text"
+                value={taskdetail}
+                maxLength={255}
+                minLength={1}
+                onChange={(e) => setTaskDetail(e.target.value)}
+                // onBlur={handleInputBlur}
+                // onKeyPress={handleInputKeyPress}
+                className="task-details"
+                id="edit-task"
+                placeholder="New Task"
+                onFocus={e => e.target.select()}
+
+            /></>) : (
+                <div className="task-wrapper">
+                    <div className={task.status ? "task-complete" : "not-complete"}>
+                        <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
+                            e.stopPropagation()
+                            const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                            if (buttonbox) {
+                                buttonbox.className = "hidden"
+                            }
+                            changeStatus(task.id)
+                        }}></i>
+                    </div>
+                    <p className="task-details"> {task.details}</p>
+                    <button id={`ellipse-${task.id}`} className="hidden"
+                        onClick={showHandler(task.id)}
+                        onWheel={leaveHandler}>
+                        <i className="fa-solid fa-ellipsis"></i>
+                    </button>
+
+                </div>
+            )}
+            {/* <div className="task-wrapper">
                 <div className={task.status ? "task-complete" : "not-complete"}>
                     <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
                         e.stopPropagation()
@@ -65,7 +108,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                     <i className="fa-solid fa-ellipsis"></i>
                 </button>
 
-            </div>
+            </div> */}
             {showMenu && currentTask === task.id && (
                 <TaskMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
                     e.stopPropagation()
@@ -79,7 +122,13 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                         <i className="fa-solid fa-ellipsis"></i>
                     </button>
                     <ul className="task-dropdown" style={{ top: coords.top, left: coords.left }}>
-                        <li className="task-li" style={{borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid'}}>
+                        <li className="task-li"
+                            style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setEditFocus(true)
+                            }}
+                        >
                             <i className="fa-solid fa-pen"></i> Edit Task
                         </li>
                         <li className='delete-category task-li'>
