@@ -56,6 +56,7 @@ export const taskPost = (task, cardId) => async (dispatch) => {
 export const taskStatus = (taskId) => async (dispatch) => {
     const res = await fetch(`/api/tasks/status/${taskId}`, {
         method: "PUT"
+        
     })
 
     const data = await res.json();
@@ -64,6 +65,22 @@ export const taskStatus = (taskId) => async (dispatch) => {
         dispatch(addTask(data));
     } else {
         return data
+    }
+}
+
+export const taskPut = (taskId, task) => async (dispatch) => {
+    const res = await fetch(`apli/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(task)
+    })
+
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(addTask(data));
+    } else {
+        return data;
     }
 }
 
