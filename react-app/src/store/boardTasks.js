@@ -69,7 +69,7 @@ export const taskStatus = (taskId) => async (dispatch) => {
 }
 
 export const taskPut = (taskId, task) => async (dispatch) => {
-    const res = await fetch(`apli/tasks/${taskId}`, {
+    const res = await fetch(`/api/tasks/${taskId}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(task)

@@ -25,7 +25,7 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
 
     const handleInputBlur = () => {
         // Send the updated information to the database
-        if (!setNewTask) return
+        if (!newTask) return
         else {
             dispatch(taskPost({
                 details: newTask,

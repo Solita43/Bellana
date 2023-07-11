@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { taskPost, taskStatus } from "../../store/boardTasks";
+import { taskPut, taskStatus } from "../../store/boardTasks";
 import { TaskMenu } from "../../context/Modal";
 
 function Task({ taskId, currentTask, setCurrentTask }) {
@@ -54,6 +54,27 @@ function Task({ taskId, currentTask, setCurrentTask }) {
         setShowMenu(false);
     }
 
+    const handleInputBlur = () => {
+        // Send the updated information to the database
+        if (!taskdetail || taskdetail.trim() === task.details) {
+            return setEditFocus(false)
+        }
+        else {
+            dispatch(taskPut(taskId, {
+                details: taskdetail,
+            })).then((data) => {
+                setEditFocus(false)
+            })
+
+        }
+    };
+
+    const handleInputKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.target.blur();
+        }
+    };
+
     return (
         <>
             {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
@@ -62,9 +83,10 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                 maxLength={255}
                 minLength={1}
                 onChange={(e) => setTaskDetail(e.target.value)}
-                // onBlur={handleInputBlur}
-                // onKeyPress={handleInputKeyPress}
+                onBlur={handleInputBlur}
+                onKeyPress={handleInputKeyPress}
                 className="task-details"
+                onClick={(e) => e.stopPropagation()}
                 id="edit-task"
                 placeholder="New Task"
                 onFocus={e => e.target.select()}
@@ -90,25 +112,6 @@ function Task({ taskId, currentTask, setCurrentTask }) {
 
                 </div>
             )}
-            {/* <div className="task-wrapper">
-                <div className={task.status ? "task-complete" : "not-complete"}>
-                    <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
-                        e.stopPropagation()
-                        const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                        if (buttonbox) {
-                            buttonbox.className = "hidden"
-                        }
-                        changeStatus(task.id)
-                    }}></i>
-                </div>
-                <p className="task-details"> {task.details}</p>
-                <button id={`ellipse-${task.id}`} className="hidden"
-                    onClick={showHandler(task.id)}
-                    onWheel={leaveHandler}>
-                    <i className="fa-solid fa-ellipsis"></i>
-                </button>
-
-            </div> */}
             {showMenu && currentTask === task.id && (
                 <TaskMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
                     e.stopPropagation()
@@ -126,6 +129,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                             style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
                             onClick={(e) => {
                                 e.stopPropagation();
+                                leaveHandler(e);
                                 setEditFocus(true)
                             }}
                         >

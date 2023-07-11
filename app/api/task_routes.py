@@ -107,6 +107,8 @@ def edit_task(taskId):
 
     if form.validate():
         task.details = form.data["details"]
+
+        db.session.commit()
     
         return {task.id: task.to_dict()}, 201
     else:
