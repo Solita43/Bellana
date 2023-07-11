@@ -8,6 +8,7 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
+    const tasks = useSelector(state => state.boardTasks)
 
     const dispatch = useDispatch();
 

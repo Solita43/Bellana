@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { taskPut, taskStatus } from "../../store/boardTasks";
+import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
 import { TaskMenu } from "../../context/Modal";
 
 function Task({ taskId, currentTask, setCurrentTask }) {
@@ -10,7 +10,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const [editFocus, setEditFocus] = useState(false);
-    const [taskdetail, setTaskDetail] = useState(task.details);
+    const [taskdetail, setTaskDetail] = useState(task?.details);
 
     useEffect(() => {
         if (!editFocus) return;
@@ -30,6 +30,15 @@ function Task({ taskId, currentTask, setCurrentTask }) {
             }
         })
     }
+
+    const handleDelete = (e) => {
+        e.stopPropagation();
+        setCurrentTask(null);
+        setShowMenu(false);
+        dispatch(taskDelete(taskId))
+
+    }
+
     const showHandler = (id) => (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -74,6 +83,8 @@ function Task({ taskId, currentTask, setCurrentTask }) {
             event.target.blur();
         }
     };
+
+    if (!task) return null;
 
     return (
         <>
@@ -135,7 +146,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                         >
                             <i className="fa-solid fa-pen"></i> Edit Task
                         </li>
-                        <li className='delete-category task-li'>
+                        <li className='delete-category task-li' onClick={handleDelete}>
                             <i className="fa-regular fa-trash-can"></i> Delete Task
                         </li>
                     </ul>
