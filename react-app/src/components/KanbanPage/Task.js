@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
 import { TaskMenu } from "../../context/Modal";
 
-function Task({ taskId, currentTask, setCurrentTask }) {
+function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragHandle, innerRef }) {
     const [coords, setCoords] = useState({});
     const [showMenu, setShowMenu] = useState(false);
     const task = useSelector(state => state.boardTasks[taskId]);
@@ -12,6 +12,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
     const [editFocus, setEditFocus] = useState(false);
     const [taskdetail, setTaskDetail] = useState(task?.details);
 
+
     useEffect(() => {
         if (!editFocus) return;
 
@@ -19,6 +20,13 @@ function Task({ taskId, currentTask, setCurrentTask }) {
 
     }, [editFocus])
 
+    const handleClick = (e) => {
+
+        e.preventDefault();
+        e.stopPropagation()
+        window.alert("Feature Coming Soon...")
+    }
+    
 
 
     const changeStatus = (taskId) => {
@@ -87,7 +95,22 @@ function Task({ taskId, currentTask, setCurrentTask }) {
     if (!task) return null;
 
     return (
-        <>
+        <div key={taskId} className="kanban-task-container" ref={innerRef}
+            {...draggable}
+            {...dragHandle}
+            onClick={handleClick}
+            onMouseOver={() => {
+                const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                if (buttonbox) {
+                    buttonbox.className = "task-ellipse"
+                }
+            }}
+            onMouseLeave={() => {
+                const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                if (buttonbox) {
+                    buttonbox.className = "hidden"
+                }
+            }}>
             {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
                 type="text"
                 value={taskdetail}
@@ -152,7 +175,7 @@ function Task({ taskId, currentTask, setCurrentTask }) {
                     </ul>
                 </TaskMenu>
             )}
-        </>
+        </div>
     )
 }
 export default Task

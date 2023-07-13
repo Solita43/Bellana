@@ -12,13 +12,7 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
 
     const dispatch = useDispatch();
 
-    const handleClick = (e) => {
 
-        e.preventDefault();
-        e.stopPropagation()
-        window.alert("Feature Coming Soon...")
-    }
-    
 
     useEffect(() => {
         if (inFocus) document.getElementById("add-task").focus()
@@ -89,24 +83,24 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
                                 return (
                                     <Draggable key={taskId} draggableId={`task-${taskId}`} index={index}>
                                         {(provided) => (
-                                            <div key={taskId} className="kanban-task-container" ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                onClick={handleClick}
-                                                onMouseOver={() => {
-                                                    const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                                                    if (buttonbox) {
-                                                        buttonbox.className = "task-ellipse"
-                                                    }
-                                                }}
-                                                onMouseLeave={() => {
-                                                    const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                                                    if (buttonbox) {
-                                                        buttonbox.className = "hidden"
-                                                    }
-                                                }}>
-                                                <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} />
-                                            </div>
+                                            // <div key={taskId} className="kanban-task-container" ref={provided.innerRef}
+                                            //     {...provided.draggableProps}
+                                            //     {...provided.dragHandleProps}
+                                            //     onClick={handleClick}
+                                            //     onMouseOver={() => {
+                                            //         const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                                            //         if (buttonbox) {
+                                            //             buttonbox.className = "task-ellipse"
+                                            //         }
+                                            //     }}
+                                            //     onMouseLeave={() => {
+                                            //         const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                                            //         if (buttonbox) {
+                                            //             buttonbox.className = "hidden"
+                                            //         }
+                                            //     }}>
+                                                <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrder={taskOrder} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} />
+                                            // </div>
                                         )}
                                     </Draggable>
                                 )
