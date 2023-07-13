@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
-import { taskPost, taskStatus } from "../../store/boardTasks";
+import { taskPost} from "../../store/boardTasks";
 import Task from "./Task";
 
 function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
-    const tasks = useSelector(state => state.boardTasks)
+    // const tasks = useSelector(state => state.boardTasks)
 
     const dispatch = useDispatch();
 
@@ -24,9 +24,7 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
         else {
             dispatch(taskPost({
                 details: newTask,
-                status: "Not started"
             }, column)).then((data) => {
-                taskOrder.push(Object.keys(data)[0])
                 setInFocus(false)
                 setNewTask("")
             })

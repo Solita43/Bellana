@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
 import { TaskMenu } from "../../context/Modal";
@@ -26,7 +26,7 @@ function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragH
         e.stopPropagation()
         window.alert("Feature Coming Soon...")
     }
-    
+
 
 
     const changeStatus = (taskId) => {
@@ -92,7 +92,9 @@ function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragH
         }
     };
 
-    if (!task) return null;
+    if (!task) return (<div key="null" ref={innerRef}
+        {...draggable}
+        {...dragHandle}></div>);
 
     return (
         <div key={taskId} className="kanban-task-container" ref={innerRef}
