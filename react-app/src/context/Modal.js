@@ -56,4 +56,20 @@ export function Modal() {
   );
 }
 
+export function TaskMenu({ top, left, onClose, children }) {
+  const { modalRef } = useContext(ModalContext);
+  if (!modalRef.current) return null;
+
+  return ReactDOM.createPortal(
+    <div>
+      <div id="task-portal-background" onClick={onClose} />
+      <div>
+        {children}
+      </div>
+    </div >,
+    modalRef.current
+  );
+}
+
+
 export const useModal = () => useContext(ModalContext);

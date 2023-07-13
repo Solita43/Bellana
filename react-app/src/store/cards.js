@@ -1,5 +1,6 @@
 const GET_CARDS = "cards/GET_CARDS";
-const CREATE_CARD = "cards/CREATE_CARD"
+const CREATE_CARD = "cards/CREATE_CARD";
+const UPDATE_CATEGORY = "cards/UPDATE_CATEGORY";
 
 const getCards = (cards) => ({
     type: GET_CARDS,
@@ -8,6 +9,11 @@ const getCards = (cards) => ({
 
 const createCard = (card) => ({
     type: CREATE_CARD,
+    payload: card
+})
+
+const updateCategory = (card) => ({
+    type: UPDATE_CATEGORY,
     payload: card
 })
 
@@ -46,6 +52,7 @@ export const categoryUpdate = (cardId, category) => async (dispatch) => {
     const data = await res.json();
 
     if (res.ok) {
+        dispatch(updateCategory(data))
     } else {
         return data;
     }
@@ -94,6 +101,8 @@ export default function reducer(state = initialState, action) {
         case CREATE_CARD:
             const newState = {...state, [action.payload.boardId]: {...state[action.payload.boardId], ...action.payload.card}}
             return newState
+        case UPDATE_CATEGORY:
+            return {...state, [action.payload.boardId]: {...state[action.payload.boardId], [action.payload.order]: {...action.payload}}}
         default:
             return state;
     }

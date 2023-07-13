@@ -6,25 +6,29 @@ def seed_tasks():
     
     # Tasks for board 1 backlog category
     backlog_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'backlog').first()
-    tasks_backlog_board_1 = [Task(details='Edit a task', user_id=2, order=0, board_id=1),
-                             Task(details='Delete a task', user_id=2, order=1, board_id=1),
-                             Task(details='Mark task as complete', user_id=2, order=3, board_id=1)]
+    tasks_backlog_board_1 = [Task(details='Delete a task', user_id=2, order=0, board_id=1),
+                             Task(details='View a Task', user_id=2, order=1, board_id=1),
+                             Task(details='Fix styling of user dropdown on nav', user_id=2, order=2, board_id=1),
+                             Task(details='Fix bug with updating a column category', user_id=2, order=3, board_id=1),
+                             Task(details='Create a portal for task menus', user_id=2, order=4, board_id=1)]
 
     [backlog_board_1.tasks.append(task) for task in tasks_backlog_board_1]
 
     # Tasks for board 1 in progress category
     inprogress_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Progress').first()
 
-    tasks_inprogress_board_1 = [Task(details='Create a task', user_id=2, order=0, board_id=1, status='in progress')]
+    tasks_inprogress_board_1 = [Task(details="Edit a task", user_id=2, order=0, board_id=1)]
 
     [inprogress_board_1.tasks.append(task) for task in tasks_inprogress_board_1]
 
     # Tasks for board 1 in review category
     inreview_board_1 = Card.query.filter(Card.board_id == 1, Card.category == 'in Review').first()
 
-    tasks_inreview_board_1 = [Task(details='Creating a column', user_id=2, order=0, board_id=1, status='complete'),
-                             Task(details='Deleting a column', user_id=2, order=1, board_id=1, status='complete'),
-                             Task(details='Dragging Tasks', user_id=2, order=2, board_id=1, status='complete')]
+    tasks_inreview_board_1 = [Task(details='Creating a column', user_id=2, order=0, board_id=1, status=True),
+                             Task(details='Deleting a column', user_id=2, order=1, board_id=1, status=True),
+                             Task(details='Dragging Tasks', user_id=2, order=2, board_id=1, status=True),
+                             Task(details='Create a task', user_id=2, order=3, board_id=1),
+                             Task(details="Mark task as complete", user_id=2, order=4, board_id=1)]
 
     [inreview_board_1.tasks.append(task) for task in tasks_inreview_board_1]
 
@@ -38,10 +42,16 @@ def seed_tasks():
                              Task(details='Delete a project', user_id=2, order=4, board_id=1),
                              Task(details='Delete a board', user_id=2, order=5, board_id=1),
                              Task(details='Home dashboard with projects widget', user_id=2, order=6, board_id=1),
-                             Task(details='Projec dashboard', user_id=2, order=7, board_id=1),
+                             Task(details='Project dashboard', user_id=2, order=7, board_id=1),
                              Task(details='Project resources section on dashboard', user_id=2, order=8, board_id=1),
                              Task(details='Kanban columns for boards', user_id=2, order=9, board_id=1),
-                             Task(details='Drag and drop columns', user_id=2, order=10, board_id=1),]
+                             Task(details='Drag and drop columns', user_id=2, order=10, board_id=1),
+                             Task(details='Make a logo', user_id=2, order=11, board_id=1),
+                             Task(details='Navigation Bar', user_id=2, order=12, board_id=1),
+                             Task(details='User Dropdown', user_id=2, order=13, board_id=1),
+                             Task(details='Splash page', user_id=2, order=14, board_id=1),
+                             Task(details='Login Modal', user_id=2, order=15, board_id=1),
+                             Task(details='Sign up modal', user_id=2, order=16, board_id=1)]
 
     [deployed_board_1.tasks.append(task) for task in tasks_deployed_board_1]
 

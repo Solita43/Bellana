@@ -63,7 +63,6 @@ def create_task(cardId):
 
     form = TaskForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    form["status"].data = "Not started"
 
     if form.validate():
         task = Task(
@@ -79,3 +78,54 @@ def create_task(cardId):
         return {task.id: task.to_dict()}, 201
     else:
         return validation_errors_to_error_messages(form.errors), 400
+    
+@task_routes.route('/status/<int:taskId>', methods=["PUT"])
+@login_required
+def change_status(taskId):
+    task = Task.query.get(taskId)
+
+    if not task:
+        return {"error": "Task not found..."}, 404
+    
+    task.status = not task.status
+    db.session.commit()
+
+    return {task.id: task.to_dict()}, 201
+
+@task_routes.route('/<int:taskId>', methods=["PUT"])
+@login_required
+def edit_task(taskId):
+    task = Task.query.get(taskId)
+
+    if not task:
+        return {"error": "Task not found..."}, 404
+    if current_user.id != task.board.project.owner_id:
+        return {"error": "Unauthorized"}, 401
+    
+    form = TaskForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate():
+        task.details = form.data["details"]
+
+        db.session.commit()
+    
+        return {task.id: task.to_dict()}, 201
+    else:
+        return validation_errors_to_error_messages(form.errors), 400
+    
+@task_routes.route('/<int:taskId>', methods=["DELETE"])
+@login_required
+def delete_task(taskId):
+
+    task = Task.query.get(taskId)
+
+    if not task:
+        return {"error": "Task not found..."}, 404
+    if current_user.id != task.board.project.owner_id:
+        return {"error": "Unauthorized"}, 401
+    
+    db.session.delete(task)
+    db.session.commit()
+
+    return {"message": "Project has been successfully deleted."}
