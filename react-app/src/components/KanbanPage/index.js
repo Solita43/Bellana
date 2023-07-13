@@ -58,11 +58,6 @@ function KanbanPage() {
         if (inFocus) document.getElementById("add-section").focus()
     }, [inFocus])
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        window.alert("Feature Coming Soon...")
-    }
-
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
