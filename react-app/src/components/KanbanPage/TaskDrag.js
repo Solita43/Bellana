@@ -4,11 +4,13 @@ import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost} from "../../store/boardTasks";
 import Task from "./Task";
 
-function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
+function TaskDrag({ board, column, currentTask, setCurrentTask }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
-    // const tasks = useSelector(state => state.boardTasks)
+    const tasks = useSelector(state => state.boardTasks)
+    const taskOrder = useSelector(state => state.cards[board][column].tasks)
+    console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", taskOrder)
 
     const dispatch = useDispatch();
 
@@ -16,6 +18,7 @@ function TaskDrag({ taskOrder, column, currentTask, setCurrentTask }) {
 
     useEffect(() => {
         if (inFocus) document.getElementById("add-task").focus()
+        else return
     }, [inFocus])
 
     const handleInputBlur = () => {

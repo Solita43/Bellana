@@ -31,7 +31,7 @@ function KanbanPage() {
         dispatch(cardsGet(boardId)).then(data => {
             const tasks = {}
             for (let column of Object.values(data[boardId])) {
-                tasks[column.id] = Object.values(column.tasks).map(task => task.id);
+                tasks[column.id] = column.tasks
             }
             setTasksOrders(tasks)
         })
@@ -183,7 +183,7 @@ function KanbanPage() {
                                                         >
                                                             <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
-                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
+                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} tasks={tasks} column={column.id} board={column.boardId} />
                                                             </div>
                                                         </div>
                                                     )
