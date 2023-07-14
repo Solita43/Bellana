@@ -85,7 +85,6 @@ export const taskPut = (taskId, task) => async (dispatch) => {
     })
 
     const data = await res.json();
-    console.log("EDITED TASK 🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", data)
 
     if (res.ok) {
         dispatch(addTask(data));
@@ -115,8 +114,7 @@ export default function reducer(state = initialState, action) {
         case GET_TASKS:
             return action.payload
         case ADD_TASK:
-            console.log("EDITED TASK 🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", action.payload)
-            return {...state, ...action.payload}
+            return {...state, ...action.payload.task}
         case DELETE_TASK:
             const newState = {...state}
             delete newState[action.payload]
