@@ -13,7 +13,7 @@ class Project(db.Model):
     details = db.Column(db.String(500))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    owner = db.relationship("User", back_populates="projects")
+    owner = db.relationship("User", back_populates="projects_owned")
     boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all")
     resources = db.relationship("ProjectResource", back_populates="project", cascade="delete-orphan, all")
     team = db.relationship("TeamMember", back_populates="project", cascade="delete-orphan, all")
@@ -27,7 +27,8 @@ class Project(db.Model):
             "details": self.details,
             "createdAt": self.created_at,
             "owner": self.owner.to_dict(),
-            "resources": {resource.id: resource.to_dict() for resource in self.resources}
+            "resources": {resource.id: resource.to_dict() for resource in self.resources},
+            "team": {member.id: member.to_dict() for member in self.team}
         }
 
 

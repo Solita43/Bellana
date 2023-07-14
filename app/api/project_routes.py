@@ -24,7 +24,7 @@ def user_projects():
     Return a dictionary of all projects the current user owns.
     """
 
-    return {project.id: project.to_dict() for project in current_user.projects}
+    return {project.project_id: project.project.to_dict() for project in current_user.projects}
 
 
 @project_routes.route("/", methods=["POST"])

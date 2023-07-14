@@ -16,6 +16,7 @@ class TeamMember(db.Model):
     admin = db.Column(db.Boolean, default=False)
 
     project = db.relationship("Project", back_populates="team")
+    user = db.relationship("User", back_populates="projects")
 
     def to_dict(self):
         return {
