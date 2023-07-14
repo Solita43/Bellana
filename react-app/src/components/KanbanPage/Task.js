@@ -130,7 +130,6 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                 className="task-details"
                 onClick={(e) => e.stopPropagation()}
                 id="edit-task"
-                placeholder="New Task"
                 onFocus={e => e.target.select()}
 
             /></>) : (
