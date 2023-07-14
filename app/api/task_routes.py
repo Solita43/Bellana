@@ -75,7 +75,7 @@ def create_task(cardId):
         card.tasks.append(task)
         db.session.commit()
 
-        return {task.id: task.to_dict()}, 201
+        return {"task": {task.id: task.to_dict()}, "card": card.to_dict()}, 201
     else:
         return validation_errors_to_error_messages(form.errors), 400
     

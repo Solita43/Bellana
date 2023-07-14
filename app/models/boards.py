@@ -26,5 +26,5 @@ class Board(db.Model):
             "name": self.name,
             "projectId": self.project_id,
             "purpose": self.purpose,
-            "cards": {card.order: card.to_dict() for card in self.cards}
+            "cards": [card.id for card in sorted([card for card in self.cards], key= lambda card: card.order)]
         }

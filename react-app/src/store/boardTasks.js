@@ -1,3 +1,5 @@
+import { updateCategory } from "./cards";
+
 const GET_TASKS = "boardTasks/GET_TASKS";
 const ADD_TASK = "boardTasks/ADD_TASK";
 const DELETE_TASK ="boardTasks/DELETE_TASK";
@@ -51,8 +53,10 @@ export const taskPost = (task, cardId) => async (dispatch) => {
 
     const data = await res.json();
 
+    console.log('🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬', data)
     if (res.ok) {
         dispatch(addTask(data));
+        dispatch(updateCategory(data.card))
         return data
     } else {
         return data;
@@ -111,7 +115,7 @@ export default function reducer(state = initialState, action) {
         case GET_TASKS:
             return action.payload
         case ADD_TASK:
-            return {...state, ...action.payload}
+            return {...state, ...action.payload.task}
         case DELETE_TASK:
             const newState = {...state}
             delete newState[action.payload]

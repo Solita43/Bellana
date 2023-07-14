@@ -8,8 +8,12 @@ card_routes = Blueprint("cards", __name__)
 @card_routes.route('/<int:boardId>')
 @login_required
 def getCards(boardId):
+    board = Board.query.get(boardId)
 
-    return {boardId: {card.order: card.to_dict() for card in Board.query.get(boardId).cards}}
+    print("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in board.cards] )
+
+
+    return {boardId: {card.id: card.to_dict() for card in board.cards}}
 
 
 @card_routes.route("/", methods=["PUT"])

@@ -24,5 +24,5 @@ class Card(db.Model):
             "category": self.category,
             "boardId": self.board_id,
             "order": self.order,
-            "tasks": {task.order: task.to_dict() for task in self.tasks}
+            "tasks": [task.id for task in sorted([task for task in self.tasks], key= lambda task: task.order)]
         }
