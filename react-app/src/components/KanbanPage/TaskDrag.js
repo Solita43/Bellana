@@ -86,7 +86,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
                                 return (
                                     <Draggable key={taskId} draggableId={`task-${taskId}`} index={index}>
                                         {(provided) => (
-                                            <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrder={taskOrders[column]} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} index={index} />
+                                            <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrders={taskOrders} column={column} setTasksOrders={setTasksOrders} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} index={index} />
                                         )}
                                     </Draggable>
                                 )

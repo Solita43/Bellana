@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import ReactGA from 'react-ga';
+
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -23,8 +25,16 @@ function SignupFormModal() {
 
 		dispatch(signUp(username, email, password, firstName, lastName)).then(data => {
 			if (data) {
+				ReactGA.exception({
+					description: 'An error ocurred',
+					fatal: true
+				  });
 				setErrors(data.errors);
 			} else {
+				ReactGA.event({
+					category: 'User',
+					action: 'Created an Account'
+				  });
 				closeModal();
 			}
 		})
