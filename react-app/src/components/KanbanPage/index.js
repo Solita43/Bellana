@@ -183,7 +183,7 @@ function KanbanPage() {
                                                         >
                                                             <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
-                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} board={column.boardId} tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
+                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} board={column.boardId} tasks={tasks} taskOrders={tasksOrders} setTasksOrders={setTasksOrders} column={column.id} />
                                                             </div>
                                                         </div>
                                                     )
