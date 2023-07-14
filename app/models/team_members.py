@@ -21,7 +21,8 @@ class TeamMember(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "userId": self.user_id,
+            "user": self.user.to_dict(),
             "projectId": self.project_id,
-            "role": self.role
+            "role": self.role,
+            "owner": self.owner
         }

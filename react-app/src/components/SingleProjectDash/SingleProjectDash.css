@@ -140,8 +140,16 @@
   gap: 0.5rem;
   height: auto;
   align-items: center;
-  padding-left: 0.8rem;
+  width: max-content;
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: .5rem;
 }
+
+.member-container:hover {
+  box-shadow: var(--main-pink) 0 0 .2rem;
+}
+
 
 .member-details {
   line-height: 1rem;
@@ -192,4 +200,11 @@
 .add-first-resource:hover {
   opacity: 1;
   font-weight: bold;
+}
+
+.members-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-left: .8rem
 }

@@ -15,8 +15,8 @@ function SingleProjectDash() {
     if (!project) return null;
 
 
-    const innerButton = () => {
-        return `${project.owner.firstName[0]}${project.owner.lastName[0]}`
+    const innerButton = (user) => {
+        return `${user.firstName[0]}${user.lastName[0]}`
     }
 
     const handleDelete = (resourceId) => {
@@ -38,14 +38,37 @@ function SingleProjectDash() {
                 </div>
                 <div className="team-container">
                     <h3 className="team-title">Project Team</h3>
-                    <div className="member-container">
-                        <div id="profile-button">
-                            <p id="initials">{innerButton()}</p>
-                        </div>
-                        <div className="member-details">
-                            <p className="member-name">{project.owner.firstName} {project.owner.lastName}</p>
-                            <p className="member-role">Project Owner</p>
-                        </div>
+                    <div className="members-wrapper">
+                        {Object.values(project.team).length && Object.values(project.team).map(member => {
+                            return (
+                                <div className="member-container"
+                                    onMouseOver={() => {
+                                        const buttonbox = document.getElementById(`member-menu-${member.id}`);
+                                        if (buttonbox) {
+                                            buttonbox.className = "member-menu-carrot"
+                                        }
+                                    }}
+                                    onMouseLeave={() => {
+                                        const buttonbox = document.getElementById(`member-menu-${member.id}`);
+                                        if (buttonbox) {
+                                            buttonbox.className = "hidden"
+                                        }
+                                    }}
+                                    onClick={() => window.alert("Feature Coming Soon...")}
+                                    >
+                                    <div id="profile-button">
+                                        <p id="initials">{innerButton(member.user)}</p>
+                                    </div>
+                                    <div className="member-details">
+                                        <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
+                                        <p className="member-role">{member.role ? member.role : member.owner ? "Project Owner" : "+ Add Role"}</p>
+                                    </div>
+                                    <button id={`member-menu-${member.id}`} className="hidden">
+                                        <i className="fa-solid fa-angle-down"></i>
+                                    </button>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="resources-container">
@@ -58,7 +81,7 @@ function SingleProjectDash() {
                                     {Object.values(project.resources).map(resource => {
                                         return (
                                             <div key={resource.id} className="resource-container">
-                                                <a  className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
+                                                <a className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
                                                     <p className="resource-title">{resource.title}</p>
                                                 </a>
                                                 {/* <OpenModalButton buttonText={<i className="fa-solid fa-trash-can"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} /> */}
