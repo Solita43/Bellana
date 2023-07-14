@@ -16,6 +16,7 @@ class Project(db.Model):
     owner = db.relationship("User", back_populates="projects")
     boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all")
     resources = db.relationship("ProjectResource", back_populates="project", cascade="delete-orphan, all")
+    team = db.relationship("TeamMember", back_populates="project", cascade="delete-orphan, all")
 
 
     def to_dict(self):

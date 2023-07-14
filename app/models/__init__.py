@@ -6,3 +6,4 @@ from .boards import Board
 from .cards import Card
 from .tasks import Task
 from .resources import ProjectResource
+from .team_members import TeamMember
