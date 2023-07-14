@@ -4,12 +4,12 @@ import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost } from "../../store/boardTasks";
 import Task from "./Task";
 
-function TaskDrag({ board, column, currentTask, setCurrentTask }) {
+function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setTasksOrders }) {
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
     const tasks = useSelector(state => state.boardTasks)
-    const taskOrder = useSelector(state => state.cards[board][column].tasks)
+    // const taskOrder = useSelector(state => state.cards[board][column].tasks)
 
     const dispatch = useDispatch();
 
@@ -27,6 +27,9 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
             dispatch(taskPost({
                 details: newTask,
             }, column)).then((data) => {
+                const newOrders = {...taskOrders}
+                newOrders[column] = data.card.tasks
+                setTasksOrders(newOrders)
                 setInFocus(false)
                 setNewTask("")
             })
@@ -43,7 +46,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
 
 
 
-    if (!taskOrder || !taskOrder.length) {
+    if (!taskOrders[column] || !taskOrders[column].length) {
         return (
             <Droppable droppableId={`${column}`} type="task">
                 {(provided, snapshot) => {
@@ -79,11 +82,11 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
                 return (
                     <div className="scroll-wrapper" id="scroll-wrapper">
                         <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)' }}>
-                            {taskOrder.length && taskOrder.map((taskId, index) => {
+                            {taskOrders[column].length && taskOrders[column].map((taskId, index) => {
                                 return (
                                     <Draggable key={taskId} draggableId={`task-${taskId}`} index={index}>
                                         {(provided) => (
-                                            <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrder={taskOrder} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} index={index} />
+                                            <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrders={taskOrders} column={column} setTasksOrders={setTasksOrders} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} index={index} />
                                         )}
                                     </Draggable>
                                 )

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
 import { TaskMenu } from "../../context/Modal";
 
-function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragHandle, innerRef }) {
+function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, innerRef, setTasksOrders, taskOrders, column, index }) {
     const [coords, setCoords] = useState({});
     const [showMenu, setShowMenu] = useState(false);
     const task = useSelector(state => state.boardTasks[taskId]);
@@ -43,7 +43,13 @@ function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragH
         e.stopPropagation();
         setCurrentTask(null);
         setShowMenu(false);
-        dispatch(taskDelete(taskId))
+        dispatch(taskDelete(taskId)).then(() => {
+            const newOrders = { ...taskOrders }
+            newOrders[column] = [...newOrders[column]]
+            newOrders[column].splice(index, 1)
+            
+            setTasksOrders(newOrders)
+        })
 
     }
 
@@ -58,7 +64,6 @@ function Task({ taskId, currentTask, setCurrentTask, taskOrder, draggable, dragH
         setShowMenu(true);
 
         const rect = e.currentTarget.getBoundingClientRect();
-        console.log(rect)
         setCoords({
             left: rect.x,
             top: rect.y + 25 + window.scrollY

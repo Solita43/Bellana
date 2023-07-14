@@ -10,7 +10,6 @@ card_routes = Blueprint("cards", __name__)
 def getCards(boardId):
     board = Board.query.get(boardId)
 
-    print("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬", [card.to_dict() for card in board.cards] )
 
 
     return {boardId: {card.id: card.to_dict() for card in board.cards}}
@@ -35,7 +34,6 @@ def changeOrder():
 def update_category(cardId):
 
     card = Card.query.get(cardId)
-    print("card start🤬🤬🤬🤬🤬 ", card.to_dict())
 
 
     if not card:
@@ -46,11 +44,9 @@ def update_category(cardId):
     
     data = request.get_json()
 
-    print("🤬🤬🤬➡️➡️➡️➡️➡️➡️ DATA", data)
     card.category = data["category"]
     db.session.commit()
 
-    print("card end 🦄🦄🦄🦄🦄🦄 ", card.to_dict())
 
 
     return card.to_dict(), 201
@@ -84,7 +80,6 @@ def delete_card(cardId):
 @login_required
 def create_card():
 
-    print("HERE 🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬")
 
     form = CardForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
