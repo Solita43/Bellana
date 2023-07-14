@@ -43,7 +43,7 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
-        if (!Object.values(cards).length || !boards) return
+        if (!Object.values(cards).length || !Object.values(boards).length) return
         console.log(boards)
         setColumnOrder(boards[projectId][boardId].cards);
         setColumns(Object.values(cards[boardId]))
@@ -171,7 +171,7 @@ function KanbanPage() {
                         {(provided) => {
                             return (
                                 <div className="card-container" ref={provided.innerRef} {...provided.droppableProps}>
-                                    {columnOrder.length && columnOrder.map((columnId, index) => {
+                                    {columnOrder.length ? (columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
                                         if (!column) return null;
                                         return (
@@ -192,7 +192,7 @@ function KanbanPage() {
                                             </Draggable>
 
                                         )
-                                    })}
+                                    })): null}
                                     {columns.length < 4 && (
                                         <div className="add-section">
                                             <div className="category-container">

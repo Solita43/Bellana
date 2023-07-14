@@ -78,7 +78,7 @@ def delete_card(cardId):
     
     db.session.commit()
 
-    return {board.id: {card.order: card.to_dict() for card in board.cards}}, 200
+    return board.to_dict(), 200
 
 @card_routes.route('/', methods=["POST"])
 @login_required

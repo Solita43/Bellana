@@ -3,6 +3,7 @@ import { postBoard } from "./boards";
 const GET_CARDS = "cards/GET_CARDS";
 const CREATE_CARD = "cards/CREATE_CARD";
 const UPDATE_CATEGORY = "cards/UPDATE_CATEGORY";
+const DELETE_CARD = "cards/DELETE_CARD";
 
 const getCards = (cards) => ({
     type: GET_CARDS,
@@ -16,6 +17,11 @@ const createCard = (card) => ({
 
 export const updateCategory = (card) => ({
     type: UPDATE_CATEGORY,
+    payload: card
+})
+
+const cardDelete = (card) => ({
+    type: DELETE_CARD,
     payload: card
 })
 
@@ -60,7 +66,7 @@ export const categoryUpdate = (cardId, category) => async (dispatch) => {
     }
 }
 
-export const deleteCard = (cardId, columns) => async (dispatch) => {
+export const deleteCard = (cardId, columns, boardId) => async (dispatch) => {
     const res = await fetch(`/api/cards/${cardId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -70,7 +76,8 @@ export const deleteCard = (cardId, columns) => async (dispatch) => {
     const data = await res.json()
 
     if (res.ok) {
-        dispatch(getCards(data))
+        dispatch(postBoard(data))
+        dispatch(cardDelete({cardId: cardId, boardId: boardId}))
         return data
     }
 }
@@ -105,6 +112,11 @@ export default function reducer(state = initialState, action) {
             return newState
         case UPDATE_CATEGORY:
             return { ...state, [action.payload.boardId]: { ...state[action.payload.boardId], [action.payload.id]: { ...action.payload } } }
+        case DELETE_CARD:
+            const nextState = {...state, [action.payload.boardId]: {...state[action.payload.boardId]}}
+            delete nextState[action.payload.boardId][action.payload.cardId]
+            return nextState
+
         default:
             return state;
     }
