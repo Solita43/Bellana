@@ -12,7 +12,7 @@ const createCard = (card) => ({
     payload: card
 })
 
-const updateCategory = (card) => ({
+export const updateCategory = (card) => ({
     type: UPDATE_CATEGORY,
     payload: card
 })
@@ -102,7 +102,7 @@ export default function reducer(state = initialState, action) {
             const newState = {...state, [action.payload.boardId]: {...state[action.payload.boardId], ...action.payload.card}}
             return newState
         case UPDATE_CATEGORY:
-            return {...state, [action.payload.boardId]: {...state[action.payload.boardId], [action.payload.order]: {...action.payload}}}
+            return {...state, [action.payload.boardId]: {...state[action.payload.boardId], [action.payload.id]: {...action.payload}}}
         default:
             return state;
     }

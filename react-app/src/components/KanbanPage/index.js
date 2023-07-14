@@ -43,8 +43,8 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
-        if (!Object.values(cards).length || !cards[boardId]) return
-        setColumnOrder(Object.values(cards[boardId]).map(column => column.id));
+        if (!board) return
+        setColumnOrder(board.cards);
         setColumns(Object.values(cards[boardId]))
     }, [cards, boardId])
 
@@ -183,7 +183,7 @@ function KanbanPage() {
                                                         >
                                                             <CategoryInputHeader props={provided.dragHandleProps} column={column} columns={columns} columnOrder={columnOrder} setColumnOrder={setColumnOrder} />
                                                             <div className="card">
-                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} tasks={tasks} column={column.id} board={column.boardId} />
+                                                                <TaskDrag currentTask={currentTask} setCurrentTask={setCurrentTask} board={column.boardId} tasks={tasks} taskOrder={tasksOrders[column.id]} column={column.id} />
                                                             </div>
                                                         </div>
                                                     )

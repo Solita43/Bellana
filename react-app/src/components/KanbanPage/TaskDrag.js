@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
-import { taskPost} from "../../store/boardTasks";
+import { taskPost } from "../../store/boardTasks";
 import Task from "./Task";
 
 function TaskDrag({ board, column, currentTask, setCurrentTask }) {
@@ -10,7 +10,6 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
     const [errors, setErrors] = useState({})
     const tasks = useSelector(state => state.boardTasks)
     const taskOrder = useSelector(state => state.cards[board][column].tasks)
-    console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", taskOrder)
 
     const dispatch = useDispatch();
 
@@ -41,7 +40,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
         }
     };
 
-    
+
 
 
     if (!taskOrder || !taskOrder.length) {
@@ -84,29 +83,12 @@ function TaskDrag({ board, column, currentTask, setCurrentTask }) {
                                 return (
                                     <Draggable key={taskId} draggableId={`task-${taskId}`} index={index}>
                                         {(provided) => (
-                                            // <div key={taskId} className="kanban-task-container" ref={provided.innerRef}
-                                            //     {...provided.draggableProps}
-                                            //     {...provided.dragHandleProps}
-                                            //     onClick={handleClick}
-                                            //     onMouseOver={() => {
-                                            //         const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                                            //         if (buttonbox) {
-                                            //             buttonbox.className = "task-ellipse"
-                                            //         }
-                                            //     }}
-                                            //     onMouseLeave={() => {
-                                            //         const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                                            //         if (buttonbox) {
-                                            //             buttonbox.className = "hidden"
-                                            //         }
-                                            //     }}>
-                                                <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrder={taskOrder} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} />
-                                            // </div>
+                                            <Task taskId={taskId} currentTask={currentTask} setCurrentTask={setCurrentTask} taskOrder={taskOrder} draggable={provided.draggableProps} dragHandle={provided.dragHandleProps} innerRef={provided.innerRef} index={index} />
                                         )}
                                     </Draggable>
                                 )
                             })}
-                            
+
                             {provided.placeholder}
                         </div>
                         {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
