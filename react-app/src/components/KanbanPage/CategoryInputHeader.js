@@ -35,7 +35,7 @@ function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrd
              columns[id] = newOrder[id]
          }
 
-        dispatch(deleteCard(column.id, columns))
+        dispatch(deleteCard(column.id, columns, column.boardId))
 
     }
 
