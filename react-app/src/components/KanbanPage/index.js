@@ -43,10 +43,11 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
-        if (!board) return
-        setColumnOrder(board.cards);
+        if (!Object.values(cards).length || !boards) return
+        console.log(boards)
+        setColumnOrder(boards[projectId][boardId].cards);
         setColumns(Object.values(cards[boardId]))
-    }, [cards, boardId])
+    }, [cards])
 
     useEffect(() => {
         if (!Object.values(boards).length) return
@@ -84,7 +85,7 @@ function KanbanPage() {
                 columns[id] = newOrder[id]
             }
 
-            return dispatch(orderUpdate(columns));
+            return dispatch(orderUpdate(columns, boardId));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {

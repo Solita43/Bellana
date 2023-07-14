@@ -1,3 +1,5 @@
+import { postBoard } from "./boards";
+
 const GET_CARDS = "cards/GET_CARDS";
 const CREATE_CARD = "cards/CREATE_CARD";
 const UPDATE_CATEGORY = "cards/UPDATE_CATEGORY";
@@ -29,23 +31,23 @@ export const cardsGet = (boardId) => async (dispatch) => {
     }
 }
 
-export const orderUpdate = (newOrder) => async (dispatch) => {
-    const res = await fetch(`/api/cards/`, {
+export const orderUpdate = (newOrder, boardId) => async (dispatch) => {
+    const res = await fetch(`/api/cards/order/${boardId}`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newOrder)
     })
     const data = await res.json()
 
-    if(res.ok) {
-        return data
+    if (res.ok) {
+        dispatch(postBoard(data))
     }
 }
 
 export const categoryUpdate = (cardId, category) => async (dispatch) => {
     const res = await fetch(`/api/cards/${cardId}`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(category)
     })
 
@@ -61,7 +63,7 @@ export const categoryUpdate = (cardId, category) => async (dispatch) => {
 export const deleteCard = (cardId, columns) => async (dispatch) => {
     const res = await fetch(`/api/cards/${cardId}`, {
         method: "DELETE",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(columns)
     })
 
@@ -76,15 +78,16 @@ export const deleteCard = (cardId, columns) => async (dispatch) => {
 export const cardPost = (card) => async (dispatch) => {
     const res = await fetch('/api/cards/', {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(card)
     })
 
     const data = await res.json();
 
     if (res.ok) {
-         await dispatch(createCard({boardId: card.boardId, card: data}))
-         return data
+        dispatch(postBoard(data.board))
+        dispatch(createCard(data.card))
+        return data
     } else {
         return data;
     }
@@ -96,12 +99,12 @@ const initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_CARDS:
-            return {...state, ...action.payload}
+            return { ...state, ...action.payload }
         case CREATE_CARD:
-            const newState = {...state, [action.payload.boardId]: {...state[action.payload.boardId], ...action.payload.card}}
+            const newState = { ...state, [action.payload.boardId]: { ...state[action.payload.boardId], [action.payload.id]: { ...action.payload } } }
             return newState
         case UPDATE_CATEGORY:
-            return {...state, [action.payload.boardId]: {...state[action.payload.boardId], [action.payload.id]: {...action.payload}}}
+            return { ...state, [action.payload.boardId]: { ...state[action.payload.boardId], [action.payload.id]: { ...action.payload } } }
         default:
             return state;
     }

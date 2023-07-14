@@ -90,7 +90,7 @@ def change_status(taskId):
     task.status = not task.status
     db.session.commit()
 
-    return {task.id: task.to_dict()}, 201
+    return {"task":{task.id: task.to_dict()}}, 201
 
 @task_routes.route('/<int:taskId>', methods=["PUT"])
 @login_required

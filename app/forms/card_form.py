@@ -18,5 +18,5 @@ def category_order(form, field):
 class CardForm(FlaskForm):
     boardId = IntegerField("boardId", validators=[DataRequired()])
     category = StringField("category", validators=[DataRequired()])
-    order = IntegerField("order", validators=[DataRequired()])
+    order = IntegerField("order", validators=[category_order])
     
