@@ -53,7 +53,6 @@ export const taskPost = (task, cardId) => async (dispatch) => {
 
     const data = await res.json();
 
-    console.log('🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬', data)
     if (res.ok) {
         dispatch(addTask(data));
         dispatch(updateCategory(data.card))

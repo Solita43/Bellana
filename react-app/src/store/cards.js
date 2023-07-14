@@ -68,7 +68,6 @@ export const deleteCard = (cardId, columns) => async (dispatch) => {
     const data = await res.json()
 
     if (res.ok) {
-        console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", data)
         dispatch(getCards(data))
         return data
     }

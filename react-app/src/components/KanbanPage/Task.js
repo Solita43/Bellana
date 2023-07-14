@@ -45,10 +45,8 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
         setShowMenu(false);
         dispatch(taskDelete(taskId)).then(() => {
             const newOrders = { ...taskOrders }
-            console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬" , taskOrders)
             newOrders[column] = [...newOrders[column]]
             newOrders[column].splice(index, 1)
-            console.log("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬" , newOrders)
             
             setTasksOrders(newOrders)
         })
@@ -66,7 +64,6 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
         setShowMenu(true);
 
         const rect = e.currentTarget.getBoundingClientRect();
-        console.log(rect)
         setCoords({
             left: rect.x,
             top: rect.y + 25 + window.scrollY
