@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import db, Board, Card
 from app.forms import CardForm
+from .auth_routes import validation_errors_to_error_messages
+
 
 card_routes = Blueprint("cards", __name__)
 
@@ -15,9 +17,11 @@ def getCards(boardId):
     return {boardId: {card.id: card.to_dict() for card in board.cards}}
 
 
-@card_routes.route("/", methods=["PUT"])
+@card_routes.route("/order/<int:boardId>", methods=["PUT"])
 @login_required
-def changeOrder():
+def changeOrder(boardId):
+
+    board = Board.query.get(boardId)
     
     data = request.get_json()
 
@@ -27,7 +31,7 @@ def changeOrder():
 
     db.session.commit()
 
-    return {"message": "success"}, 201
+    return board.to_dict(), 201
 
 @card_routes.route('/<int:cardId>', methods=["PUT"])
 @login_required
@@ -74,7 +78,7 @@ def delete_card(cardId):
     
     db.session.commit()
 
-    return {board.id: {card.order: card.to_dict() for card in board.cards}}, 200
+    return board.to_dict(), 200
 
 @card_routes.route('/', methods=["POST"])
 @login_required
@@ -83,6 +87,8 @@ def create_card():
 
     form = CardForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
+    print("🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬🤬 ", form.data)
+
 
     if form.validate():
         column = Card(
@@ -95,7 +101,9 @@ def create_card():
         db.session.commit()
 
         
-    return {column.order: column.to_dict()}, 201
+        return {"card": column.to_dict(), "board": column.board.to_dict()}, 201
+    else:
+        return validation_errors_to_error_messages(form.errors), 400
 
 
 

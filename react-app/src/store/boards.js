@@ -7,7 +7,7 @@ const getBoards = (boards) => ({
     payload: boards
 })
 
-const postBoard = (board) => ({
+export const postBoard = (board) => ({
     type: POST_BOARD,
     payload: board
 })

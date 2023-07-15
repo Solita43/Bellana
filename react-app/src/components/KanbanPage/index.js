@@ -43,10 +43,11 @@ function KanbanPage() {
     }, [boardId, dispatch])
 
     useEffect(() => {
-        if (!board) return
-        setColumnOrder(board.cards);
+        if (!Object.values(cards).length || !Object.values(boards).length) return
+        console.log(boards)
+        setColumnOrder(boards[projectId][boardId].cards);
         setColumns(Object.values(cards[boardId]))
-    }, [cards, boardId])
+    }, [cards])
 
     useEffect(() => {
         if (!Object.values(boards).length) return
@@ -84,7 +85,7 @@ function KanbanPage() {
                 columns[id] = newOrder[id]
             }
 
-            return dispatch(orderUpdate(columns));
+            return dispatch(orderUpdate(columns, boardId));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {
@@ -170,7 +171,7 @@ function KanbanPage() {
                         {(provided) => {
                             return (
                                 <div className="card-container" ref={provided.innerRef} {...provided.droppableProps}>
-                                    {columnOrder.length && columnOrder.map((columnId, index) => {
+                                    {columnOrder.length ? (columnOrder.map((columnId, index) => {
                                         const column = columns.find((column) => column.id === columnId);
                                         if (!column) return null;
                                         return (
@@ -191,7 +192,7 @@ function KanbanPage() {
                                             </Draggable>
 
                                         )
-                                    })}
+                                    })): null}
                                     {columns.length < 4 && (
                                         <div className="add-section">
                                             <div className="category-container">
