@@ -77,7 +77,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
         )
     }
     return (
-        <Droppable droppableId={`${column}`} type="task">
+        <Droppable droppableId={`${column}`} type="task"  >
             {(provided, snapshot) => {
                 return (
                     <div className="scroll-wrapper" id="scroll-wrapper">

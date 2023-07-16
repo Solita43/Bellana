@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
@@ -6,11 +6,15 @@ import CreateResourceModal from "../CreateResourceModal";
 import resourcesSVG from './resources.svg';
 import { resourceDelete } from "../../store/projects";
 import "./SingleProjectDash.css"
+import { DropDownMenu } from "../../context/Modal";
 
 function SingleProjectDash() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
     const dispatch = useDispatch();
+    const [currentMember, setCurrentMember] = useState(null)
+    const [coords, setCoords] = useState({});
+    const [showMenu, setShowMenu] = useState(false);
 
     if (!project) return null;
 
@@ -21,6 +25,23 @@ function SingleProjectDash() {
 
     const handleDelete = (resourceId) => {
         dispatch(resourceDelete(resourceId))
+    }
+
+    const showHandler = (id) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // if (showMenu) {
+        //     return setShowMenu(false)
+        // }
+
+        setCurrentMember(id);
+        setShowMenu(true);
+
+        const rect = e.currentTarget.getBoundingClientRect();
+        setCoords({
+            left: rect.x + 30,
+            top: rect.y + 45 + window.scrollY
+        });
     }
 
     return (
@@ -41,32 +62,43 @@ function SingleProjectDash() {
                     <div className="members-wrapper">
                         {Object.values(project.team).length && Object.values(project.team).map(member => {
                             return (
-                                <div className="member-container"
-                                    onMouseOver={() => {
-                                        const buttonbox = document.getElementById(`member-menu-${member.id}`);
-                                        if (buttonbox) {
-                                            buttonbox.className = "member-menu-carrot"
-                                        }
-                                    }}
-                                    onMouseLeave={() => {
-                                        const buttonbox = document.getElementById(`member-menu-${member.id}`);
-                                        if (buttonbox) {
-                                            buttonbox.className = "hidden"
-                                        }
-                                    }}
-                                    onClick={() => window.alert("Feature Coming Soon...")}
+                                <>
+                                    <div className="member-container"
+                                        onClick={showHandler(member.id)}
+                                    // onMouseLeave={() => {
+                                    //     const buttonbox = document.getElementById(`member-menu-${member.id}`);
+                                    //     if (buttonbox) {
+                                    //         buttonbox.className = "fa-solid fa-angle-down white"
+                                    //     }
+                                    // }}
                                     >
-                                    <div id="profile-button">
-                                        <p id="initials">{innerButton(member.user)}</p>
+                                        <div id="profile-button">
+                                            <p id="initials">{innerButton(member.user)}</p>
+                                        </div>
+                                        <div className="member-details">
+                                            <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
+                                            <p className="member-role">{member.role ? member.role : member.owner ? "Project Owner" : "+ Add Role"}</p>
+                                        </div>
+                                        <div className="member-menu-container">
+                                            <i className="fa-solid fa-angle-down"></i>
+                                        </div>
+                                        {showMenu && currentMember === member.id && (
+                                            <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
+                                                // e.stopPropagation()
+                                                // setCurrentMember(null)
+                                                // setShowMenu(false)
+                                            }}>
+                                                <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
+                                                    <li className="member-menu-li"
+                                                        style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                                                    >
+                                                        {member.role ? "Change Role" : "Add Role"}
+                                                    </li>
+                                                </ul>
+                                            </DropDownMenu>
+                                        )}
                                     </div>
-                                    <div className="member-details">
-                                        <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
-                                        <p className="member-role">{member.role ? member.role : member.owner ? "Project Owner" : "+ Add Role"}</p>
-                                    </div>
-                                    <button id={`member-menu-${member.id}`} className="hidden">
-                                        <i className="fa-solid fa-angle-down"></i>
-                                    </button>
-                                </div>
+                                </>
                             )
                         })}
                     </div>

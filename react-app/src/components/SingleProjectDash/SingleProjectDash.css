@@ -140,10 +140,10 @@
   gap: 0.5rem;
   height: auto;
   align-items: center;
-  width: max-content;
   cursor: pointer;
   padding: .5rem;
   border-radius: .5rem;
+  position: relative;
 }
 
 .member-container:hover {
@@ -153,11 +153,18 @@
 
 .member-details {
   line-height: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 1px;
 }
 
 .member-name {
   font-size: 0.9rem;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .member-role {
@@ -207,4 +214,34 @@
   gap: 1rem;
   align-items: center;
   padding-left: .8rem
+}
+
+.fa-angle-down {
+  font-size: .8rem;
+  color: var(--white-background)
+}
+
+.member-container:hover .fa-angle-down {
+  color: var(--background-color)
+}
+
+.member-menu-container {
+  position: relative;
+}
+
+.member-menu {
+  position: absolute;
+  right: 0;
+  width: max-content;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+  border-radius: .3rem;
+  top: 100%;
+  padding: .2rem 0;
+}
+
+.member-menu-li {
+  width: 100%;
+  padding: 0 1rem;
+  font-size: .9rem;
 }

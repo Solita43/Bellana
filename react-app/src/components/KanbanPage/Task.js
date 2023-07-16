@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
-import { TaskMenu } from "../../context/Modal";
+import { DropDownMenu } from "../../context/Modal";
 
 function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, innerRef, setTasksOrders, taskOrders, column, index }) {
     const [coords, setCoords] = useState({});
@@ -48,7 +48,7 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
             const newOrders = { ...taskOrders }
             newOrders[column] = [...newOrders[column]]
             newOrders[column].splice(index, 1)
-            
+
             setTasksOrders(newOrders)
         })
 
@@ -69,6 +69,8 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
             left: rect.x,
             top: rect.y + 25 + window.scrollY
         });
+        
+        document.addEventListener('scroll', (event) => {setShowMenu(false)});
     }
 
     const leaveHandler = (e) => {
@@ -118,7 +120,8 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                 if (buttonbox) {
                     buttonbox.className = "hidden"
                 }
-            }}>
+            }}
+            >
             {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
                 type="text"
                 value={taskdetail}
@@ -154,7 +157,7 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                 </div>
             )}
             {showMenu && currentTask === task.id && (
-                <TaskMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
+                <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
                     e.stopPropagation()
                     const buttonbox = document.getElementById(`ellipse-${taskId}`);
                     if (buttonbox) {
@@ -180,7 +183,7 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                             <i className="fa-regular fa-trash-can"></i> Delete Task
                         </li>
                     </ul>
-                </TaskMenu>
+                </DropDownMenu>
             )}
         </div>
     )
