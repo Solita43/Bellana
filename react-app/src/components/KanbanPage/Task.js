@@ -157,12 +157,12 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                 </div>
             )}
             {showMenu && currentTask === task.id && (
-                <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
-                    e.stopPropagation()
+                <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
                     const buttonbox = document.getElementById(`ellipse-${taskId}`);
                     if (buttonbox) {
                         buttonbox.className = "hidden"
                     }
+                    setCurrentTask(null)
                     setShowMenu(false)
                 }}>
                     <button className="task-ellipse-portal" style={{ top: coords.top - 25, left: coords.left + .5 }} onClick={leaveHandler}>

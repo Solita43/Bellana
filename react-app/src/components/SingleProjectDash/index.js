@@ -30,16 +30,13 @@ function SingleProjectDash() {
     const showHandler = (id) => (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // if (showMenu) {
-        //     return setShowMenu(false)
-        // }
 
         setCurrentMember(id);
         setShowMenu(true);
 
         const rect = e.currentTarget.getBoundingClientRect();
         setCoords({
-            left: rect.x + 30,
+            left: rect.x,
             top: rect.y + 45 + window.scrollY
         });
     }
@@ -60,17 +57,12 @@ function SingleProjectDash() {
                 <div className="team-container">
                     <h3 className="team-title">Project Team</h3>
                     <div className="members-wrapper">
+                    <OpenModalButton className="add-team-member" buttonText={<><i className="fa-solid fa-plus team"></i> Add a Member</>}  />
                         {Object.values(project.team).length && Object.values(project.team).map(member => {
                             return (
                                 <>
                                     <div className="member-container"
                                         onClick={showHandler(member.id)}
-                                    // onMouseLeave={() => {
-                                    //     const buttonbox = document.getElementById(`member-menu-${member.id}`);
-                                    //     if (buttonbox) {
-                                    //         buttonbox.className = "fa-solid fa-angle-down white"
-                                    //     }
-                                    // }}
                                     >
                                         <div id="profile-button">
                                             <p id="initials">{innerButton(member.user)}</p>
@@ -83,16 +75,21 @@ function SingleProjectDash() {
                                             <i className="fa-solid fa-angle-down"></i>
                                         </div>
                                         {showMenu && currentMember === member.id && (
-                                            <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={(e) => {
-                                                // e.stopPropagation()
-                                                // setCurrentMember(null)
-                                                // setShowMenu(false)
+                                            <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                                                setCurrentMember(null);
+                                                setShowMenu(false)
                                             }}>
                                                 <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
                                                     <li className="member-menu-li"
                                                         style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
                                                     >
                                                         {member.role ? "Change Role" : "Add Role"}
+                                                    </li>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}>
+                                                        {member.owner ? null : "Set as Project Owner"}
+                                                    </li>
+                                                    <li className="member-menu-li">
+                                                        Remove from project
                                                     </li>
                                                 </ul>
                                             </DropDownMenu>

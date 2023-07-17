@@ -26,7 +26,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
-    sa.Column('role', sa.String(length=20), nullable=False),
+    sa.Column('role', sa.String(length=20), nullable=True),
     sa.Column('owner', sa.Boolean(), nullable=True),
     sa.Column('admin', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),

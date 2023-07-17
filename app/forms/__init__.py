@@ -5,3 +5,4 @@ from .board_form import BoardForm
 from .resource_form import ResourceForm
 from .task_form import TaskForm
 from .card_form import CardForm
+from .team_member import TeamMemberForm

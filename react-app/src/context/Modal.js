@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
@@ -58,10 +58,26 @@ export function Modal() {
 
 export function DropDownMenu({ top, left, onClose, children }) {
   const { modalRef } = useContext(ModalContext);
-  if (!modalRef.current) return null;
+  const portalRef = useRef()
+  
+  useEffect(() => {
+    const closeMenu = (e) => {
+      // If the area on the page clicked does not contain the value in ulRef.current, close the menu.
+      if (!portalRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
 
+    // if show menu is set to true, add a click listener to the entire document so it can close the menu when clicking outside the menu.
+    document.addEventListener("click", closeMenu);
+    
+    return () => document.removeEventListener("click", closeMenu);
+  }, [])
+  
+  if (!modalRef.current) return null;
+  
   return ReactDOM.createPortal(
-    <div>
+    <div className='portal-wrapper' ref={portalRef}>
       {children}
     </div>,
     modalRef.current
