@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Project, db, Board, Card
+from app.models import Project, db, Board, Card, TeamMember
 from app.forms import ProjectForm
 from .auth_routes import validation_errors_to_error_messages
 
@@ -24,7 +24,7 @@ def user_projects():
     Return a dictionary of all projects the current user owns.
     """
 
-    return {project.id: project.to_dict() for project in current_user.projects}
+    return {project.project_id: project.project.to_dict() for project in current_user.projects}
 
 
 @project_routes.route("/", methods=["POST"])
@@ -46,6 +46,11 @@ def create_project():
         )
 
         db.session.add(project)
+        db.session.commit()
+
+        # Creat a TeamMember for the owner of the project
+        member = TeamMember(user_id=project.owner_id, owner=True)
+        project.team.append(member)
         db.session.commit()
 
         #Create a default board for the new project

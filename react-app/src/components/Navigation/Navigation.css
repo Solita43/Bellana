@@ -46,7 +46,7 @@
   width: 2rem;
   height: 2rem;
   background-color: var(--main-pink);
-  border-radius: 2rem;
+  border-radius: 100%;
   border: none;
   display: flex;
   align-items: center;

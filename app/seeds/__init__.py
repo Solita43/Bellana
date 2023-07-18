@@ -6,6 +6,7 @@ from .cards import seed_cards, undo_cards
 from .tasks import seed_tasks, undo_tasks
 from .resources import seed_resources, undo_resources
 from app.models.db import db, environment, SCHEMA
+from .team_members import seed_team_members, undo_team_members
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -26,6 +27,7 @@ def seed():
         undo_cards()
         undo_tasks()
         undo_resources()
+        undo_team_members()
         
     seed_users()
     seed_projects()
@@ -33,6 +35,7 @@ def seed():
     seed_cards()
     seed_tasks()
     seed_resources()
+    seed_team_members()
     # Add other seed functions here
 
 
@@ -45,4 +48,5 @@ def undo():
     undo_cards()
     undo_tasks()
     undo_resources()
+    undo_team_members()
     # Add other undo functions here

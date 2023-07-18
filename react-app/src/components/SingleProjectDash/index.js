@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
@@ -6,21 +6,43 @@ import CreateResourceModal from "../CreateResourceModal";
 import resourcesSVG from './resources.svg';
 import { resourceDelete } from "../../store/projects";
 import "./SingleProjectDash.css"
+import { DropDownMenu } from "../../context/Modal";
 
 function SingleProjectDash() {
     const { projectId } = useParams();
     const project = useSelector(state => state.projects[projectId]);
     const dispatch = useDispatch();
+    const [currentMember, setCurrentMember] = useState(null)
+    const [coords, setCoords] = useState({});
+    const [showMenu, setShowMenu] = useState(false);
 
     if (!project) return null;
 
 
-    const innerButton = () => {
-        return `${project.owner.firstName[0]}${project.owner.lastName[0]}`
+    const innerButton = (user) => {
+        return `${user.firstName[0]}${user.lastName[0]}`
     }
 
     const handleDelete = (resourceId) => {
         dispatch(resourceDelete(resourceId))
+    }
+
+    const showHandler = (id) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        setCurrentMember(id);
+        setShowMenu(true);
+
+        const rect = e.currentTarget.getBoundingClientRect();
+        setCoords({
+            left: rect.x,
+            top: rect.y + 45 + window.scrollY
+        });
+    }
+
+    const handleClick = (e) => {
+        window.alert("Feature coming soon...")
     }
 
     return (
@@ -38,14 +60,49 @@ function SingleProjectDash() {
                 </div>
                 <div className="team-container">
                     <h3 className="team-title">Project Team</h3>
-                    <div className="member-container">
-                        <div id="profile-button">
-                            <p id="initials">{innerButton()}</p>
-                        </div>
-                        <div className="member-details">
-                            <p className="member-name">{project.owner.firstName} {project.owner.lastName}</p>
-                            <p className="member-role">Project Owner</p>
-                        </div>
+                    <div className="members-wrapper">
+                    <OpenModalButton className="add-team-member" onButtonClick={handleClick} buttonText={<><i className="fa-solid fa-plus team"></i> Add Member</>}  />
+                        {Object.values(project.team).length && Object.values(project.team).map(member => {
+                            return (
+                                <>
+                                    <div className="member-container"
+                                        onClick={showHandler(member.id)}
+                                    >
+                                        <div id="profile-button">
+                                            <p id="initials">{innerButton(member.user)}</p>
+                                        </div>
+                                        <div className="member-details">
+                                            <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
+                                            <p className="member-role">{member.role ? member.role : member.owner ? "Project Owner" : "+ Add Role"}</p>
+                                        </div>
+                                        <div className="member-menu-container">
+                                            <i className="fa-solid fa-angle-down"></i>
+                                        </div>
+                                        {showMenu && currentMember === member.id && (
+                                            <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                                                setCurrentMember(null);
+                                                setShowMenu(false)
+                                            }}>
+                                                <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
+                                                    <li className="member-menu-li"
+                                                        style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                                                        onClick={handleClick}
+                                                    >
+                                                        {member.role ? "Change Role" : "Add Role"}
+                                                    </li>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
+                                                        {member.owner ? null : "Set as Project Owner"}
+                                                    </li>
+                                                    <li className="member-menu-li" onClick={handleClick}>
+                                                        Remove from project
+                                                    </li>
+                                                </ul>
+                                            </DropDownMenu>
+                                        )}
+                                    </div>
+                                </>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="resources-container">
@@ -58,7 +115,7 @@ function SingleProjectDash() {
                                     {Object.values(project.resources).map(resource => {
                                         return (
                                             <div key={resource.id} className="resource-container">
-                                                <a  className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
+                                                <a className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
                                                     <p className="resource-title">{resource.title}</p>
                                                 </a>
                                                 {/* <OpenModalButton buttonText={<i className="fa-solid fa-trash-can"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} /> */}
