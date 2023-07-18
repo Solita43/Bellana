@@ -83,12 +83,12 @@
 
 .delete-resource {
   color: var(--background-color);
-  opacity: .5;
+  opacity: 0;
   cursor: pointer;
   font-size: .85rem;
 }
 
-.delete-resource:hover {
+.resource-container:hover .delete-resource {
   color: rgb(255, 0, 0);
   opacity: 1;
 }
@@ -242,4 +242,34 @@
   width: 100%;
   padding: 0 .5rem;
   font-size: .8rem;
+}
+
+.add-team-member {
+  background-color: transparent;
+  border: none;
+  color: var(--background-color);
+  padding: .5rem;
+  border-radius: .5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: .7;
+  display: flex;
+  align-items: center;
+  gap: .5rem
+}
+
+.team {
+  border: dashed var(--background-color) .1rem;
+  border-radius: 0.7rem;
+  padding: .65rem;
+}
+
+.add-team-member:hover {
+  opacity: 1;
+  color: var(--main-pink);
+}
+
+.add-team-member:hover .team {
+  border: dashed var(--main-pink) .1rem;
+
 }

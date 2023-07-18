@@ -41,6 +41,10 @@ function SingleProjectDash() {
         });
     }
 
+    const handleClick = (e) => {
+        window.alert("Feature coming soon...")
+    }
+
     return (
         <div className="main-container">
             <div className="project-nav">
@@ -57,7 +61,7 @@ function SingleProjectDash() {
                 <div className="team-container">
                     <h3 className="team-title">Project Team</h3>
                     <div className="members-wrapper">
-                    <OpenModalButton className="add-team-member" buttonText={<><i className="fa-solid fa-plus team"></i> Add a Member</>}  />
+                    <OpenModalButton className="add-team-member" onButtonClick={handleClick} buttonText={<><i className="fa-solid fa-plus team"></i> Add Member</>}  />
                         {Object.values(project.team).length && Object.values(project.team).map(member => {
                             return (
                                 <>
@@ -82,13 +86,14 @@ function SingleProjectDash() {
                                                 <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
                                                     <li className="member-menu-li"
                                                         style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                                                        onClick={handleClick}
                                                     >
                                                         {member.role ? "Change Role" : "Add Role"}
                                                     </li>
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
                                                         {member.owner ? null : "Set as Project Owner"}
                                                     </li>
-                                                    <li className="member-menu-li">
+                                                    <li className="member-menu-li" onClick={handleClick}>
                                                         Remove from project
                                                     </li>
                                                 </ul>
