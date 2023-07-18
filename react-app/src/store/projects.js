@@ -2,6 +2,7 @@ const GET_PROJECTS = "projects/GET_PROJECTS";
 const ADD_PROJECT = "projects/ADD_PROJECTS";
 const EDIT_PROJECT = "projects/EDIT_PROJECT";
 const DELETE_PROJECT = "projects/DELETE_PROJECT";
+const ADD_MEMBER = "projects/ADD_MEMBER";
 
 const getProjects = (projects) => ({
     type: GET_PROJECTS,
@@ -22,6 +23,27 @@ const deleteProject = (projectId) => ({
     type: DELETE_PROJECT,
     payload: projectId
 })
+
+const createMember = (member) => ({
+    type: ADD_MEMBER,
+    payload: member
+})
+
+export const memberCreate = (member) => async (dispatch) => {
+    const res = await fetch(`/api/team/project/${member.projectId}`,{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(member)
+    })
+
+    const data = await res.json()
+
+    console.log(data)
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    }
+}
 
 export const projectsGet = () => async (dispatch) => {
     const res = await fetch("/api/projects/my-projects")
@@ -127,6 +149,8 @@ export default function reducer(state = initialState, action) {
             const newState = {...state}
             delete newState[action.payload]
             return newState
+        case ADD_MEMBER: 
+            return {...state, [action.payload.projectId]: {...state[action.payload.projectId], team: {...state[action.payload.projectId].team, [action.payload.user.id]: {...action.payload}}}}
         default: 
             return state;        
     }

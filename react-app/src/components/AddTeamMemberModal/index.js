@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { usersGet } from "../../store/users";
 import { useDispatch, useSelector } from "react-redux";
 import "./AddTeamMemberModal.css"
-import { DropDownMenu } from "../../context/Modal";
+import { memberCreate } from "../../store/projects";
+import { useModal } from "../../context/Modal";
+
 
 
 function AddTeamMemberModal({ projectId }) {
+    const { closeModal } = useModal();
+
     const project = useSelector(state => state.projects[projectId]);
     const dispatch = useDispatch();
     const usersObj = useSelector(state => state.users);
@@ -45,7 +49,8 @@ function AddTeamMemberModal({ projectId }) {
         return () => document.removeEventListener("click", closeMenu);
     }, [showSearch]);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         if (!chosenId) return
 
         const new_member = {
@@ -54,6 +59,8 @@ function AddTeamMemberModal({ projectId }) {
             role,
             admin
         }
+        console.log(new_member)
+        dispatch(memberCreate(new_member)).then(closeModal)
     }
     const ulClassName = "search-dropdown" + (showSearch ? "" : " hidden");
 
@@ -88,7 +95,10 @@ function AddTeamMemberModal({ projectId }) {
                 <ul className={ulClassName} ref={ulRef}>
                     {users.map(user => {
                         return (
-                            <li key={user.id}>
+                            <li key={user.id} onClick={() => {
+                                setChosenId(user.id)
+                                setShowSearch(false)
+                            }}>
                                 {user.firstName} {user.lastName}
                             </li>
                         )

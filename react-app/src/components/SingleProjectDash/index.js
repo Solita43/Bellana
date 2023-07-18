@@ -79,7 +79,7 @@ function SingleProjectDash() {
                                         </div>
                                         <div className="member-details">
                                             <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
-                                            <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" : "+ Add Role"}</p>{member.owner ? (<i className="fa-solid fa-shield-halved"></i>): null}</div>
+                                            <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" :member.admin ? "Admin": "+ Add Role"}</p>{member.admin ? (<i className="fa-solid fa-user-shield"></i>): member.owner ? (<i className="fa-solid fa-shield"></i>): null}</div>
                                         </div>
                                         <div className="member-menu-container">
                                             <i className="fa-solid fa-angle-down"></i>

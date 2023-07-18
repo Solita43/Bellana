@@ -7,7 +7,7 @@ from .utils import is_owner_admin
 
 team_routes = Blueprint("team", __name__)
 
-@team_routes.route('/project/<int:projectId>')
+@team_routes.route('/project/<int:projectId>', methods=["POST"])
 @login_required
 def create_member(projectId):
     project = Project.query.get(projectId)
