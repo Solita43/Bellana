@@ -28,7 +28,7 @@ class Project(db.Model):
             "createdAt": self.created_at,
             "owner": self.owner.to_dict(),
             "resources": {resource.id: resource.to_dict() for resource in self.resources},
-            "team": {member.id: member.to_dict() for member in self.team}
+            "team": {member.user_id: member.to_dict() for member in self.team}
         }
 
 

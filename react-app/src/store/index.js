@@ -4,11 +4,13 @@ import session from './session';
 import projects from './projects';
 import boards from './boards';
 import cards from './cards';
-import myTasks from './myTasks'
-import boardTasks from './boardTasks'
+import myTasks from './myTasks';
+import boardTasks from './boardTasks';
+import users from './users';
 
 const rootReducer = combineReducers({
   session,
+  users,
   projects,
   myTasks,
   boards,
