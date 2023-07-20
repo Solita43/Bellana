@@ -135,6 +135,22 @@ export const resourceDelete = (resourceId) => async (dispatch) => {
     }
 }
 
+export const memberRolePut = (memberId, role) => async (dispatch) => {
+    const res = await fetch(`/api/team/role/${memberId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(role)
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    } else {
+        return data
+    }
+}
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {

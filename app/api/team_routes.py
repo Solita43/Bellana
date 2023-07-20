@@ -59,8 +59,6 @@ def update_role(memberId):
         db.session.commit()
         return member.to_dict(), 201
     else: 
-        print("😾😾😾😾😾😾😾😾😾😾😾😾😾😾😾😾😾 ERROR BLOCK =====> ")
-
         return {"error": "Role cannot be greater than 20 characters"}
         
 
