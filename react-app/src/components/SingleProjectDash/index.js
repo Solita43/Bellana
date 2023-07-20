@@ -10,6 +10,7 @@ import { DropDownMenu } from "../../context/Modal";
 import AddTeamMemberModal from "../AddTeamMemberModal";
 import TransferOwnerModal from "../TransferOwnerModal";
 import { useModal } from '../../context/Modal';
+import RemoveMemberModal from "../RemoveMemberModal";
 
 
 function SingleProjectDash() {
@@ -153,7 +154,7 @@ function SingleProjectDash() {
                                                         Set as Project Owner
                                                     </li>
                                                 )}
-                                                <li className="member-menu-li" onClick={handleClick}>
+                                                <li className="member-menu-li" onClick={() => setModalContent(<RemoveMemberModal member={member} projectName={project.name}/>)}>
                                                     Remove from project
                                                 </li>
                                             </ul>

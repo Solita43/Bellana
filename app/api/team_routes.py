@@ -108,7 +108,7 @@ def remove_member(memberId):
         return {"error": "Unauthorized"}, 401
     
     if member.owner:
-        return {"error": "You must tranfer ownership of this project before you remove yourself."}
+        return {"error": "You must tranfer ownership of this project before you remove yourself."}, 400
     
     db.session.delete(member)
     db.session.commit()
