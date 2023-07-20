@@ -8,6 +8,9 @@ import { memberAdminPut, memberOwnerPut, memberRolePut, resourceDelete } from ".
 import "./SingleProjectDash.css"
 import { DropDownMenu } from "../../context/Modal";
 import AddTeamMemberModal from "../AddTeamMemberModal";
+import TransferOwnerModal from "../TransferOwnerModal";
+import { useModal } from '../../context/Modal';
+
 
 function SingleProjectDash() {
     const { projectId } = useParams();
@@ -20,7 +23,8 @@ function SingleProjectDash() {
     const [roleInput, setRoleInput] = useState(false);
     const [role, setRole] = useState("")
     const [errorRole, setErrorRole] = useState("");
-    const [errorAdmin, setErrorAdmin] = useState("")
+    const [errorAdmin, setErrorAdmin] = useState("");
+    const { setModalContent } = useModal();
 
 
     if (!project) return null;
@@ -145,7 +149,7 @@ function SingleProjectDash() {
                                                     {!member.admin ? "Make Admin" :"Remove as Admin"}
                                                 </li>)}
                                                 {!member.owner && (
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => setModalContent(<TransferOwnerModal member={member} projectName={project.name}/>)}>
                                                         Set as Project Owner
                                                     </li>
                                                 )}
