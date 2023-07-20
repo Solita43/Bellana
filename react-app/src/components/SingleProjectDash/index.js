@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateResourceModal from "../CreateResourceModal";
 import resourcesSVG from './resources.svg';
-import { memberRolePut, resourceDelete } from "../../store/projects";
+import { memberAdminPut, memberRolePut, resourceDelete } from "../../store/projects";
 import "./SingleProjectDash.css"
 import { DropDownMenu } from "../../context/Modal";
 import AddTeamMemberModal from "../AddTeamMemberModal";
@@ -19,7 +19,9 @@ function SingleProjectDash() {
     const [showMenu, setShowMenu] = useState(false);
     const [roleInput, setRoleInput] = useState(false);
     const [role, setRole] = useState("")
-    const [errorRole, setErrorRole] = useState("")
+    const [errorRole, setErrorRole] = useState("");
+    const [errorAdmin, setErrorAdmin] = useState("")
+
 
     if (!project) return null;
 
@@ -64,14 +66,14 @@ function SingleProjectDash() {
             return
         }
 
-        dispatch(memberRolePut(currentMember, {role})).then((data) => {
+        dispatch(memberRolePut(currentMember, { role })).then((data) => {
             if (data) {
                 setErrorRole(data.error)
             } else {
                 setCurrentMember(null);
                 setShowMenu(false)
                 setRoleInput(false)
-                return 
+                return
             }
         })
     }
@@ -100,79 +102,86 @@ function SingleProjectDash() {
                             return 1
                         }).map(member => {
                             return (
-                                    <div className="member-container"
-                                        onClick={showHandler(member.id)}
-                                        key={member.id}
-                                    >
-                                        <div id="profile-button">
-                                            <p id="initials">{innerButton(member.user)}</p>
-                                        </div>
-                                        <div className="member-details">
-                                            <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
-                                            <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" : member.admin ? "Admin" : "+ Add Role"}</p>{member.admin ? (<i className="fa-solid fa-user-shield"></i>) : member.owner ? (<i className="fa-solid fa-shield"></i>) : null}</div>
-                                        </div>
-                                        <div className="member-menu-container">
-                                            <i className="fa-solid fa-angle-down"></i>
-                                        </div>
-                                        {showMenu && currentMember === member.id && !roleInput && (
-                                            <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
-                                                setCurrentMember(null);
-                                                setShowMenu(false)
-                                            }}>
-                                                <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
-                                                    <li className="member-menu-li"
-                                                        style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
-                                                        onClick={() => {
-                                                            if (member.role) setRole(member.role)
-                                                            setRoleInput(true)
-                                                        }}
-                                                    >
-                                                        {member.role ? "Change Role" : "Add Role"}
-                                                    </li>
-                                                    {!member.admin && !member.owner && (
-                                                        <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
-                                                            Make Admin
-                                                        </li>
-
-                                                    )}
-                                                    {!member.owner && (
-                                                        <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
-                                                            Set as Project Owner
-                                                        </li>
-                                                    )}
-                                                    <li className="member-menu-li" onClick={handleClick}>
-                                                        Remove from project
-                                                    </li>
-                                                </ul>
-                                            </DropDownMenu>
-                                        )}
-                                        {showMenu && currentMember === member.id && roleInput && (
-                                            <DropDownMenu op={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
-                                                setCurrentMember(null);
-                                                setShowMenu(false)
-                                                setRoleInput(false)
-                                            }}>
-                                                <div className="role-dropdown" style={{ top: coords.top, left: coords.left }}>
-                                                    <h4 className="role-input-header" >{`What is ${member.user.firstName} ${member.user.lastName}'s role on this project?`}</h4>
-                                                    <form className="role-form">
-                                                            <input
-                                                                type="text"
-                                                                value={role}
-                                                                minLength={3}
-                                                                maxLength={20}
-                                                                onChange={(e) => setRole(e.target.value)}
-                                                                placeholder="e.g. Approver, Contributor"
-                                                                className="role-input"
-                                                            />
-                                                        <button onClick={roleSubmit(member.role)} className="role-submit">Done</button>
-                                                    </form>
-                                                    {errorRole ? <p className="errors">* {errorRole}</p> : null}
-                                                </div>
-
-                                            </DropDownMenu>
-                                        )}
-
+                                <div className="member-container"
+                                    onClick={showHandler(member.id)}
+                                    key={member.id}
+                                >
+                                    <div id="profile-button">
+                                        <p id="initials">{innerButton(member.user)}</p>
                                     </div>
+                                    <div className="member-details">
+                                        <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
+                                        <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" : member.admin ? "Admin" : "+ Add Role"}</p>{member.admin ? (<i className="fa-solid fa-user-shield"></i>) : member.owner ? (<i className="fa-solid fa-shield"></i>) : null}</div>
+                                    </div>
+                                    <div className="member-menu-container">
+                                        <i className="fa-solid fa-angle-down"></i>
+                                    </div>
+                                    {showMenu && currentMember === member.id && !roleInput && (
+                                        <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                                            setCurrentMember(null);
+                                            setShowMenu(false)
+                                        }}>
+                                            <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
+                                                <li className="member-menu-li"
+                                                    style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                                                    onClick={() => {
+                                                        if (member.role) setRole(member.role)
+                                                        setRoleInput(true)
+                                                    }}
+                                                >
+                                                    {member.role ? "Change Role" : "Add Role"}
+                                                </li>
+                                                <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => {
+                                                    dispatch(memberAdminPut(member.id)).then((data) => {
+                                                        if (data) {
+                                                            setErrorAdmin(data.error)
+                                                        } else {
+                                                            setCurrentMember(null);
+                                                            setShowMenu(false)
+                                                            return
+                                                        }
+                                                    })
+                                                }}>
+                                                    {!member.admin && !member.owner ? "Make Admin" : "Remove as Admin"}
+                                                </li>
+                                                {!member.owner && (
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
+                                                        Set as Project Owner
+                                                    </li>
+                                                )}
+                                                <li className="member-menu-li" onClick={handleClick}>
+                                                    Remove from project
+                                                </li>
+                                            </ul>
+                                        </DropDownMenu>
+                                    )}
+                                    {showMenu && currentMember === member.id && roleInput && (
+                                        <DropDownMenu op={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                                            setCurrentMember(null);
+                                            setShowMenu(false)
+                                            setRoleInput(false)
+                                        }}>
+                                            <div className="role-dropdown" style={{ top: coords.top, left: coords.left }}>
+                                                <h4 className="role-input-header" >{`What is ${member.user.firstName} ${member.user.lastName}'s role on this project?`}</h4>
+                                                <form className="role-form">
+                                                    <input
+                                                        type="text"
+                                                        value={role}
+                                                        minLength={3}
+                                                        maxLength={20}
+                                                        onChange={(e) => setRole(e.target.value)}
+                                                        placeholder="e.g. Approver, Contributor"
+                                                        className="role-input"
+                                                    />
+                                                    <button onClick={roleSubmit(member.role)} className="role-submit">Done</button>
+                                                </form>
+                                                {errorRole ? <p className="errors">* {errorRole}</p> : null}
+                                            </div>
+
+                                        </DropDownMenu>
+                                    )}
+
+                                </div>
                             )
                         })}
                     </div>

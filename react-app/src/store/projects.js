@@ -151,6 +151,22 @@ export const memberRolePut = (memberId, role) => async (dispatch) => {
     }
 }
 
+export const memberAdminPut = (memberId) => async (dispatch) => {
+    const res = await fetch(`/api/team/admin/${memberId}`, {
+        method: "PUT"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    } else {
+        return data
+    }
+}
+
+
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
