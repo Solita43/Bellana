@@ -22,4 +22,4 @@ class TeamMemberForm(FlaskForm):
     userId = StringField("userId", validators=[DataRequired(), user_exists])
     projectId = IntegerField("projectId", validators=[DataRequired(), project_exists])
     role = StringField("details")
-    admin = BooleanField("admin", validators=[DataRequired()])
+    admin = BooleanField("admin")

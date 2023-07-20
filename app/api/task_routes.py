@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 from app.models import db, Task, Board, Card
 from app.forms import TaskForm
 from .auth_routes import validation_errors_to_error_messages
+from .utils import is_owner_admin
+
 
 
 task_routes = Blueprint("tasks", __name__)
@@ -60,6 +62,9 @@ def create_task(cardId):
 
     if not card:
         return {"error": "Card not found..."}, 404
+    
+    if not is_owner_admin(current_user.id, card.board.project_id):
+        return {"error": "Unauthorized"}, 401
 
     form = TaskForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
@@ -86,6 +91,8 @@ def change_status(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
+    if not is_owner_admin(current_user.id, task.board.project_id):
+        return {"error": "Unauthorized"}, 401
     
     task.status = not task.status
     db.session.commit()
@@ -99,7 +106,7 @@ def edit_task(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
-    if current_user.id != task.board.project.owner_id:
+    if not is_owner_admin(current_user.id, task.board.project_id):
         return {"error": "Unauthorized"}, 401
     
     form = TaskForm()
@@ -122,7 +129,7 @@ def delete_task(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
-    if current_user.id != task.board.project.owner_id:
+    if not is_owner_admin(current_user.id, task.board.project_id):
         return {"error": "Unauthorized"}, 401
     
     db.session.delete(task)

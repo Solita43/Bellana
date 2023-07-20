@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { taskPost } from "../../store/boardTasks";
 import Task from "./Task";
+import { useParams } from "react-router-dom";
 
 function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setTasksOrders }) {
+    const {projectId} = useParams();
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
-    const tasks = useSelector(state => state.boardTasks)
+    const tasks = useSelector(state => state.boardTasks);
+	const sessionUser = useSelector(state => state.session.user);
+    const member = useSelector(state => state.projects[projectId].team[sessionUser.id]);
+
     // const taskOrder = useSelector(state => state.cards[board][column].tasks)
 
     const dispatch = useDispatch();
@@ -68,7 +73,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
                                 placeholder="New Task"
 
                             /></div>) : null}
-                            <button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>
+                            {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>): null}
                         </>
                     )
                 }}
@@ -108,7 +113,7 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
 
                         /></div>) : null}
 
-                        <button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>
+                        {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>): null}
                     </div>
                 )
             }}

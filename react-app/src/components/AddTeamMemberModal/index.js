@@ -59,9 +59,9 @@ function AddTeamMemberModal({ projectId }) {
             userId: chosenMember.id,
             projectId,
             role,
-            admin
+            admin: admin
         }
-        console.log(new_member)
+
         dispatch(memberCreate(new_member)).then(closeModal)
     }
     const ulClassName = "search-dropdown" + (showSearch ? "" : " hidden");
@@ -86,7 +86,7 @@ function AddTeamMemberModal({ projectId }) {
             <h1>Add a New Team Member</h1>
             <div className="member-search-choose">
                 <div className="member-filter">
-                    <label htmlfor="member-search" style={{width: "100%"}} >
+                    <label htmlFor="member-search" style={{width: "100%"}} >
                     Search Users
                     </label>
                     <input

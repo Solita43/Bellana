@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { taskPut, taskStatus, taskDelete } from "../../store/boardTasks";
 import { DropDownMenu } from "../../context/Modal";
+import { useParams } from "react-router-dom";
+
 
 function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, innerRef, setTasksOrders, taskOrders, column, index }) {
+    const {projectId} = useParams();
     const [coords, setCoords] = useState({});
     const [showMenu, setShowMenu] = useState(false);
     const task = useSelector(state => state.boardTasks[taskId]);
@@ -11,6 +14,8 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
     const [errors, setErrors] = useState({});
     const [editFocus, setEditFocus] = useState(false);
     const [taskdetail, setTaskDetail] = useState(task?.details);
+    const sessionUser = useSelector(state => state.session.user);
+    const member = useSelector(state => state.projects[projectId].team[sessionUser.id]);
 
 
     useEffect(() => {
@@ -148,11 +153,11 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                         }}></i>
                     </div>
                     <p className="task-details"> {task.details}</p>
-                    <button id={`ellipse-${task.id}`} className="hidden"
+                    {member.owner || member.admin ? (<button id={`ellipse-${task.id}`} className="hidden"
                         onClick={showHandler(task.id)}
                         onWheel={leaveHandler}>
                         <i className="fa-solid fa-ellipsis"></i>
-                    </button>
+                    </button>): null}
 
                 </div>
             )}

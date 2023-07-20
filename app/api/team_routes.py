@@ -21,7 +21,6 @@ def create_member(projectId):
     form = TeamMemberForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
-
     if form.validate():
         new_member = TeamMember(user_id=form.data["userId"],
                                 project_id=form.data["projectId"],
