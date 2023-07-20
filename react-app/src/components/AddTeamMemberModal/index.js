@@ -30,7 +30,7 @@ function AddTeamMemberModal({ projectId }) {
     }, [dispatch])
 
     const openMenu = () => {
-        if (showSearch) return;
+        if (showSearch);
         setShowSearch(true);
     };
 
@@ -86,19 +86,24 @@ function AddTeamMemberModal({ projectId }) {
             <h1>Add a New Team Member</h1>
             <div className="member-search-choose">
                 <div className="member-filter">
+                    <label htmlfor="member-search" style={{width: "100%"}} >
+                    Search Users
+                    </label>
                     <input
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="Search by first name"
                         onClick={openMenu}
+                        id="member-search"
 
                     ></input>
+
                     <div className="search-dropdown-container">
                         <ul className={ulClassName} ref={ulRef}>
                             {users.map(user => {
                                 return (
-                                    <li key={user.id} onClick={() => {
+                                    <li key={user.id} className="member-search-li" onClick={() => {
                                         setChosenMember(user)
                                         setShowSearch(false)
                                     }}>
@@ -113,7 +118,7 @@ function AddTeamMemberModal({ projectId }) {
 
                 </div>
                 <div className="chosen-member-wrapper">
-                    <h4>New Member Preview</h4>
+                    <p style={{ paddingBottom: ".5rem" }} >New Member Preview</p>
 
                     {chosenMember ? (
                         <div className="current-member-container">
@@ -135,14 +140,14 @@ function AddTeamMemberModal({ projectId }) {
             </div>
             <form onSubmit={handleSubmit} >
                 <div id="member-form">
-                    <label>
+                    <label className="member-role-input">
                         Role
                         <input
                             type="text"
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                             minLength={4}
-                            className="member-role"
+
                         />
                     </label>
                     <div className="member-admin">

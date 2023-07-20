@@ -63,8 +63,8 @@ function SingleProjectDash() {
                 <div className="team-container">
                     <h3 className="team-title">Project Team</h3>
                     <div className="members-wrapper">
-                    {(project.team[user.id].admin || project.team[user.id].owner) && <OpenModalButton className="add-team-member" modalComponent={<AddTeamMemberModal projectId={projectId} />} buttonText={<><i className="fa-solid fa-plus team"></i> Add Member</>}  />}
-                        {Object.values(project.team).length && Object.values(project.team).sort((a,b) => {
+                        {(project.team[user.id].admin || project.team[user.id].owner) && <OpenModalButton className="add-team-member" modalComponent={<AddTeamMemberModal projectId={projectId} />} buttonText={<><i className="fa-solid fa-plus team"></i> Add Member</>} />}
+                        {Object.values(project.team).length && Object.values(project.team).sort((a, b) => {
                             if (a.owner) return -1
                             if (a.admin && (!b.owner || !b.admin)) return -1
                             return 1
@@ -79,7 +79,7 @@ function SingleProjectDash() {
                                         </div>
                                         <div className="member-details">
                                             <p className="member-name">{member.user.firstName} {member.user.lastName}</p>
-                                            <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" :member.admin ? "Admin": "+ Add Role"}</p>{member.admin ? (<i className="fa-solid fa-user-shield"></i>): member.owner ? (<i className="fa-solid fa-shield"></i>): null}</div>
+                                            <div className="member-role"><p>{member.role ? member.role : member.owner ? "Project Owner" : member.admin ? "Admin" : "+ Add Role"}</p>{member.admin ? (<i className="fa-solid fa-user-shield"></i>) : member.owner ? (<i className="fa-solid fa-shield"></i>) : null}</div>
                                         </div>
                                         <div className="member-menu-container">
                                             <i className="fa-solid fa-angle-down"></i>
@@ -96,12 +96,17 @@ function SingleProjectDash() {
                                                     >
                                                         {member.role ? "Change Role" : "Add Role"}
                                                     </li>
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
-                                                        {member.admin ? null : "Make Admin"}
-                                                    </li>
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
-                                                        {member.owner ? null : "Set as Project Owner"}
-                                                    </li>
+                                                    {!member.admin && !member.owner && (
+                                                        <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
+                                                            Make Admin
+                                                        </li>
+
+                                                    )}
+                                                    {!member.owner && (
+                                                        <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
+                                                            Set as Project Owner
+                                                        </li>
+                                                    )}
                                                     <li className="member-menu-li" onClick={handleClick}>
                                                         Remove from project
                                                     </li>

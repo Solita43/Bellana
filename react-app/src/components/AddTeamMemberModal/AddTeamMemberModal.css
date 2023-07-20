@@ -39,7 +39,6 @@ input[type="checkbox"]:checked + .switch {
   width: 100%;
   height: max-content;
   align-self: center;
-  align-items: center;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -55,7 +54,6 @@ input[type="checkbox"]:checked + .switch {
 #member-form {
   display: flex;
   gap: 0.5rem;
-  border: blue solid 2px;
   width: 100%;
 }
 
@@ -72,64 +70,76 @@ input[type="checkbox"]:checked + .switch {
   padding: 0.6rem;
 }
 
+.member-role-input {
+  align-self: flex-start;
+  padding-top: .5rem;
+}
+
 .member-search-choose {
   display: flex;
   width: 100%;
-  border: red solid 2px;
   justify-content: space-between;
   height: 100px;
   padding: 0 0.4rem;
 }
 
 .chosen-member-wrapper {
-    border: green solid 2px;
-    padding: 0 .3rem;
-    display: flex;
-    width: 50%;
-    flex-direction: column;
-    align-items: center;
-    /* gap: .5rem */
+  padding: 0 0.3rem;
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  /* align-items: center; */
+  /* gap: .5rem */
 }
 
 .none-chosen {
-    font-size: .9rem;
-    max-width: 70%;
-    opacity: .4;
-    font-weight: bold;
-    text-align: center;
+  font-size: 0.9rem;
+  max-width: 70%;
+  opacity: 0.4;
+  font-weight: bold;
+  text-align: center;
 }
 
 .member-filter {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 48%;
-    border: yellow solid 2px;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  width: 48%;
+  /* padding-top: .5rem; */
 }
 
-.member-filter > input{
-    width: 90%;
+.member-filter > input {
+  width: 95%;
+  cursor: pointer;
+
 }
 .member-filter > input:focus-visible {
-    box-shadow: none;
+  box-shadow: none;
 }
-
 
 .search-dropdown-container {
-    position: relative;
-    width: 90%;
-    display: flex;
-    justify-content:  center;
-    height: 80%;
+  position: relative;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  height: 80%;
 }
 .search-dropdown {
-    border: 0.03rem solid var(--main-pink);
-    border-top: none;
-    top: -3%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    background-color: white;
-    z-index: 999;
+  border: 0.03rem solid var(--main-pink);
+  border-top: none;
+  top: -4%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: white;
+  z-index: 999;
+}
+
+.member-search-li {
+  padding-left: .5rem;
+}
+
+.member-search-li:hover {
+  background-color: #fdc1c8a6;
 }
