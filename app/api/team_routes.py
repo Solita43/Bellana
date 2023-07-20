@@ -95,6 +95,28 @@ def transfer_ownership(memberId):
     db.session.commit()
         
     return {"NewOwner": member.to_dict(), "OldOwner": owner.to_dict()}
+
+@team_routes.route('/<int:memberId>', methods=["DELETE"])
+@login_required
+def remove_member(memberId):
+    member = TeamMember.query.get(memberId)
+
+    if not member:
+        return {"error": "Team Member not found"}, 404
+    
+    if is_owner_admin(current_user.id, member.project_id) != "owner":
+        return {"error": "Unauthorized"}, 401
+    
+    if member.owner:
+        return {"error": "You must tranfer ownership of this project before you remove yourself."}
+    
+    db.session.delete(member)
+    db.session.commit()
+
+    return {"message": "User successfully removed from project."}
+    
+    
+
     
     
     
