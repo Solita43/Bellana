@@ -165,6 +165,21 @@ export const memberAdminPut = (memberId) => async (dispatch) => {
     }
 }
 
+export const memberOwnerPut = (memberId) => async (dispatch) => {
+    const res = await fetch(`/api/team/transfer_owner/${memberId}`, {
+        method: "PUT"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data.NewOwner))
+        dispatch(createMember(data.OldOwner))
+    } else {
+        return data
+    }
+}
+
 
 
 const initialState = {};

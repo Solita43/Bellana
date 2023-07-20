@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateResourceModal from "../CreateResourceModal";
 import resourcesSVG from './resources.svg';
-import { memberAdminPut, memberRolePut, resourceDelete } from "../../store/projects";
+import { memberAdminPut, memberOwnerPut, memberRolePut, resourceDelete } from "../../store/projects";
 import "./SingleProjectDash.css"
 import { DropDownMenu } from "../../context/Modal";
 import AddTeamMemberModal from "../AddTeamMemberModal";
@@ -131,7 +131,7 @@ function SingleProjectDash() {
                                                 >
                                                     {member.role ? "Change Role" : "Add Role"}
                                                 </li>
-                                                <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => {
+                                                {!member.owner && (<li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => {
                                                     dispatch(memberAdminPut(member.id)).then((data) => {
                                                         if (data) {
                                                             setErrorAdmin(data.error)
@@ -142,10 +142,10 @@ function SingleProjectDash() {
                                                         }
                                                     })
                                                 }}>
-                                                    {!member.admin && !member.owner ? "Make Admin" : "Remove as Admin"}
-                                                </li>
+                                                    {!member.admin ? "Make Admin" :"Remove as Admin"}
+                                                </li>)}
                                                 {!member.owner && (
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={handleClick}>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}>
                                                         Set as Project Owner
                                                     </li>
                                                 )}

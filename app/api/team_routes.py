@@ -75,6 +75,30 @@ def change_admin_status(memberId):
     db.session.commit()
     return member.to_dict(), 201
 
+@team_routes.route('/transfer_owner/<int:memberId>', methods=["PUT"])
+@login_required
+def transfer_ownership(memberId):
+    member = TeamMember.query.get(memberId)
+    owner = TeamMember.query.filter(TeamMember.project_id == member.project_id, TeamMember.owner == True).first()
+
+    if not member:
+        return {"error": "Team Member not found"}, 404
+    
+    if is_owner_admin(current_user.id, member.project_id) != "owner":
+        return {"error": "Unauthorized"}, 401
+    
+    if member.admin:
+        member.admin=False
+    member.owner=True
+    owner.owner=False
+
+    db.session.commit()
+        
+    return {"NewOwner": member.to_dict(), "OldOwner": owner.to_dict()}
+    
+    
+    
+
         
 
 
