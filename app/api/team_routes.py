@@ -56,6 +56,25 @@ def update_role(memberId):
         return member.to_dict(), 201
     else: 
         return {"error": "Role cannot be greater than 20 characters"}
+    
+@team_routes.route('/admin/<int:memberId>', methods=["PUT"])
+@login_required
+def change_admin_status(memberId):
+    member = TeamMember.query.get(memberId)
+
+    if not member:
+        return {"error": "Team Member not found"}, 404
+    
+    if is_owner_admin(current_user.id, member.project_id) != "owner":
+        return {"error": "Unauthorized"}, 401
+    
+    if is_owner_admin(current_user.id, member.project_id) == "owner" and member.owner:
+        return {"error": "Owner cannot have admin status as well."}, 400
+    
+    member.admin = not member.admin
+    db.session.commit()
+    return member.to_dict(), 201
+
         
 
 
