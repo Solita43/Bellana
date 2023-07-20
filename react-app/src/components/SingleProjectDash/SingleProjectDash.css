@@ -275,3 +275,50 @@
   border: dashed var(--main-pink) .1rem;
 
 }
+
+.role-dropdown {
+  position: absolute;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+  border-radius: .3rem;
+  padding: .5rem;
+  max-width: max-content;
+}
+
+.role-form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.role-submit {
+  background-color: var(--main-pink);
+  border: none;
+  align-self: center;
+  padding: 0 0.3rem;
+  margin-top: 0.5rem;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.role-input {
+  width: 100%;
+  font-size: .8rem;
+  box-shadow: var(--light-gray) 0rem 0rem .1rem;
+  border: none;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+}
+
+.role-input:focus-visible {
+  box-shadow: var(--light-gray) 0rem 0rem .3rem;
+
+}
+
+.role-input-header {
+  font-size: .8rem;
+  padding-bottom: .4rem;
+}

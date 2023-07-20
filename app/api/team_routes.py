@@ -50,11 +50,7 @@ def update_role(memberId):
     
     data = request.get_json()
 
-    if len(data["role"]) == 0:
-        member.role = None
-        db.session.commit()
-        return member.to_dict(), 201
-    elif len(data["role"]) <= 20:
+    if not data["role"] or len(data["role"]) <= 20:
         member.role = data["role"]
         db.session.commit()
         return member.to_dict(), 201

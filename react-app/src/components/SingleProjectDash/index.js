@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateResourceModal from "../CreateResourceModal";
 import resourcesSVG from './resources.svg';
-import { resourceDelete } from "../../store/projects";
+import { memberRolePut, resourceDelete } from "../../store/projects";
 import "./SingleProjectDash.css"
 import { DropDownMenu } from "../../context/Modal";
 import AddTeamMemberModal from "../AddTeamMemberModal";
@@ -17,6 +17,9 @@ function SingleProjectDash() {
     const [currentMember, setCurrentMember] = useState(null)
     const [coords, setCoords] = useState({});
     const [showMenu, setShowMenu] = useState(false);
+    const [roleInput, setRoleInput] = useState(false);
+    const [role, setRole] = useState("")
+    const [errorRole, setErrorRole] = useState("")
 
     if (!project) return null;
 
@@ -33,6 +36,10 @@ function SingleProjectDash() {
         e.preventDefault();
         e.stopPropagation();
 
+        if (currentMember === id) return
+
+
+        if (roleInput) setRoleInput(false)
         setCurrentMember(id);
         setShowMenu(true);
 
@@ -46,6 +53,29 @@ function SingleProjectDash() {
     const handleClick = (e) => {
         window.alert("Feature coming soon...")
     }
+
+    const roleSubmit = (memberRole) => (e) => {
+        e.preventDefault()
+
+        if ((!role && !memberRole) || (role && role.trim() === memberRole)) {
+            setCurrentMember(null);
+            setShowMenu(false)
+            setRoleInput(false)
+            return
+        }
+
+        dispatch(memberRolePut(currentMember, {role})).then((data) => {
+            if (data) {
+                setErrorRole(data.error)
+            } else {
+                setCurrentMember(null);
+                setShowMenu(false)
+                setRoleInput(false)
+                return 
+            }
+        })
+    }
+
 
     return (
         <div className="main-container">
@@ -70,9 +100,9 @@ function SingleProjectDash() {
                             return 1
                         }).map(member => {
                             return (
-                                <>
                                     <div className="member-container"
                                         onClick={showHandler(member.id)}
+                                        key={member.id}
                                     >
                                         <div id="profile-button">
                                             <p id="initials">{innerButton(member.user)}</p>
@@ -84,7 +114,7 @@ function SingleProjectDash() {
                                         <div className="member-menu-container">
                                             <i className="fa-solid fa-angle-down"></i>
                                         </div>
-                                        {showMenu && currentMember === member.id && (
+                                        {showMenu && currentMember === member.id && !roleInput && (
                                             <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
                                                 setCurrentMember(null);
                                                 setShowMenu(false)
@@ -92,7 +122,10 @@ function SingleProjectDash() {
                                                 <ul id={`member-menu-${member.id}`} className="member-menu" style={{ top: coords.top, left: coords.left }}>
                                                     <li className="member-menu-li"
                                                         style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
-                                                        onClick={handleClick}
+                                                        onClick={() => {
+                                                            if (member.role) setRole(member.role)
+                                                            setRoleInput(true)
+                                                        }}
                                                     >
                                                         {member.role ? "Change Role" : "Add Role"}
                                                     </li>
@@ -113,8 +146,33 @@ function SingleProjectDash() {
                                                 </ul>
                                             </DropDownMenu>
                                         )}
+                                        {showMenu && currentMember === member.id && roleInput && (
+                                            <DropDownMenu op={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                                                setCurrentMember(null);
+                                                setShowMenu(false)
+                                                setRoleInput(false)
+                                            }}>
+                                                <div className="role-dropdown" style={{ top: coords.top, left: coords.left }}>
+                                                    <h4 className="role-input-header" >{`What is ${member.user.firstName} ${member.user.lastName}'s role on this project?`}</h4>
+                                                    <form className="role-form">
+                                                            <input
+                                                                type="text"
+                                                                value={role}
+                                                                minLength={3}
+                                                                maxLength={20}
+                                                                onChange={(e) => setRole(e.target.value)}
+                                                                placeholder="e.g. Approver, Contributor"
+                                                                className="role-input"
+                                                            />
+                                                        <button onClick={roleSubmit(member.role)} className="role-submit">Done</button>
+                                                    </form>
+                                                    {errorRole ? <p className="errors">* {errorRole}</p> : null}
+                                                </div>
+
+                                            </DropDownMenu>
+                                        )}
+
                                     </div>
-                                </>
                             )
                         })}
                     </div>

@@ -64,7 +64,10 @@ export function DropDownMenu({ top, left, onClose, children }) {
     const closeMenu = (e) => {
       // If the area on the page clicked does not contain the value in ulRef.current, close the menu.
       if (!portalRef.current.contains(e.target)) {
+
         onClose();
+      } else {
+        return
       }
     };
 
