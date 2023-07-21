@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 
 function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, innerRef, setTasksOrders, taskOrders, column, index }) {
-    const {projectId} = useParams();
+    const { projectId } = useParams();
     const [coords, setCoords] = useState({});
     const [showMenu, setShowMenu] = useState(false);
     const task = useSelector(state => state.boardTasks[taskId]);
@@ -32,7 +32,9 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
         window.alert("Feature Coming Soon...")
     }
 
-
+    const innerButton = (user) => {
+        return `${user.firstName[0]}${user.lastName[0]}`
+    }
 
     const changeStatus = (taskId) => {
         dispatch(taskStatus(taskId)).then(data => {
@@ -74,8 +76,8 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
             left: rect.x,
             top: rect.y + 25 + window.scrollY
         });
-        
-        document.addEventListener('scroll', (event) => {setShowMenu(false)});
+
+        document.addEventListener('scroll', (event) => { setShowMenu(false) });
     }
 
     const leaveHandler = (e) => {
@@ -113,7 +115,6 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
         <div key={taskId} className="kanban-task-container" ref={innerRef}
             {...draggable}
             {...dragHandle}
-            onClick={handleClick}
             onMouseOver={() => {
                 const buttonbox = document.getElementById(`ellipse-${taskId}`);
                 if (buttonbox) {
@@ -126,70 +127,83 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
                     buttonbox.className = "hidden"
                 }
             }}
-            >
-            {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
-                type="text"
-                value={taskdetail}
-                maxLength={255}
-                minLength={1}
-                onChange={(e) => setTaskDetail(e.target.value)}
-                onBlur={handleInputBlur}
-                onKeyPress={handleInputKeyPress}
-                className="task-details"
-                onClick={(e) => e.stopPropagation()}
-                id="edit-task"
-                onFocus={e => e.target.select()}
+        >
+            <div>
+                {editFocus ? (<><i className="fa-regular fa-circle-check"></i><input
+                    type="text"
+                    value={taskdetail}
+                    maxLength={255}
+                    minLength={1}
+                    onChange={(e) => setTaskDetail(e.target.value)}
+                    onBlur={handleInputBlur}
+                    onKeyPress={handleInputKeyPress}
+                    className="task-details"
+                    onClick={(e) => e.stopPropagation()}
+                    id="edit-task"
+                    onFocus={e => e.target.select()}
 
-            /></>) : (
-                <div className="task-wrapper">
-                    <div className={task.status ? "task-complete" : "not-complete"}>
-                        <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
-                            e.stopPropagation()
-                            const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                            if (buttonbox) {
-                                buttonbox.className = "hidden"
-                            }
-                            changeStatus(task.id)
-                        }}></i>
+                /></>) : (
+                    <div className="task-wrapper">
+                        <div className={task.status ? "task-complete" : "not-complete"}>
+                            <i id={`check-${task.id}`} className="fa-solid fa-check" onClick={(e) => {
+                                e.stopPropagation()
+                                const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                                if (buttonbox) {
+                                    buttonbox.className = "hidden"
+                                }
+                                changeStatus(task.id)
+                            }}></i>
+                        </div>
+                        <p className="task-details"> {task.details}</p>
+                        {member.owner || member.admin ? (<button id={`ellipse-${task.id}`} className="hidden"
+                            onClick={showHandler(task.id)}
+                            onWheel={leaveHandler}>
+                            <i className="fa-solid fa-ellipsis"></i>
+                        </button>) : null}
+
                     </div>
-                    <p className="task-details"> {task.details}</p>
-                    {member.owner || member.admin ? (<button id={`ellipse-${task.id}`} className="hidden"
-                        onClick={showHandler(task.id)}
-                        onWheel={leaveHandler}>
-                        <i className="fa-solid fa-ellipsis"></i>
-                    </button>): null}
+                )}
+                {showMenu && currentTask === task.id && (
+                    <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
+                        const buttonbox = document.getElementById(`ellipse-${taskId}`);
+                        if (buttonbox) {
+                            buttonbox.className = "hidden"
+                        }
+                        setCurrentTask(null)
+                        setShowMenu(false)
+                    }}>
+                        <button className="task-ellipse-portal" style={{ top: coords.top - 25, left: coords.left + .5 }} onClick={leaveHandler}>
+                            <i className="fa-solid fa-ellipsis"></i>
+                        </button>
+                        <ul className="task-dropdown" style={{ top: coords.top, left: coords.left }}>
+                            <li className="task-li"
+                                style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    leaveHandler(e);
+                                    setEditFocus(true)
+                                }}
+                            >
+                                <i className="fa-solid fa-pen"></i> Edit Task
+                            </li>
+                            <li className='delete-category task-li' onClick={handleDelete}>
+                                <i className="fa-regular fa-trash-can"></i> Delete Task
+                            </li>
+                        </ul>
+                    </DropDownMenu>
+                )}
+            </div>
+            <div className="assignee">
+                {task.assignee ? (
+                    <>
+                        <div className="assignee-initials">
+                            <p>{innerButton(task.assignee)}</p>
+                        </div>
+                        <p>{task.assignee.firstName} {task.assignee.lastName}</p>
+                    </>
+                ) : (<div><i class="fa-regular fa-user"></i></div>)}
+            </div>
 
-                </div>
-            )}
-            {showMenu && currentTask === task.id && (
-                <DropDownMenu top={coords.top} left={coords.left} showMenu={showMenu} onClose={() => {
-                    const buttonbox = document.getElementById(`ellipse-${taskId}`);
-                    if (buttonbox) {
-                        buttonbox.className = "hidden"
-                    }
-                    setCurrentTask(null)
-                    setShowMenu(false)
-                }}>
-                    <button className="task-ellipse-portal" style={{ top: coords.top - 25, left: coords.left + .5 }} onClick={leaveHandler}>
-                        <i className="fa-solid fa-ellipsis"></i>
-                    </button>
-                    <ul className="task-dropdown" style={{ top: coords.top, left: coords.left }}>
-                        <li className="task-li"
-                            style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                leaveHandler(e);
-                                setEditFocus(true)
-                            }}
-                        >
-                            <i className="fa-solid fa-pen"></i> Edit Task
-                        </li>
-                        <li className='delete-category task-li' onClick={handleDelete}>
-                            <i className="fa-regular fa-trash-can"></i> Delete Task
-                        </li>
-                    </ul>
-                </DropDownMenu>
-            )}
         </div>
     )
 }

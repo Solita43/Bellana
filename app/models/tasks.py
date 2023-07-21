@@ -18,7 +18,7 @@ class Task(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     card = db.relationship("Card", back_populates="tasks")
-    user = db.relationship("User", back_populates="tasks")
+    assignee = db.relationship("User", back_populates="tasks")
     board = db.relationship("Board", back_populates="tasks")
 
     def to_dict(self):
@@ -30,5 +30,5 @@ class Task(db.Model):
             'order': self.order,
             'createdAt': self.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
             'updatedAt': self.updated_at.strftime("%m/%d/%Y, %H:%M:%S"),
-            "assignee": self.user.to_dict()
+            "assignee": self.assignee.to_dict()
         }

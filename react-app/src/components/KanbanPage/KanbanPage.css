@@ -13,7 +13,6 @@
   position: relative;
 }
 
-
 .card-info-wrapper {
   height: max-content;
   display: flex;
@@ -117,11 +116,15 @@
   box-shadow: var(--background-color) 0 0 0.5rem;
   border-radius: 0.3rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
 }
 
 .kanban-task-container:hover {
   border: solid var(--main-pink) 0.01rem;
   box-shadow: var(--main-pink) 0 0 0.4rem;
+  cursor: pointer;
 }
 
 .task-details {
@@ -240,7 +243,6 @@ li:hover {
   padding: 0.2rem 0.6rem;
   cursor: pointer;
   font-size: 0.8rem;
-  
 }
 .task-menu {
   position: relative;
@@ -264,5 +266,26 @@ li:hover {
   margin: auto;
 }
 
+.assignee-initials {
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--main-pink);
+  border-radius: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--background-color);
+  font-size: .5rem;
+  font-weight: bold;
+}
 
+
+.assignee {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .6rem;
+  padding-top: .3rem;
+}
 
