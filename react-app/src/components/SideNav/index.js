@@ -27,13 +27,14 @@ function SideNav() {
 
     return (
         <div className="side-container">
+            {/* <div className="title-dropdown-side" style={{backgroundColor: `var(--${project.color})`}}> */}
             <div className="title-dropdown-side">
                 <p className="dd-project-side-nav">{project.name}</p>
                 <ProjectDropdown projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />
             </div>
             <div className="user-nav">
                 <button onClick={() => history.push(`/project/${project.id}`)} className="project-home"><i className="fa-solid fa-house"></i> Project Home</button>
-                <button onClick={handleClick} className="my-tasks"><i className="fa-regular fa-circle-check"></i> My Tasks</button>
+                {/* <button onClick={handleClick} className="my-tasks"><i className="fa-regular fa-circle-check"></i> My Tasks</button> */}
 
             </div>
             <div className="nav-board-list">

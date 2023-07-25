@@ -30,5 +30,15 @@ class Task(db.Model):
             'order': self.order,
             'createdAt': self.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
             'updatedAt': self.updated_at.strftime("%m/%d/%Y, %H:%M:%S"),
-            "assignee": self.assignee.to_dict()
+            "assignee": self.assignee.to_dict() if self.user_id else None
+        }
+    
+    def to_dict_dash(self):
+        return {
+            'id': self.id,
+            'details': self.details,
+            'status': self.status,
+            'createdAt': self.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
+            'updatedAt': self.updated_at.strftime("%m/%d/%Y, %H:%M:%S"),
+            "project": self.board.project.to_dict()
         }

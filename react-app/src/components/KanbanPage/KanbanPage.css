@@ -193,6 +193,7 @@
 
 .fa-circle-check {
   cursor: pointer;
+  position: relative;
 }
 
 .task-complete {
@@ -267,16 +268,17 @@ li:hover {
 }
 
 .assignee-initials {
+  border-radius: 100%;
   width: 1rem;
   height: 1rem;
-  background-color: var(--main-pink);
-  border-radius: 100%;
-  border: none;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: var(--background-color);
+  align-items: center;
+  padding: 0.4rem;
   font-size: .5rem;
+  color: var(--background-color);
+  background-color: var(--main-pink);
+  position: relative;
   font-weight: bold;
 }
 
@@ -287,5 +289,54 @@ li:hover {
   gap: .3rem;
   font-size: .6rem;
   padding-top: .3rem;
+  position: relative
 }
 
+.unassigned {
+  border: dashed var(--background-color) .01rem;
+  border-radius: 100%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem;
+  font-size: .5rem;
+  color: var(--background-color);
+  position: relative;
+}
+
+.kanban-task-container:hover .unassigned {
+  color: var(--dull-white);
+  border: dashed var(--dull-white) .01rem;
+
+}
+
+.unassigned:hover {
+  background-color: #2a2e31;
+}
+
+.assign-member {
+  position: absolute;
+  background-color: var(--background-color);
+  width: max-content;
+  box-shadow: var(--dull-white) 0rem 0rem 0.08rem;
+  border-radius: 0.3rem;
+
+
+}
+
+.assign-input {
+  padding: .5rem;
+
+}
+
+.member-assign-li {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: .6rem;
+  align-items: center;
+  padding: .2rem .5rem;
+  color: var(--dull-white)
+}

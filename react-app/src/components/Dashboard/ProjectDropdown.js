@@ -31,7 +31,7 @@ function ProjectDropdown( {projectId, projectName, buttonIcon}) {
     const menuClass = projectId + " dropdown" + (showMenu ? "" : " hidden ") 
 
     return (
-        <>
+        <div className="side-nav-menu">
             <div className="dropdown-icon" onClick={openMenu}>
                 {buttonIcon}
             </div>
@@ -50,7 +50,7 @@ function ProjectDropdown( {projectId, projectName, buttonIcon}) {
                     )} onButtonClick={closeMenu} modalComponent={<DeleteProjectModal projectId={projectId} projectName={projectName} />} />
                 </li>
             </ul>
-        </>
+        </div>
 
     )
 }

@@ -32,3 +32,48 @@
   bottom: 0;
   z-index: 4;
 }
+
+.task-action-tooltip {
+    position: fixed;
+    z-index: 5;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: .6rem;
+    color: var(--dull-white);
+    text-align: center;
+    background-color: black;
+    border-radius: 6px;
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    animation: tooltip .1s ease-out;
+    transform-origin: left;
+}
+
+.task-action-tooltip:after{
+  content: " ";
+  position: absolute;
+  top: -10%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:   transparent transparent black transparent;
+}
+
+@keyframes tooltip {
+  0% {
+    opacity: 0%;
+    scale: 0.75;
+    direction: top;
+
+  }
+  100% {
+    opacity: 100%;
+    scale: 1;
+    transform-origin: top;
+  }
+}
+

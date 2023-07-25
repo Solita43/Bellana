@@ -6,12 +6,12 @@ import Task from "./Task";
 import { useParams } from "react-router-dom";
 
 function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setTasksOrders }) {
-    const {projectId} = useParams();
+    const { projectId } = useParams();
     const [inFocus, setInFocus] = useState(false);
     const [newTask, setNewTask] = useState('');
     const [errors, setErrors] = useState({})
     const tasks = useSelector(state => state.boardTasks);
-	const sessionUser = useSelector(state => state.session.user);
+    const sessionUser = useSelector(state => state.session.user);
     const member = useSelector(state => state.projects[projectId].team[sessionUser.id]);
 
     // const taskOrder = useSelector(state => state.cards[board][column].tasks)
@@ -27,12 +27,12 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
 
     const handleInputBlur = () => {
         // Send the updated information to the database
-        if (!newTask) return
+        if (!newTask) return setInFocus(false)
         else {
             dispatch(taskPost({
                 details: newTask,
             }, column)).then((data) => {
-                const newOrders = {...taskOrders}
+                const newOrders = { ...taskOrders }
                 newOrders[column] = data.card.tasks
                 setTasksOrders(newOrders)
                 setInFocus(false)
@@ -60,20 +60,22 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
                             <div className="card-info-wrapper" ref={provided.innerRef} {...provided.droppableProps} style={{ backgroundColor: snapshot.isDraggingOver ? '#f5c1c8' : 'var(--white-background)', paddingTop: "0" }}>
                                 {provided.placeholder}
                             </div>
-                            {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
-                                type="text"
-                                value={newTask}
-                                maxLength={255}
-                                minLength={1}
-                                onChange={(e) => setNewTask(e.target.value)}
-                                onBlur={handleInputBlur}
-                                onKeyPress={handleInputKeyPress}
-                                className="task-details"
-                                id="add-task"
-                                placeholder="New Task"
+                            {inFocus ? (
+                                <div className="kanban-task-container">
+                                    <input
+                                        type="text"
+                                        value={newTask}
+                                        maxLength={255}
+                                        minLength={1}
+                                        onChange={(e) => setNewTask(e.target.value)}
+                                        onBlur={handleInputBlur}
+                                        onKeyPress={handleInputKeyPress}
+                                        className="task-details"
+                                        id="add-task"
+                                        placeholder="New Task"
 
-                            /></div>) : null}
-                            {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>): null}
+                                    /></div>) : null}
+                            {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>) : null}
                         </>
                     )
                 }}
@@ -99,21 +101,27 @@ function TaskDrag({ board, column, currentTask, setCurrentTask, taskOrders, setT
 
                             {provided.placeholder}
                         </div>
-                        {inFocus ? (<div className="kanban-task-container"><i className="fa-regular fa-circle-check"></i><input
-                            type="text"
-                            value={newTask}
-                            maxLength={255}
-                            minLength={1}
-                            onChange={(e) => setNewTask(e.target.value)}
-                            onBlur={handleInputBlur}
-                            onKeyPress={handleInputKeyPress}
-                            className="task-details"
-                            id="add-task"
-                            placeholder="New Task"
+                        {inFocus ? (
+                            <div className="kanban-task-container">
+                                <div className="task-wrapper">
+                                    <input
+                                        type="text"
+                                        value={newTask}
+                                        maxLength={255}
+                                        minLength={1}
+                                        onChange={(e) => setNewTask(e.target.value)}
+                                        onBlur={handleInputBlur}
+                                        onKeyPress={handleInputKeyPress}
+                                        className="task-details"
+                                        id="add-task"
+                                        placeholder="New Task"
 
-                        /></div>) : null}
+                                    />
+                                </div>
+                            </div>
+                        ) : null}
 
-                        {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>): null}
+                        {member.owner || member.admin ? (<button className="add-task" onClick={() => setInFocus(true)}><i className="fa-solid fa-plus"></i> Add new task</button>) : null}
                     </div>
                 )
             }}

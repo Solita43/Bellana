@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import db, Task, Board, Card
+from app.models import db, Task, Board, Card, User
 from app.forms import TaskForm
 from .auth_routes import validation_errors_to_error_messages
 from .utils import is_owner_admin
@@ -14,7 +14,7 @@ task_routes = Blueprint("tasks", __name__)
 def my_tasks():
     """Query for current users tasks"""
 
-    return {task.id: task.to_dict() for task in current_user.tasks}
+    return {task.id: task.to_dict_dash() for task in current_user.tasks}
 
 @task_routes.route('/<int:boardId>')
 @login_required
@@ -73,7 +73,6 @@ def create_task(cardId):
         task = Task(
             details=form.data["details"],
             board_id=card.board_id,
-            user_id=current_user.id,
             order=len(card.tasks)
         )
 
@@ -97,7 +96,7 @@ def change_status(taskId):
     task.status = not task.status
     db.session.commit()
 
-    return {"task":{task.id: task.to_dict()}}, 201
+    return {"task":{task.id: task.to_dict()}, "myTask": {task.id: task.to_dict_dash()}}, 201
 
 @task_routes.route('/<int:taskId>', methods=["PUT"])
 @login_required
@@ -136,3 +135,29 @@ def delete_task(taskId):
     db.session.commit()
 
     return {"message": "Project has been successfully deleted."}
+
+@task_routes.route('/assign/<int:taskId>', methods=["PUT"])
+@login_required
+def assign_task(taskId):
+    task = Task.query.get(taskId)
+
+    if not task:
+        return {"error": "Task not found..."}, 404
+    if not is_owner_admin(current_user.id, task.board.project_id):
+        return {"error": "Unauthorized"}, 401
+    
+    data = request.get_json()
+
+    if data["userId"] == None:
+        task.user_id = data["userId"]
+    else:
+        user = User.query.get(data["userId"])
+
+        if not user:
+            return {"error": "User does not exist..."}, 404
+    
+        task.user_id = user.id
+
+    db.session.commit()
+
+    return {"task":{task.id: task.to_dict()}}, 201

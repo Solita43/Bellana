@@ -89,7 +89,7 @@
 .user-nav {
   box-shadow: var(--dull-white) 0 0.01rem;
   flex-direction: column;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 .dropdown {
@@ -113,4 +113,8 @@
 
 .fa-caret-down {
   cursor: pointer;
+}
+
+.side-nav-menu {
+  position: relative;
 }
