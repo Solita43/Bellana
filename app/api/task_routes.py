@@ -1,8 +1,10 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import db, Task, Board, Card
+from app.models import db, Task, Board, Card, User
 from app.forms import TaskForm
 from .auth_routes import validation_errors_to_error_messages
+from .utils import is_owner_admin
+
 
 
 task_routes = Blueprint("tasks", __name__)
@@ -12,7 +14,7 @@ task_routes = Blueprint("tasks", __name__)
 def my_tasks():
     """Query for current users tasks"""
 
-    return {task.id: task.to_dict() for task in current_user.tasks}
+    return {task.id: task.to_dict_dash() for task in current_user.tasks}
 
 @task_routes.route('/<int:boardId>')
 @login_required
@@ -60,6 +62,9 @@ def create_task(cardId):
 
     if not card:
         return {"error": "Card not found..."}, 404
+    
+    if not is_owner_admin(current_user.id, card.board.project_id):
+        return {"error": "Unauthorized"}, 401
 
     form = TaskForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
@@ -68,7 +73,6 @@ def create_task(cardId):
         task = Task(
             details=form.data["details"],
             board_id=card.board_id,
-            user_id=current_user.id,
             order=len(card.tasks)
         )
 
@@ -86,11 +90,14 @@ def change_status(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
+    if not is_owner_admin(current_user.id, task.board.project_id) and not task.user_id == current_user.id:
+        return {"error": "Unauthorized"}, 401
+    
     
     task.status = not task.status
     db.session.commit()
 
-    return {"task":{task.id: task.to_dict()}}, 201
+    return {"task":{task.id: task.to_dict()}, "myTask": {task.id: task.to_dict_dash()}}, 201
 
 @task_routes.route('/<int:taskId>', methods=["PUT"])
 @login_required
@@ -99,7 +106,7 @@ def edit_task(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
-    if current_user.id != task.board.project.owner_id:
+    if not is_owner_admin(current_user.id, task.board.project_id):
         return {"error": "Unauthorized"}, 401
     
     form = TaskForm()
@@ -122,10 +129,36 @@ def delete_task(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
-    if current_user.id != task.board.project.owner_id:
+    if not is_owner_admin(current_user.id, task.board.project_id):
         return {"error": "Unauthorized"}, 401
     
     db.session.delete(task)
     db.session.commit()
 
     return {"message": "Project has been successfully deleted."}
+
+@task_routes.route('/assign/<int:taskId>', methods=["PUT"])
+@login_required
+def assign_task(taskId):
+    task = Task.query.get(taskId)
+
+    if not task:
+        return {"error": "Task not found..."}, 404
+    if not is_owner_admin(current_user.id, task.board.project_id):
+        return {"error": "Unauthorized"}, 401
+    
+    data = request.get_json()
+
+    if data["userId"] == None:
+        task.user_id = data["userId"]
+    else:
+        user = User.query.get(data["userId"])
+
+        if not user:
+            return {"error": "User does not exist..."}, 404
+    
+        task.user_id = user.id
+
+    db.session.commit()
+
+    return {"task":{task.id: task.to_dict()}}, 201

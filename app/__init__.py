@@ -12,6 +12,7 @@ from .api.boards_routes import board_routes
 from .api.task_routes import task_routes
 from .api.cards_routes import card_routes
 from .api.resource_routes import resource_routes
+from .api.team_routes import team_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(board_routes, url_prefix='/api/boards')
 app.register_blueprint(task_routes, url_prefix='/api/tasks')
 app.register_blueprint(card_routes, url_prefix='/api/cards')
 app.register_blueprint(resource_routes, url_prefix='/api/resources')
+app.register_blueprint(team_routes, url_prefix='/api/team')
 db.init_app(app)
 Migrate(app, db)
 

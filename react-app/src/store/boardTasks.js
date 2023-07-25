@@ -107,6 +107,23 @@ export const taskDelete = (taskId) => async (dispatch) => {
     }
 }
 
+export const taskAssign = (taskId, user) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/assign/${taskId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(user)
+
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(addTask(data));
+    } else {
+        return data
+    }
+}
+
 const initialState = {}
 
 export default function reducer(state = initialState, action) {

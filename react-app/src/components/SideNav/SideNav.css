@@ -22,7 +22,8 @@
 .title-dropdown-side {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  gap: .5rem;
+  /* justify-content: space-around; */
   height: 3.3rem;
   background-color: var(--main-pink);
   color: var(--background-color);
@@ -89,7 +90,7 @@
 .user-nav {
   box-shadow: var(--dull-white) 0 0.01rem;
   flex-direction: column;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0;
 }
 
 .dropdown {
@@ -113,4 +114,20 @@
 
 .fa-caret-down {
   cursor: pointer;
+}
+
+.side-nav-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.side-project-icon {
+  font-size: .9rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  border-radius: .5rem;
 }

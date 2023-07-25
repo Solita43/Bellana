@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Project, db, Board, Card
+from app.models import Project, db, Board, Card, TeamMember
 from app.forms import ProjectForm
 from .auth_routes import validation_errors_to_error_messages
 
@@ -24,7 +24,7 @@ def user_projects():
     Return a dictionary of all projects the current user owns.
     """
 
-    return {project.id: project.to_dict() for project in current_user.projects}
+    return {project.project_id: project.project.to_dict() for project in current_user.projects}
 
 
 @project_routes.route("/", methods=["POST"])
@@ -48,6 +48,11 @@ def create_project():
         db.session.add(project)
         db.session.commit()
 
+        # Creat a TeamMember for the owner of the project
+        member = TeamMember(user_id=project.owner_id, owner=True)
+        project.team.append(member)
+        db.session.commit()
+
         #Create a default board for the new project
         board = Board(name="Feature Workflow", project_id=project.id, purpose="Track Feature Development")
         project.boards.append(board)
@@ -60,7 +65,7 @@ def create_project():
         board.cards.append(Card(category="Deployed", order=3))
         db.session.commit()
       
-        return {project.id: project.to_dict()}
+        return {project.id: project.to_dict()}, 201
     else:
         return validation_errors_to_error_messages(form.errors), 400
 
@@ -112,3 +117,27 @@ def delete_project(projectId):
     db.session.delete(project)
     db.session.commit()
     return {"message": "Project has been successfully deleted."}
+
+@project_routes.route("/color/<int:projectId>", methods=["PUT"])
+@login_required
+def change_color(projectId):
+
+    choices = {'green', 'light-pink', 'red', 'purple', 'blue'}
+
+    project = Project.query.get(projectId)
+
+    if not project:
+        return {"error": "Project not found..."}, 404
+
+    if current_user.id != project.owner_id:
+        return {"error": "Unauthorized"}, 401
+
+    data = request.get_json()
+
+    if data["color"] not in choices:
+        return {"error": "Not a valid color choice..."}, 404
+    
+    project.color = data["color"]
+    db.session.commit()
+
+    return {project.id: project.to_dict()}, 201

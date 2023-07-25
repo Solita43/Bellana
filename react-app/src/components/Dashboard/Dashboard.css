@@ -19,15 +19,14 @@
   flex-direction: column;
   padding: 1.5rem;
   border-radius: 1rem;
-  box-shadow: var(--light-gray) 0rem 0rem .5rem;
+  box-shadow: var(--light-gray) 0rem 0rem 0.5rem;
   height: 28rem;
   background-color: #ffffff0f;
   color: var(--dull-white);
 }
 
 .dash-projects:hover {
-  border: .1rem var(--light-gray) solid;
-
+  border: 0.1rem var(--light-gray) solid;
 }
 
 .projects-wrapper {
@@ -50,7 +49,6 @@
   gap: 0.5rem;
   align-items: center;
   height: max-content;
-
 }
 
 .task-container {
@@ -65,7 +63,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   height: 4.5rem;
-
 }
 
 .dash-welcome {
@@ -96,10 +93,9 @@
   padding: 1rem;
   display: flex;
   align-items: center;
-  gap: .6rem;
-  opacity: .8;
+  gap: 0.6rem;
+  opacity: 0.8;
   height: max-content;
-
 }
 
 .create-project-dash:hover,
@@ -107,12 +103,11 @@
 .task-container:hover {
   box-shadow: var(--light-gray) 0rem 0rem 0.3rem;
   opacity: 1;
-  color: whitesmoke
+  color: whitesmoke;
 }
 
 .project-icon {
-  background-color: var(--main-pink);
-  color: var(--background-color);
+  color: white;
   padding: 0.4rem;
   border-radius: 30%;
   min-width: 2.5rem;
@@ -128,9 +123,9 @@
 }
 
 .fa-solid.fa-plus.home {
-  border: whitesmoke dashed .1rem;
+  border: whitesmoke dashed 0.1rem;
   color: whitesmoke;
-  padding: .8rem;
+  padding: 0.8rem;
   border-radius: 0.7rem;
   width: 2.5rem;
   height: 2.5rem;
@@ -150,4 +145,98 @@
 .dash-projects-title {
   font-size: 1.7rem;
   text-align: center;
+}
+
+.dash-task-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: hsla(0, 0%, 100%, 0.259) 0.01rem solid;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+}
+.tab {
+  position: relative;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  border: none;
+  border-radius: 0.3rem;
+  background-color: whitesmoke;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-in;
+  opacity: 0.9;
+}
+
+.tab:hover {
+  background-color: transparent;
+  font-weight: bold;
+  color: whitesmoke;
+  opacity: 0.9;
+}
+
+.tab:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.tab-focus {
+  background-color: transparent;
+  font-weight: bold;
+  color: whitesmoke;
+  border-bottom: 1px white solid;
+}
+
+.tab-focus:hover {
+  background-color: transparent;
+}
+
+.dash-task {
+  display: flex;
+  width: 95%;
+  border-bottom: hsla(0, 0%, 100%, 0.259) 0.01rem solid;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem;
+  cursor: default;
+}
+
+.dash-task:hover {
+  background-color: transparent;
+}
+
+.dash-task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5rem;
+  overflow-y: auto;
+}
+
+.task-project {
+  border-radius: 2rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.dash-project-dropdown {
+  position: absolute;
+  z-index: 999;
+}
+
+.color {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.set-color-li {
+  position: relative;
 }

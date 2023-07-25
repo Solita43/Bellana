@@ -83,12 +83,12 @@
 
 .delete-resource {
   color: var(--background-color);
-  opacity: .5;
+  opacity: 0;
   cursor: pointer;
   font-size: .85rem;
 }
 
-.delete-resource:hover {
+.resource-container:hover .delete-resource {
   color: rgb(255, 0, 0);
   opacity: 1;
 }
@@ -140,21 +140,38 @@
   gap: 0.5rem;
   height: auto;
   align-items: center;
-  padding-left: 0.8rem;
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: .5rem;
+  position: relative;
 }
+
+.member-container:hover {
+  box-shadow: var(--main-pink) 0 0 .2rem;
+}
+
 
 .member-details {
   line-height: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 1px;
 }
 
 .member-name {
   font-size: 0.9rem;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .member-role {
   font-size: 0.7rem;
   opacity: 0.7;
+  display: flex;
+  gap: .2rem;
 }
 
 .single-project-title {
@@ -192,4 +209,116 @@
 .add-first-resource:hover {
   opacity: 1;
   font-weight: bold;
+}
+
+.members-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-left: .8rem
+}
+
+.fa-angle-down {
+  font-size: .8rem;
+  color: var(--white-background)
+}
+
+.member-container:hover .fa-angle-down {
+  color: var(--background-color)
+}
+
+.member-menu-container {
+  position: relative;
+}
+
+.member-menu {
+  position: absolute;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+  border-radius: .3rem;
+  padding: .2rem 0;
+  max-width: max-content;
+}
+
+.member-menu-li {
+  width: 100%;
+  padding: 0 .5rem;
+  font-size: .8rem;
+}
+
+.add-team-member {
+  background-color: transparent;
+  border: none;
+  color: var(--background-color);
+  padding: .5rem;
+  border-radius: .5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: .7;
+  display: flex;
+  align-items: center;
+  gap: .5rem
+}
+
+.team {
+  border: dashed var(--background-color) .1rem;
+  border-radius: 0.7rem;
+  padding: .65rem;
+}
+
+.add-team-member:hover {
+  opacity: 1;
+  color: var(--main-pink);
+}
+
+.add-team-member:hover .team {
+  border: dashed var(--main-pink) .1rem;
+
+}
+
+.role-dropdown {
+  position: absolute;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+  border-radius: .3rem;
+  padding: .5rem;
+  max-width: max-content;
+}
+
+.role-form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.role-submit {
+  background-color: var(--main-pink);
+  border: none;
+  align-self: center;
+  padding: 0 0.3rem;
+  margin-top: 0.5rem;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.role-input {
+  width: 100%;
+  font-size: .8rem;
+  box-shadow: var(--light-gray) 0rem 0rem .1rem;
+  border: none;
+  background-color: var(--background-color);
+  color: var(--dull-white);
+}
+
+.role-input:focus-visible {
+  box-shadow: var(--light-gray) 0rem 0rem .3rem;
+
+}
+
+.role-input-header {
+  font-size: .8rem;
+  padding-bottom: .4rem;
 }
