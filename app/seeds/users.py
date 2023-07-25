@@ -29,6 +29,13 @@ def seed_users():
     db.session.add(marnie)
     db.session.add(bobbie)
     db.session.add(mel)
+    db.session.add(jane)
+    db.session.add(Alfonso)
+    db.session.add(Jennifer)
+    db.session.add(phil)
+    db.session.add(Bella)
+    db.session.add(nikki)
+
     db.session.commit()
 
 
