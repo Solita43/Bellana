@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import CreateProjectModal from "../CreateProjectModal";
-import { DropDownMenu } from "../../context/Modal";
+import { ColorMenu, DropDownMenu } from "../../context/Modal";
 import DeleteProjectModal from "../DeleteProjectModal";
 import EditProjectDetails from "../EditProjectDetails";
+import { useDispatch } from "react-redux";
+import { colorPut } from "../../store/projects";
 
 
 
@@ -13,10 +15,14 @@ function MyProjects({ projects }) {
     const [showMenu, setShowMenu] = useState(false);
     const [currentProject, setCurrentProject] = useState(null);
     const [coords, setCoords] = useState({});
+    const [showColorMenu, setShowColorMenu] = useState(false);
+    const [colorCoords, setColorCoords] = useState({});
+    const dispatch = useDispatch();
+
+
 
     const showHandler = (id) => (e) => {
         e.preventDefault();
-        e.stopPropagation();
         if (showMenu) {
             return setShowMenu(false)
         }
@@ -30,6 +36,24 @@ function MyProjects({ projects }) {
         });
 
         document.addEventListener('scroll', (event) => { setShowMenu(false) });
+    }
+
+    const colorShowHandler = (e) => {
+        e.preventDefault();
+
+        setShowColorMenu(true);
+        const rect = e.currentTarget.getBoundingClientRect();
+        setColorCoords({
+            left: rect.x + 116,
+            top: rect.y  + window.scrollY
+        });
+
+        document.addEventListener('scroll', (event) => { setShowMenu(false) });
+
+    }
+
+    const setColor = (projectId, color) => (e) => {
+        dispatch(colorPut(projectId, {color}))
     }
 
 
@@ -53,13 +77,29 @@ function MyProjects({ projects }) {
                                     <DropDownMenu onClose={() => {
                                         setCurrentProject(null);
                                         setShowMenu(false);
+                                        setShowColorMenu(false);
                                     }} top={coords.top} left={coords.left}>
-                                        <ul className="dash-project-dropdown dropdown"  style={{ top: coords.top, left: coords.left }} >
+                                        <ul className="dash-project-dropdown dropdown" style={{ top: coords.top, left: coords.left }} >
                                             <li>
                                                 <OpenModalButton className="edit-button" buttonText={<><i className="fa-solid fa-pen"></i> Edit details</>} onButtonClick={() => {
                                                     setCurrentProject(null);
                                                     setShowMenu(false);
+                                                    setShowColorMenu(false);
                                                 }} modalComponent={<EditProjectDetails projectId={project.id} />} />
+                                            </li>
+                                            <li onMouseEnter={colorShowHandler}>
+                                                <div className="set-color-li">
+                                                    <p>Set Color</p>
+                                                    {showColorMenu && currentProject === project.id && (
+                                                        <ColorMenu left={colorCoords.left} top={colorCoords.top} onClose={() => setShowColorMenu(false)} >
+                                                            <div className='color' style={{backgroundColor: "var(--green)"}} onClick={setColor(project.id, "green")}></div>
+                                                            <div className='color' style={{backgroundColor: "var(--light-pink)"}} onClick={setColor(project.id, "light-pink")}></div>
+                                                            <div className='color' style={{backgroundColor: "var(--red)"}} onClick={setColor(project.id, "red")}></div>
+                                                            <div className='color' style={{backgroundColor: "var(--purple)"}} onClick={setColor(project.id, "purple")}></div>
+                                                            <div className='color' style={{backgroundColor: "var(--blue)"}} onClick={setColor(project.id, "blue")}></div>
+                                                        </ColorMenu>
+                                                    )}
+                                                </div>
                                             </li>
                                             <li>
                                                 <OpenModalButton
@@ -72,6 +112,7 @@ function MyProjects({ projects }) {
                                                     )} onButtonClick={() => {
                                                         setCurrentProject(null);
                                                         setShowMenu(false);
+                                                        setShowColorMenu(false);
                                                     }} modalComponent={<DeleteProjectModal projectId={project.id} projectName={project.name} />} />
                                             </li>
                                         </ul>

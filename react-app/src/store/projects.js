@@ -1,3 +1,5 @@
+import { myTasksGet } from "./myTasks";
+
 const GET_PROJECTS = "projects/GET_PROJECTS";
 const ADD_PROJECT = "projects/ADD_PROJECTS";
 const EDIT_PROJECT = "projects/EDIT_PROJECT";
@@ -195,6 +197,23 @@ export const memberDelete = (member) => async (dispatch) => {
 
     if (res.ok) {
         dispatch(deleteMember(member))
+    } else {
+        return data
+    }
+}
+
+export const colorPut = (projectId, color) => async (dispatch) => {
+    const res = await fetch(`/api/projects/color/${projectId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(color)
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(myTasksGet())
+        dispatch(putProject(data))
     } else {
         return data
     }

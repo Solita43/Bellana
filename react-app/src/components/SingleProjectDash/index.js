@@ -87,6 +87,9 @@ function SingleProjectDash() {
     return (
         <div className="main-container">
             <div className="project-nav">
+                <div className="side-project-icon" style={{ backgroundColor: `var(--${project.color})` }}>
+                    <i className="fa-solid fa-diagram-project"></i>
+                </div>
                 <h2 className="single-project-title">{project.name} Dashboard</h2>
 
             </div>
@@ -147,14 +150,14 @@ function SingleProjectDash() {
                                                         }
                                                     })
                                                 }}>
-                                                    {!member.admin ? "Make Admin" :"Remove as Admin"}
+                                                    {!member.admin ? "Make Admin" : "Remove as Admin"}
                                                 </li>)}
                                                 {!member.owner && (
-                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => setModalContent(<TransferOwnerModal member={member} projectName={project.name}/>)}>
+                                                    <li className="member-menu-li" style={{ borderBottom: 'hsla(0, 0%, 100%, 0.259) 0.01rem solid' }} onClick={() => setModalContent(<TransferOwnerModal member={member} projectName={project.name} />)}>
                                                         Set as Project Owner
                                                     </li>
                                                 )}
-                                                <li className="member-menu-li" onClick={() => setModalContent(<RemoveMemberModal member={member} projectName={project.name}/>)}>
+                                                <li className="member-menu-li" onClick={() => setModalContent(<RemoveMemberModal member={member} projectName={project.name} />)}>
                                                     Remove from project
                                                 </li>
                                             </ul>

@@ -63,8 +63,7 @@ export function DropDownMenu({ top, left, onClose, children }) {
   useEffect(() => {
     const closeMenu = (e) => {
       // If the area on the page clicked does not contain the value in ulRef.current, close the menu.
-      if (!portalRef.current.contains(e.target)) {
-
+      if (!portalRef.current || !portalRef.current.contains(e.target)) {
         onClose();
       } else {
         return
@@ -94,10 +93,28 @@ export function TaskActionTooltip({ top, left, onClose, children }) {
   if (!modalRef.current) return null;
 
   return ReactDOM.createPortal(
-    <div 
-      className="task-action-tooltip" 
+    <div
+      className="task-action-tooltip"
       onMouseEnter={onClose}
-      style={{top: top, left: left}}
+      style={{ top: top, left: left }}
+    >
+      {children}
+    </div>,
+    modalRef.current
+  );
+}
+
+export function ColorMenu({ top, left, onClose, children }) {
+  const { modalRef } = useContext(ModalContext);
+  const portalRef = useRef()
+
+  if (!modalRef.current) return null;
+
+  return ReactDOM.createPortal(
+    <div
+      className="dropdown"
+      onMouseLeave={onClose}
+      style={{ top: top, left: left }}
     >
       {children}
     </div>,

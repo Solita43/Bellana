@@ -27,7 +27,6 @@ function SideNav() {
 
     return (
         <div className="side-container">
-            {/* <div className="title-dropdown-side" style={{backgroundColor: `var(--${project.color})`}}> */}
             <div className="title-dropdown-side">
                 <p className="dd-project-side-nav">{project.name}</p>
                 <ProjectDropdown projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />

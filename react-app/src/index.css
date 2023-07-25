@@ -103,7 +103,8 @@ input:focus-visible {
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.set-color-li {
   opacity: 1;
   background-color: transparent;
   border: none;
@@ -113,7 +114,8 @@ input:focus-visible {
 }
 
 .edit-button:hover,
-.delete-button:hover {
+.delete-button:hover,
+.set-color-li {
   color: var(--white-background)
 }
 
