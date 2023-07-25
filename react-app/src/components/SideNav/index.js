@@ -13,6 +13,7 @@ function SideNav() {
     const boards = useSelector(state => state.boards[projectId])
     const dispatch = useDispatch();
     const history = useHistory();
+    const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
         dispatch(boardsGet(projectId))
@@ -29,7 +30,7 @@ function SideNav() {
         <div className="side-container">
             <div className="title-dropdown-side">
                 <p className="dd-project-side-nav">{project.name}</p>
-                <ProjectDropdown projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />
+                {project.owner.id === sessionUser.id && (<ProjectDropdown projectId={projectId} projectName={project.name} buttonIcon={<i className="fa-solid fa-caret-down"></i>} />)}
             </div>
             <div className="user-nav">
                 <button onClick={() => history.push(`/project/${project.id}`)} className="project-home"><i className="fa-solid fa-house"></i> Project Home</button>
@@ -38,7 +39,7 @@ function SideNav() {
             </div>
             <div className="nav-board-list">
                 <h4 className="board-list-title"><i className="fa-solid fa-table-columns"></i> Boards</h4>
-                <OpenModalButton className="create-board" buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId} />} />
+                {project.owner.id === sessionUser.id && (<OpenModalButton className="create-board" buttonText={<i className="fa-solid fa-plus"></i>} modalComponent={<CreateBoardModal projectId={projectId} />} />)}
             </div>
             <ul>
                 {boards && Object.values(boards).map(board => {

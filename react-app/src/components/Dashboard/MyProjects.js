@@ -5,7 +5,7 @@ import CreateProjectModal from "../CreateProjectModal";
 import { ColorMenu, DropDownMenu } from "../../context/Modal";
 import DeleteProjectModal from "../DeleteProjectModal";
 import EditProjectDetails from "../EditProjectDetails";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { colorPut } from "../../store/projects";
 
 
@@ -18,6 +18,8 @@ function MyProjects({ projects }) {
     const [showColorMenu, setShowColorMenu] = useState(false);
     const [colorCoords, setColorCoords] = useState({});
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
+
 
 
 
@@ -69,7 +71,7 @@ function MyProjects({ projects }) {
                                 <i className="fa-solid fa-diagram-project"></i>
                             </div>
                             <h3 className="dash-p-name" onClick={() => history.push(`/project/${project.id}`)}>{project.name}</h3>
-                            <div className="dash-project-menu">
+                            {project.owner.id === sessionUser.id && (<div className="dash-project-menu">
                                 <div className="dash-dropdown-icon" onClick={showHandler(project.id)}>
                                     <i className="fa-solid fa-ellipsis"></i>
                                 </div>
@@ -117,7 +119,7 @@ function MyProjects({ projects }) {
                                             </li>
                                         </ul>
                                     </DropDownMenu>)}
-                            </div>
+                            </div>)}
                         </div>
                     )
                 })}

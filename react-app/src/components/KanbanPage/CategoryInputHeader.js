@@ -1,14 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { categoryUpdate, deleteCard } from '../../store/cards';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
+
 
 
 function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrder }) {
+    const { projectId } = useParams();
     const [category, setCategory] = useState(column.category);
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const [inFocus, setInFocus] = useState(false)
     const ulRef = useRef();
+    const sessionUser = useSelector(state => state.session.user);
+    const member = useSelector(state => state.projects[projectId].team[sessionUser.id]);
+
+    console.log(member)
+
 
 
     useEffect(() => {
@@ -88,11 +96,11 @@ function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrd
                         className="card-category"
                         id={"category " + column.id}
                     /> : <h4 onClick={() => {
-                        setInFocus(true)
+                        if (member.owner) setInFocus(true)
 
                     }}>{column.category}</h4>}
                 </div>
-                <div className="dash-project-menu">
+                {member.owner && (<div className="dash-project-menu">
                     <div className="dropdown-icon" onClick={openMenu}>
                         <i className="fa-solid fa-ellipsis"></i>
                     </div>
@@ -111,7 +119,7 @@ function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrd
                             <i className="fa-regular fa-trash-can"></i> Delete Section
                         </li>
                     </ul>
-                </div>
+                </div>)}
 
 
             </div>

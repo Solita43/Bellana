@@ -90,8 +90,9 @@ def change_status(taskId):
 
     if not task:
         return {"error": "Task not found..."}, 404
-    if not is_owner_admin(current_user.id, task.board.project_id):
+    if not is_owner_admin(current_user.id, task.board.project_id) and not task.user_id == current_user.id:
         return {"error": "Unauthorized"}, 401
+    
     
     task.status = not task.status
     db.session.commit()
