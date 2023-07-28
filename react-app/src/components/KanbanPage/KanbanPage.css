@@ -13,7 +13,6 @@
   position: relative;
 }
 
-
 .card-info-wrapper {
   height: max-content;
   display: flex;
@@ -117,11 +116,15 @@
   box-shadow: var(--background-color) 0 0 0.5rem;
   border-radius: 0.3rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
 }
 
 .kanban-task-container:hover {
   border: solid var(--main-pink) 0.01rem;
   box-shadow: var(--main-pink) 0 0 0.4rem;
+  cursor: pointer;
 }
 
 .task-details {
@@ -190,6 +193,7 @@
 
 .fa-circle-check {
   cursor: pointer;
+  position: relative;
 }
 
 .task-complete {
@@ -240,7 +244,6 @@ li:hover {
   padding: 0.2rem 0.6rem;
   cursor: pointer;
   font-size: 0.8rem;
-  
 }
 .task-menu {
   position: relative;
@@ -264,5 +267,76 @@ li:hover {
   margin: auto;
 }
 
+.assignee-initials {
+  border-radius: 100%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem;
+  font-size: .5rem;
+  color: var(--background-color);
+  background-color: var(--main-pink);
+  position: relative;
+  font-weight: bold;
+}
 
 
+.assignee {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .6rem;
+  padding-top: .3rem;
+  position: relative
+}
+
+.unassigned {
+  border: dashed var(--background-color) .01rem;
+  border-radius: 100%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem;
+  font-size: .5rem;
+  color: var(--background-color);
+  position: relative;
+}
+
+.kanban-task-container:hover .unassigned {
+  color: var(--dull-white);
+  border: dashed var(--dull-white) .01rem;
+
+}
+
+.unassigned:hover {
+  background-color: #2a2e31;
+}
+
+.assign-member {
+  position: absolute;
+  background-color: var(--background-color);
+  width: max-content;
+  box-shadow: var(--dull-white) 0rem 0rem 0.08rem;
+  border-radius: 0.3rem;
+
+
+}
+
+.assign-input {
+  padding: .5rem;
+
+}
+
+.member-assign-li {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: .6rem;
+  align-items: center;
+  padding: .2rem .5rem;
+  color: var(--dull-white)
+}

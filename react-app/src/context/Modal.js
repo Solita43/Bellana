@@ -59,25 +59,63 @@ export function Modal() {
 export function DropDownMenu({ top, left, onClose, children }) {
   const { modalRef } = useContext(ModalContext);
   const portalRef = useRef()
-  
+
   useEffect(() => {
     const closeMenu = (e) => {
       // If the area on the page clicked does not contain the value in ulRef.current, close the menu.
-      if (!portalRef.current.contains(e.target)) {
+      if (!portalRef.current || !portalRef.current.contains(e.target)) {
         onClose();
+      } else {
+        return
       }
     };
 
     // if show menu is set to true, add a click listener to the entire document so it can close the menu when clicking outside the menu.
     document.addEventListener("click", closeMenu);
-    
+
     return () => document.removeEventListener("click", closeMenu);
   }, [])
-  
+
   if (!modalRef.current) return null;
-  
+
   return ReactDOM.createPortal(
     <div className='portal-wrapper' ref={portalRef}>
+      {children}
+    </div>,
+    modalRef.current
+  );
+}
+
+export function TaskActionTooltip({ top, left, onClose, children }) {
+  const { modalRef } = useContext(ModalContext);
+  const portalRef = useRef()
+
+  if (!modalRef.current) return null;
+
+  return ReactDOM.createPortal(
+    <div
+      className="task-action-tooltip"
+      onMouseEnter={onClose}
+      style={{ top: top, left: left }}
+    >
+      {children}
+    </div>,
+    modalRef.current
+  );
+}
+
+export function ColorMenu({ top, left, onClose, children }) {
+  const { modalRef } = useContext(ModalContext);
+  const portalRef = useRef()
+
+  if (!modalRef.current) return null;
+
+  return ReactDOM.createPortal(
+    <div
+      className="dropdown"
+      onMouseLeave={onClose}
+      style={{ top: top, left: left }}
+    >
       {children}
     </div>,
     modalRef.current

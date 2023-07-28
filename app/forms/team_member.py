@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField
+from wtforms import StringField, IntegerField, BooleanField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import User, Project
 
@@ -19,6 +19,7 @@ def project_exists(form, field):
 
 
 class TeamMemberForm(FlaskForm):
-    userId = StringField("name", validators=[DataRequired(), user_exists])
-    projectId = IntegerField("ownerId", validators=[DataRequired(), project_exists])
+    userId = StringField("userId", validators=[DataRequired(), user_exists])
+    projectId = IntegerField("projectId", validators=[DataRequired(), project_exists])
     role = StringField("details")
+    admin = BooleanField("admin")

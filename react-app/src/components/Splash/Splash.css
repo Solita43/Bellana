@@ -1,6 +1,8 @@
 
 .splash {
     position: relative;
+    max-height: 93vh;
+    overflow: hidden;
 }
 
 .splash-collage {
@@ -30,6 +32,33 @@
 .about-p {
     font-size: 1.4rem;
     padding: 2rem 0;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-around;
+    align-items: flex-end;
+    color: white;
+}
+
+.fa-linkedin,
+.fa-github {
+    color: white;
+    font-size: 2rem;
+}
+
+.social-network {
+    position: absolute;
+    bottom: 0;
+    padding: .5rem 1rem;
+}
+
+.about-links-header {
+    color: white;
+}
+.copyright {
+    font-size: .8rem;
 }
 
 @keyframes transitionIn {

@@ -21,6 +21,13 @@
   --light-gray: #9e9fa0;
   --dull-white: #e0e0e1;
   --white-background: whitesmoke;
+
+  /* Icon color choices */
+  --green: #5da283;
+  --light-pink: #fc979a;
+  --red: #f06a6a;
+  --purple: #b36bd4;
+  --blue: #4573d2;
 }
 
 
@@ -96,7 +103,8 @@ input:focus-visible {
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.set-color-li {
   opacity: 1;
   background-color: transparent;
   border: none;
@@ -106,7 +114,8 @@ input:focus-visible {
 }
 
 .edit-button:hover,
-.delete-button:hover {
+.delete-button:hover,
+.set-color-li {
   color: var(--white-background)
 }
 

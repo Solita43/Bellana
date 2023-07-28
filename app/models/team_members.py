@@ -24,5 +24,6 @@ class TeamMember(db.Model):
             "user": self.user.to_dict(),
             "projectId": self.project_id,
             "role": self.role,
-            "owner": self.owner
+            "owner": self.owner,
+            "admin": self.admin
         }

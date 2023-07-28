@@ -1,7 +1,11 @@
+import { myTasksGet } from "./myTasks";
+
 const GET_PROJECTS = "projects/GET_PROJECTS";
 const ADD_PROJECT = "projects/ADD_PROJECTS";
 const EDIT_PROJECT = "projects/EDIT_PROJECT";
 const DELETE_PROJECT = "projects/DELETE_PROJECT";
+const ADD_MEMBER = "projects/ADD_MEMBER";
+const DELETE_MEMBER = "projects/DELETE_MEMBER";
 
 const getProjects = (projects) => ({
     type: GET_PROJECTS,
@@ -22,6 +26,32 @@ const deleteProject = (projectId) => ({
     type: DELETE_PROJECT,
     payload: projectId
 })
+
+const createMember = (member) => ({
+    type: ADD_MEMBER,
+    payload: member
+})
+
+const deleteMember = (member) => ({
+    type: DELETE_MEMBER,
+    payload: member
+})
+
+export const memberCreate = (member) => async (dispatch) => {
+    const res = await fetch(`/api/team/project/${member.projectId}`,{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(member)
+    })
+
+    const data = await res.json()
+
+    console.log(data)
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    }
+}
 
 export const projectsGet = () => async (dispatch) => {
     const res = await fetch("/api/projects/my-projects")
@@ -113,6 +143,84 @@ export const resourceDelete = (resourceId) => async (dispatch) => {
     }
 }
 
+export const memberRolePut = (memberId, role) => async (dispatch) => {
+    const res = await fetch(`/api/team/role/${memberId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(role)
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    } else {
+        return data
+    }
+}
+
+export const memberAdminPut = (memberId) => async (dispatch) => {
+    const res = await fetch(`/api/team/admin/${memberId}`, {
+        method: "PUT"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data))
+    } else {
+        return data
+    }
+}
+
+export const memberOwnerPut = (memberId) => async (dispatch) => {
+    const res = await fetch(`/api/team/transfer_owner/${memberId}`, {
+        method: "PUT"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(createMember(data.NewOwner))
+        dispatch(createMember(data.OldOwner))
+    } else {
+        return data
+    }
+}
+
+export const memberDelete = (member) => async (dispatch) => {
+    const res = await fetch(`/api/team/${member.id}`, {
+        method: "DELETE"
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(deleteMember(member))
+    } else {
+        return data
+    }
+}
+
+export const colorPut = (projectId, color) => async (dispatch) => {
+    const res = await fetch(`/api/projects/color/${projectId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(color)
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+        dispatch(myTasksGet())
+        dispatch(putProject(data))
+    } else {
+        return data
+    }
+}
+
+
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
@@ -127,6 +235,12 @@ export default function reducer(state = initialState, action) {
             const newState = {...state}
             delete newState[action.payload]
             return newState
+        case ADD_MEMBER: 
+            return {...state, [action.payload.projectId]: {...state[action.payload.projectId], team: {...state[action.payload.projectId].team, [action.payload.user.id]: {...action.payload}}}}
+        case DELETE_MEMBER:
+            const nextState = {...state, [action.payload.projectId]: {...state[action.payload.projectId], team: {...state[action.payload.projectId].team}}}
+            delete nextState[action.payload.projectId].team[action.payload.user.id]
+            return nextState
         default: 
             return state;        
     }

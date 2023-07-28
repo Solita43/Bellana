@@ -10,8 +10,10 @@ import { taskOrderUpdate } from "../../store/myTasks";
 import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
 import CategoryInputHeader from "./CategoryInputHeader";
 
+
 function KanbanPage() {
     const { boardId, projectId } = useParams();
+    const project = useSelector(state => state.projects[projectId]);
     const boards = useSelector(state => state.boards);
     const cards = useSelector(state => state.cards);
     const tasks = useSelector(state => state.boardTasks)
@@ -24,6 +26,8 @@ function KanbanPage() {
     const [inFocus, setInFocus] = useState(false);
     const [error, setError] = useState("");
     const [currentTask, setCurrentTask] = useState(null);
+    const sessionUser = useSelector(state => state.session.user);
+
 
 
     useEffect(() => {
@@ -162,7 +166,7 @@ function KanbanPage() {
         <div className="task-main-container">
             <div className="project-nav">
                 <h2 className="board-purpose-nav">{board.purpose}</h2>
-                <BoardDropdown board={board} />
+                {project.owner.id === sessionUser.id && (<BoardDropdown board={board} />)}
 
             </div>
             <div className="under-nav">
@@ -192,7 +196,7 @@ function KanbanPage() {
                                             </Draggable>
 
                                         )
-                                    })): null}
+                                    })) : null}
                                     {columns.length < 4 && (
                                         <div className="add-section">
                                             <div className="category-container">
@@ -211,7 +215,7 @@ function KanbanPage() {
                                                 /> :
                                                     (<h4 style={{ cursor: "pointer" }} onClick={() => setInFocus(true)} ><i className="fa-solid fa-plus"></i> Add Section</h4>)}
                                             </div>
-                                            {error && <p className="errors" style={{textAlign: "left"}}>* {error}</p>}
+                                            {error && <p className="errors" style={{ textAlign: "left" }}>* {error}</p>}
                                         </div>
                                     )}
                                     {provided.placeholder}
