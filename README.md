@@ -1,5 +1,7 @@
 # Bellana
 
+![Kanban Board](/bellana.gif)
+
 ## Table of Contents
 
 - [Bellana](#bellana)
