@@ -15,7 +15,6 @@ function CategoryInputHeader({ column, props, columns, setColumnOrder, columnOrd
     const sessionUser = useSelector(state => state.session.user);
     const member = useSelector(state => state.projects[projectId].team[sessionUser.id]);
 
-    console.log(member)
 
 
 

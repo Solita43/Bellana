@@ -55,7 +55,6 @@ function Task({ taskId, currentTask, setCurrentTask, draggable, dragHandle, inne
 
     const changeStatus = (taskId) => {
         dispatch(taskStatus(taskId)).then(data => {
-            console.log(data)
             if (data) {
                 const err = { ...errors }
                 err.status = data.error

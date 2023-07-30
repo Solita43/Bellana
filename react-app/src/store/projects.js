@@ -46,7 +46,6 @@ export const memberCreate = (member) => async (dispatch) => {
 
     const data = await res.json()
 
-    console.log(data)
 
     if (res.ok) {
         dispatch(createMember(data))

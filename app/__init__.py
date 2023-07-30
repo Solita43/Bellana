@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 import os
 from flask import Flask, request, session, redirect
 from flask_cors import CORS
@@ -15,6 +18,8 @@ from .api.resource_routes import resource_routes
 from .api.team_routes import team_routes
 from .seeds import seed_commands
 from .config import Config
+from .socket import socketio
+
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -42,6 +47,10 @@ app.register_blueprint(resource_routes, url_prefix='/api/resources')
 app.register_blueprint(team_routes, url_prefix='/api/team')
 db.init_app(app)
 Migrate(app, db)
+
+# initialize the app with the socket instance
+socketio.init_app(app, async_mode='gevent')
+
 
 # Application Security
 CORS(app)

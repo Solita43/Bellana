@@ -9,6 +9,10 @@ import TaskDrag from "./TaskDrag";
 import { taskOrderUpdate } from "../../store/myTasks";
 import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
 import CategoryInputHeader from "./CategoryInputHeader";
+import { io } from 'socket.io-client';
+import { postBoard } from "../../store/boards";
+
+let socket;
 
 
 function KanbanPage() {
@@ -28,6 +32,25 @@ function KanbanPage() {
     const [currentTask, setCurrentTask] = useState(null);
     const sessionUser = useSelector(state => state.session.user);
 
+    useEffect(() => {
+
+        // create websocket
+        socket = io();
+        
+        // listen for chat events
+        socket.on("drag_column", (board) => {
+            // when we recieve a chat, add it into our messages array in state
+            console.log("🤬🤬🤬🤬🤬 SOCKET RETURN =========> ", board)
+            setColumnOrder(board.cards)
+
+            dispatch(postBoard(board))
+        })
+        
+        // when component unmounts, disconnect
+        return (() => {
+            socket.disconnect()
+        })
+    }, [])
 
 
     useEffect(() => {
@@ -48,7 +71,6 @@ function KanbanPage() {
 
     useEffect(() => {
         if (!Object.values(cards).length || !cards[boardId] || !Object.values(boards).length) return
-        console.log(boards)
         setColumnOrder(boards[projectId][boardId].cards);
         setColumns(Object.values(cards[boardId]))
     }, [cards])
@@ -87,9 +109,14 @@ function KanbanPage() {
             const columns = {}
             for (let id in newOrder) {
                 columns[id] = newOrder[id]
-            }
+            }   
 
-            return dispatch(orderUpdate(columns, boardId));
+            socket.emit("drag_column", {
+                columns,
+                boardId
+            })
+
+            // return dispatch(orderUpdate(columns, boardId));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {
