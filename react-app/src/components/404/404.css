@@ -1,0 +1,18 @@
+.error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    gap: 1rem;
+    /* background-color: var(--white-background); */
+}
+
+.error-gif {
+    border-radius: 1rem;
+}
+
+.error-heading {
+    color: var(--dull-white);
+    font-size: 3rem;
+    text-align: center;
+}

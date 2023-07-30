@@ -9,6 +9,7 @@ import SingleProjectDash from "./components/SingleProjectDash";
 import SideNav from "./components/SideNav";
 import Splash from "./components/Splash";
 import KanbanPage from "./components/KanbanPage";
+import PageNotFound from "./components/404";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ function App() {
               <KanbanPage />
             </div>
           </ProtectedRoute>
+          <Route path="">
+            <PageNotFound />
+          </Route>
         </Switch>
       )}
     </>
