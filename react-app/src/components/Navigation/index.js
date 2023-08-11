@@ -10,11 +10,13 @@ import SignupFormModal from "../SignupFormModal";
 import { projectsGet } from "../../store/projects";
 import CreateProjectModal from '../CreateProjectModal';
 import { myTasksGet } from '../../store/myTasks';
+import { useSocket } from '../../context/Modal';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const socket = useSocket();
 
 
 	useEffect(() => {
@@ -22,9 +24,11 @@ function Navigation({ isLoaded }) {
 
 		dispatch(projectsGet())
 		dispatch(myTasksGet())
-		
-	})
-	
+		socket.connect();
+		return () => socket.disconnect()
+
+	}, [sessionUser])
+
 
 
 

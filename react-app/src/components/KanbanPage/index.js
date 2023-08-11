@@ -9,10 +9,8 @@ import TaskDrag from "./TaskDrag";
 import { taskOrderUpdate } from "../../store/myTasks";
 import { boardTasksGet, taskColumOrderUpdate } from "../../store/boardTasks";
 import CategoryInputHeader from "./CategoryInputHeader";
-import { io } from 'socket.io-client';
+import { useSocket } from "../../context/Modal";
 import { postBoard } from "../../store/boards";
-
-let socket;
 
 
 function KanbanPage() {
@@ -31,24 +29,21 @@ function KanbanPage() {
     const [error, setError] = useState("");
     const [currentTask, setCurrentTask] = useState(null);
     const sessionUser = useSelector(state => state.session.user);
+    let socket = useSocket();
 
+
+    
     useEffect(() => {
-
-        // create websocket
-        socket = io();
-        
         // listen for chat events
         socket.on("drag_column", (board) => {
             // when we recieve a chat, add it into our messages array in state
-            console.log("🤬🤬🤬🤬🤬 SOCKET RETURN =========> ", board)
             setColumnOrder(board.cards)
-
             dispatch(postBoard(board))
         })
         
         // when component unmounts, disconnect
         return (() => {
-            socket.disconnect()
+            socket.disconnect();
         })
     }, [])
 
@@ -115,8 +110,6 @@ function KanbanPage() {
                 columns,
                 boardId
             })
-
-            // return dispatch(orderUpdate(columns, boardId));
 
         } else if (result.type === "task") {
             if (destination.droppableId === source.droppableId) {

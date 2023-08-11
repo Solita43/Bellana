@@ -3,9 +3,6 @@ import os
 from app.models import db, Board, Card
 
 
-# create your SocketIO instance
-socketio = SocketIO()
-
 if os.environ.get("FLASK_ENV") == "production":
     origins = [
         "https://bellana.onrender.com"

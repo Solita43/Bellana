@@ -1,8 +1,21 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
+import { io } from 'socket.io-client';
+
+export const socket = io({autoConnect:false, reconnection: true, reconnectionAttempts: 15});
+
 
 const ModalContext = React.createContext();
+const SocketContext = React.createContext();
+
+export function SocketProvider({children}) {
+  return (
+    <SocketContext.Provider value={socket}>
+      {children}
+    </SocketContext.Provider>
+  )
+}
 
 export function ModalProvider({ children }) {
   const modalRef = useRef();
@@ -124,3 +137,4 @@ export function ColorMenu({ top, left, onClose, children }) {
 
 
 export const useModal = () => useContext(ModalContext);
+export const useSocket = () => useContext(SocketContext);

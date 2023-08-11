@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import ReactGA from 'react-ga';
 
-import { ModalProvider, Modal } from "./context/Modal";
+import { ModalProvider, Modal, SocketProvider } from "./context/Modal";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
@@ -25,20 +25,22 @@ ReactGA.initialize(TRACKING_ID);
 // HTML elements on top of the all the other HTML elements:
 function Root() {
 	return (
-		<ModalProvider>
-			<Provider store={store}>
-				<BrowserRouter>
-					<App />
-					<Modal />
-				</BrowserRouter>
-			</Provider>
-		</ModalProvider>
+		<SocketProvider>
+			<ModalProvider>
+				<Provider store={store}>
+					<BrowserRouter>
+						<App />
+						<Modal />
+					</BrowserRouter>
+				</Provider>
+			</ModalProvider>
+		</SocketProvider>
 	);
 }
 
 ReactDOM.render(
 	// <React.StrictMode>
-		<Root />,
+	<Root />,
 	// </React.StrictMode>,
 	document.getElementById("root")
 );
