@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(30), nullable=False, unique=True)
     email = db.Column(db.String(55), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    imageUrl = db.Column(db.String(255))
 
     projects_owned = db.relationship("Project", back_populates="owner", cascade="delete-orphan, all")
     tasks = db.relationship("Task", back_populates='assignee')
@@ -37,5 +38,6 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             'firstName': self.first_name,
-            'lastName': self.last_name
+            'lastName': self.last_name,
+            'imageUrl': self.imageUrl
         }
