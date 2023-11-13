@@ -29,8 +29,7 @@
   padding: .6rem 2rem;
   list-style: none;
   align-items: center;
-  max-height: fit-content;
-  height: 7vh;
+  height: 10vh;
   background-color: var(--background-color);
   z-index: 1;
   position: relative;

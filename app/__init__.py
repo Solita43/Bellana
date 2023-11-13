@@ -15,8 +15,11 @@ from .api.resource_routes import resource_routes
 from .api.team_routes import team_routes
 from .seeds import seed_commands
 from .config import Config
+from werkzeug.middleware.profiler import ProfilerMiddleware
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+file = open('stats.txt', 'a')
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app, stream=file)
 
 # Setup login manager
 login = LoginManager(app)

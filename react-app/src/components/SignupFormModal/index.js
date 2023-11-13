@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
-import ReactGA from 'react-ga';
 
 
 function SignupFormModal() {
@@ -14,27 +13,33 @@ function SignupFormModal() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [image, setImage] = useState(null)
 	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
+	const [isLoading, setIsLoading] = useState(false)
+
 
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log(image.files)
 
 		if (Object.keys(errors).length) return
 
-		dispatch(signUp(username, email, password, firstName, lastName)).then(data => {
+		const formData = new FormData();
+		formData.append("image", image);
+		formData.append("username", username);
+		formData.append("email", email);
+		formData.append("password", password);
+		formData.append("firstName", firstName);
+		formData.append("lastName", lastName)
+		setIsLoading(true)
+
+		dispatch(signUp(formData)).then(data => {
 			if (data) {
-				ReactGA.exception({
-					description: 'An error ocurred',
-					fatal: true
-				  });
-				setErrors(data.errors);
+				setErrors(data);
+				setIsLoading(false);
 			} else {
-				ReactGA.event({
-					category: 'User',
-					action: 'Created an Account'
-				  });
 				closeModal();
 			}
 		})
@@ -44,6 +49,23 @@ function SignupFormModal() {
 		<>
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
+				<label className="image-label">
+					<div className="image-upload">
+						{image ? <img id="preview-image" src={URL.createObjectURL(image)} ></img> : (
+							<>
+								<i className="fa-regular fa-image"></i>
+								<p>Upload</p>
+								<div className="image-dot"><p>+</p></div>
+							</>
+						)}
+					</div>
+					<input
+						type="file"
+						className="image-upload-input"
+						accept="image/*"
+						onChange={(e) => setImage(e.target.files[0])}
+					/>
+				</label>
 				<label>
 					First Name
 					<input
