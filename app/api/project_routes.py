@@ -4,6 +4,7 @@ from app.models import Project, db, Board, Card, TeamMember
 from app.forms import ProjectForm
 from .auth_routes import validation_errors_to_error_messages
 
+
 project_routes = Blueprint("projects", __name__)
 
 
@@ -46,23 +47,26 @@ def create_project():
         )
 
         db.session.add(project)
-        db.session.commit()
 
         # Creat a TeamMember for the owner of the project
         member = TeamMember(user_id=project.owner_id, owner=True)
         project.team.append(member)
-        db.session.commit()
 
         #Create a default board for the new project
         board = Board(name="Feature Workflow", project_id=project.id, purpose="Track Feature Development")
         project.boards.append(board)
-        db.session.commit()
+        # Synchronize the session with the database to get the board id
+        db.session.flush()
 
-        #Create default cards for the board
-        board.cards.append(Card(category="backlog", order=0))
-        board.cards.append(Card(category="in Progress", order=1))
-        board.cards.append(Card(category="in Review", order=2))
-        board.cards.append(Card(category="Deployed", order=3))
+        # Create default cards for the board using bulk_insert_mappings to create multiple cards in one operation
+        cards = [
+            {"category": "backlog", "order": 0, "board_id": board.id},
+            {"category": "in Progress", "order": 1, "board_id": board.id},
+            {"category": "in Review", "order": 2, "board_id": board.id},
+            {"category": "Deployed", "order": 3, "board_id": board.id}
+        ]
+        db.session.bulk_insert_mappings(Card, cards)
+
         db.session.commit()
       
         return {project.id: project.to_dict()}, 201
