@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom"
-import back from "./back.svg";
 import splash_collage from "./collage2.png"
 import "./Splash.css"
 
@@ -12,8 +11,8 @@ function Splash() {
     if (user) history.push('/dashboard');
 
     return (
-        <div className="splash" style={{ backgroundColor: "var(--background-color)", width: "100%" }}>
-            <img src={back} alt="svg-background"></img>
+        <div className="splash">
+            {/* <img src={back} alt="svg-background"></img> */}
             <div className="about">
                 <h2 className="about-title">Bellana brings all your tasks, teammates, and tools together.</h2>
                 <p className="about-p">Make it easy for your team to focus on tasks at hand!</p>
@@ -23,10 +22,10 @@ function Splash() {
                 {/* <p className="about-links-header"> Meet the developer:</p> */}
                 <ul className="social-icons">
                     <li>
-                        <a href="https://www.linkedin.com/in/melinda-cortez-3581b0139/" target="_blank"><i className="fa fa-linkedin"></i></a>
+                        <a href="https://www.linkedin.com/in/melinda-cortez-3581b0139/" target="_blank" rel='noreferrer'><i className="fa fa-linkedin"></i></a>
                     </li>
                     <li>
-                        <a href="https://github.com/Solita43" target="_blank"><i className="fa-brands fa-github"></i></a>
+                        <a href="https://github.com/Solita43" target="_blank" rel='noreferrer'><i className="fa-brands fa-github"></i></a>
                     </li>
                     <li>
                         <p className="copyright">Copyright <i className="fa-regular fa-copyright"></i> 2023 Melinda Cortez</p>

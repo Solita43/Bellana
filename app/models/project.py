@@ -17,10 +17,13 @@ class Project(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     color = db.Column(db.String, default=choices[randint(0 , len(choices) - 1)])
 
-    owner = db.relationship("User", back_populates="projects_owned")
-    boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all")
-    resources = db.relationship("ProjectResource", back_populates="project", cascade="delete-orphan, all")
-    team = db.relationship("TeamMember", back_populates="project", cascade="delete-orphan, all")
+
+    # relationships - use lazy='joined' to load relationships when querying for a project
+
+    owner = db.relationship("User", back_populates="projects_owned", lazy='joined')
+    boards = db.relationship("Board", back_populates="project", cascade="delete-orphan, all", lazy='joined')
+    resources = db.relationship("ProjectResource", back_populates="project", cascade="delete-orphan, all", lazy='joined')
+    team = db.relationship("TeamMember", back_populates="project", cascade="delete-orphan, all", lazy='joined')
 
 
     def to_dict(self):
