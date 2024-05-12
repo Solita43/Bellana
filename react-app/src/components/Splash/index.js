@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom"
-import splash_collage from "./collage2.png"
+import splash_collage from "../../assets/kanban-method-animate.svg"
 import "./Splash.css"
 
 function Splash() {
@@ -14,10 +14,10 @@ function Splash() {
         <div className="splash">
             {/* <img src={back} alt="svg-background"></img> */}
             <div className="about">
-                <h2 className="about-title">Bellana brings all your tasks, teammates, and tools together.</h2>
-                <p className="about-p">Make it easy for your team to focus on tasks at hand!</p>
+                <h2 className="about-title">Ditch the Chaos, Achieve More Together.</h2>
+                <p className="about-p">Streamline workflows, boost team productivity, and hit deadlines with ease. Bellana is your one-stop shop for seamless project management.</p>
             </div>
-            <img src={splash_collage} alt="collage" className="splash-collage"></img>
+            <object data={splash_collage} type="image/svg+xml" className="splash-collage"></object>
             <div className="social-network">
                 {/* <p className="about-links-header"> Meet the developer:</p> */}
                 <ul className="social-icons">

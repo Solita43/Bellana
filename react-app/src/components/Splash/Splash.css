@@ -3,9 +3,11 @@
   width: 100vw;
   height: 90vh;
   overflow: hidden;
-  background-image: url("layered-waves-haikei.svg");
+  background-image: url("../../assets/splash-background.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
+  background-position: center -5vh;
 }
 
 .splash-collage {
@@ -14,25 +16,27 @@
     right: 0;
     width: 45vw;
     height: auto;
-    animation: transitionIn 1.5s;
 }
 
 .about {
   position: absolute;
   color: whitesmoke;
-  top: 5%;
-  left: 5%;
+  top: 2vw;
+  left: 2vw;
   animation: transitionIn2 1.5s;
+  width: 55vw;
+
 }
 
 .about-title {
-  font-size: 4vw;
-  width: 55vw;
+  font-size: 3.3vw;
+  text-align: center;
 }
 .about-p {
   font-size: 1.8vw;
   padding: 2rem 0;
-  width: 50vw;
+  text-align: center;
+
 }
 
 
@@ -42,6 +46,7 @@
     justify-content: space-around;
     align-items: flex-end;
     color: white;
+    margin-left: auto;
 }
 
 .fa-linkedin,
@@ -53,6 +58,7 @@
 .social-network {
     position: absolute;
     bottom: 0;
+    right: 0;
     padding: .5rem 1rem;
 }
 
