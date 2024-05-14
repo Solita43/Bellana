@@ -1,28 +1,27 @@
 .splash {
   position: relative;
   width: 100vw;
-  height: 90vh;
-  overflow: hidden;
+  height: 100%;
   background-image: url("../../assets/splash-background.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  background-position: center -5vh;
+  background-position: top;
 }
 
 .splash-collage {
-    position: absolute;
-    top: 0;
-    right: 0;
     width: 45vw;
     height: auto;
 }
 
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .about {
-  position: absolute;
   color: whitesmoke;
-  top: 2vw;
-  left: 2vw;
   animation: transitionIn2 1.5s;
   width: 55vw;
 

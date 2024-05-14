@@ -21,28 +21,34 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/" >
-            <Splash />
+          <Route exact path="/">
+            <Splash isLoaded={isLoaded} />
           </Route>
           <ProtectedRoute exact path="/dashboard">
+            <Navigation isLoaded={isLoaded} />
+
             <Dashboard />
           </ProtectedRoute>
           <ProtectedRoute exact path="/project/:projectId">
+            <Navigation isLoaded={isLoaded} />
+
             <div className="single-project-detail-container">
               <SideNav />
               <SingleProjectDash />
             </div>
           </ProtectedRoute>
           <ProtectedRoute exact path="/project/:projectId/:boardId">
+            <Navigation isLoaded={isLoaded} />
+
             <div className="single-project-detail-container">
               <SideNav />
               <KanbanPage />
             </div>
           </ProtectedRoute>
           <Route path="">
+            <Navigation isLoaded={isLoaded} />
             <PageNotFound />
           </Route>
         </Switch>

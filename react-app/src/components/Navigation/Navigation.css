@@ -20,23 +20,31 @@
   cursor: pointer;
 }
 
-.top-nav {
+.top-nav,
+.top-nav-splash {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 0.07rem var(--main-pink) solid;
-  /* box-shadow: var(--main-pink) 0 0 .5rem; */
   padding: .6rem 2rem;
   list-style: none;
   align-items: center;
   height: 10vh;
-  background-color: var(--background-color);
-  z-index: 1;
-  position: relative;
+  background-color: transparent;
+  color: white;
 }
 
+.top-nav {
+  border-bottom: 0.07rem var(--main-pink) solid;
+  /* box-shadow: var(--main-pink) 0 0 .5rem; */
+  z-index: 1;
+  position: relative;
+
+
+}
+
+
 #logo_img {
-  width: 12rem;
+  width: 18vw;
   height: auto;
   cursor: pointer;
 }
@@ -67,13 +75,12 @@
 .login,
 .signup {
   background: transparent;
-  color: var(--main-pink);
   border: none;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.5vw;
+  font-weight: 700;
   cursor: pointer;
+  color: whitesmoke;
 }
-
 .top-right {
   display: flex;
   gap: 1.5rem;
