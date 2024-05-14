@@ -53,13 +53,11 @@ function Splash({ isLoaded }) {
               <i className="fa-brands fa-github"></i>
             </a>
           </li>
-          <li>
-            <p className="copyright">
-              Copyright <i className="fa-regular fa-copyright"></i> 2023 Melinda
-              Cortez
-            </p>
-          </li>
         </ul>
+        <div className="copyright">
+          Copyright <i className="fa-regular fa-copyright"></i> 2023 Melinda
+          Cortez
+        </div>
       </div>
     </div>
   );

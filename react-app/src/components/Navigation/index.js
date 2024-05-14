@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import logo from '../../assets/logo.svg'
+import whiteLogo from '../../assets/logo-white.webp'
+import pinkLogo from '../../assets/logo-pink.webp'
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -32,7 +33,7 @@ function Navigation({ isLoaded, splash }) {
 
 	return (
 		<div className={'top-nav' + (splash ? '-splash' : '')}>
-			<img src={logo} alt='logo' id='logo_img' onClick={(e) => history.push('/dashboard')}></img>
+			<img src={splash ? whiteLogo : pinkLogo} alt='logo' id='logo-img' onClick={(e) => history.push('/dashboard')}></img>
 			{isLoaded && (
 				<div className='top-right'>
 					{sessionUser ? (
@@ -43,13 +44,13 @@ function Navigation({ isLoaded, splash }) {
 					) : (
 						<>
 							<OpenModalButton
-								buttonText="Log In"
+								buttonText={<span className="underline">Log In</span>}
 								className="login"
 								modalComponent={<LoginFormModal />}
 							/>
 
 							<OpenModalButton
-								buttonText="Sign Up"
+								buttonText={<span className="underline">Sign Up</span>}
 								className="signup"
 								modalComponent={<SignupFormModal />}
 							/>
