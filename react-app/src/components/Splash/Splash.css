@@ -1,66 +1,77 @@
 .splash {
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 100vw;
-  height: 90vh;
-  overflow: hidden;
-  background-image: url("layered-waves-haikei.svg");
+  height: 100%;
+  background-image: url("../../assets/splash-background.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
+  background-position: center -3vh;
 }
 
 .splash-collage {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 45vw;
-    height: auto;
-    animation: transitionIn 1.5s;
+  width: 45vw;
+  height: auto;
+  margin-top: -10vh;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .about {
-  position: absolute;
   color: whitesmoke;
-  top: 5%;
-  left: 5%;
   animation: transitionIn2 1.5s;
+  width: 55vw;
+  margin-top: -15vh;
 }
 
 .about-title {
-  font-size: 4vw;
-  width: 55vw;
+  font-size: 3.3vw;
+  text-align: center;
 }
 .about-p {
   font-size: 1.8vw;
   padding: 2rem 0;
-  width: 50vw;
+  text-align: center;
 }
 
-
 .social-icons {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-around;
-    align-items: flex-end;
-    color: white;
+  display: flex;
+  gap: 1rem;
+  /* justify-content: space-around; */
+  align-items: flex-end;
+  color: white;
+  width: 100%;
+
 }
 
 .fa-linkedin,
 .fa-github {
-    color: white;
-    font-size: 2rem;
+  color: white;
+  font-size: 2rem;
 }
 
 .social-network {
-    position: absolute;
-    bottom: 0;
-    padding: .5rem 1rem;
+  /* position: absolute; */
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem 1rem;
+
 }
 
 .about-links-header {
-    color: white;
+  color: white;
 }
 .copyright {
-    font-size: .8rem;
+  font-size: 0.8rem;
+  color: whitesmoke;
+  min-width: fit-content;
 }
 
 @keyframes transitionIn {
@@ -97,12 +108,16 @@
     padding: 0;
   }
   .about {
-    /* border: black 2px solid; */
-    max-width: 85vw;
-    max-height: 50vh;
-    margin: 4vh auto 0;
+    width: 90vw;
+    margin-top: 2vh;
     color: whitesmoke;
-    position: unset;
+  }
+
+  .main-content {
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    gap: 5vh;
   }
 
   .about-title {
@@ -116,11 +131,7 @@
     width: 100%;
   }
   .splash-collage {
-    /* border: yellow 2px solid; */
-    width: auto;
-    max-height: 45vh;
-    position: unset;
-    margin: 0 auto;
+    width: 100vw;
   }
 
   .social-network {

@@ -37,14 +37,11 @@ def create_project():
 
     form = ProjectForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    form.ownerId.data = current_user.id
+    form.owner_id.data = current_user.id
 
     if form.validate():
-        project = Project(
-            name=form.data["name"],
-            owner_id=form.data["ownerId"],
-            details=form.data["details"],
-        )
+        project = Project()
+        form.populate_obj(project)
 
         db.session.add(project)
 
@@ -90,12 +87,11 @@ def update_project(projectId):
 
     form = ProjectForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    form.ownerId.data = current_user.id
+    form.owner_id.data = current_user.id
 
-    if form.validate():
-        project.name = form.data["name"]
-        project.owner_id = form.data["ownerId"]
-        project.details = form.data["details"]
+    if form.validate():\
+        # Update the project with the new information using the populate_obj method for forms
+        form.populate_obj(project)
 
         db.session.commit()
         return {project.id: project.to_dict()}, 201
