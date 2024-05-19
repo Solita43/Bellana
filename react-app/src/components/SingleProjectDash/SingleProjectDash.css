@@ -100,6 +100,8 @@
     text-decoration: none;
     color: var(--main-pink);
     font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 .resource-link:hover {
     font-weight: bold;
@@ -321,4 +323,8 @@
 .role-input-header {
   font-size: .8rem;
   padding-bottom: .4rem;
+}
+
+.resource-favicon {
+  width: auto;
 }
