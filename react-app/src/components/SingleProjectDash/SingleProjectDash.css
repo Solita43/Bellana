@@ -79,31 +79,39 @@
   box-shadow: var(--background-color) 0 0 .2rem;
   padding: .5rem;
   border-radius: .5rem;
+  position: relative;
 }
 
 .delete-resource {
   color: var(--background-color);
   opacity: 0;
   cursor: pointer;
-  font-size: .85rem;
+  font-size: .6vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: .3vw;
+  padding-top: .3vw;
 }
 
 .resource-container:hover .delete-resource {
-  color: rgb(255, 0, 0);
+  color: rgba(74, 73, 73, 0.49);
   opacity: 1;
+  z-index: 2;
 }
 
 .resource-link {
     height: 2.5rem;
-    width: max-content;
+    width: 100%;
     padding: .5rem;
     text-decoration: none;
     color: var(--main-pink);
     font-size: 1rem;
     display: flex;
     justify-content: space-between;
+    gap: .8vw;
 }
-.resource-link:hover {
+.resource-container:hover {
     font-weight: bold;
 }
 
