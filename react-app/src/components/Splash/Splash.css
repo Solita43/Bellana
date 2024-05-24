@@ -1,87 +1,140 @@
-
 .splash {
-    position: relative;
-    max-height: 93vh;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  background-image: url("../../assets/splash-background.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center -3vh;
 }
 
 .splash-collage {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 40rem;
-    animation: transitionIn 1.5s;
+  width: 45vw;
+  height: auto;
+  margin-top: -10vh;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .about {
-    position: absolute;
-    color: whitesmoke;
-    top: 10%;
-    left: 5%;
-    animation: transitionIn2 1.5s;
-
+  color: whitesmoke;
+  animation: transitionIn2 1.5s;
+  width: 55vw;
+  margin-top: -15vh;
 }
-
 
 .about-title {
-    font-size: 3rem;
-    width: 42rem;
-    
+  font-size: 3.3vw;
+  text-align: center;
 }
-
 .about-p {
-    font-size: 1.4rem;
-    padding: 2rem 0;
+  font-size: 1.8vw;
+  padding: 2rem 0;
+  text-align: center;
 }
 
 .social-icons {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-around;
-    align-items: flex-end;
-    color: white;
+  display: flex;
+  gap: 1rem;
+  /* justify-content: space-around; */
+  align-items: flex-end;
+  color: white;
+  width: 100%;
+
 }
 
 .fa-linkedin,
 .fa-github {
-    color: white;
-    font-size: 2rem;
+  color: white;
+  font-size: 2rem;
 }
 
 .social-network {
-    position: absolute;
-    bottom: 0;
-    padding: .5rem 1rem;
+  /* position: absolute; */
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem 1rem;
+
 }
 
 .about-links-header {
-    color: white;
+  color: white;
 }
 .copyright {
-    font-size: .8rem;
+  font-size: 0.8rem;
+  color: whitesmoke;
+  min-width: fit-content;
 }
 
 @keyframes transitionIn {
-    from {
-        opacity: 0;
-        transform: translatey(100%);
-        scale: 0;
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        scale: 1
-    }
+  from {
+    opacity: 0;
+    transform: translatey(100%);
+    scale: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+  }
 }
 
 @keyframes transitionIn2 {
-    from {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
+@media only screen and (max-width: 900px) {
+  .splash {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+  }
+  .about {
+    width: 90vw;
+    margin-top: 2vh;
+    color: whitesmoke;
+  }
+
+  .main-content {
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
+    gap: 5vh;
+  }
+
+  .about-title {
+    font-size: 6vw;
+    width: 100%;
+  }
+
+  .about-p {
+    font-size: 3vw;
+    /* padding: 2rem 0; */
+    width: 100%;
+  }
+  .splash-collage {
+    width: 100vw;
+  }
+
+  .social-network {
+    position: unset;
+  }
+}

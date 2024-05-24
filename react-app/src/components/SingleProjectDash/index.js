@@ -205,10 +205,12 @@ function SingleProjectDash() {
                                         return (
                                             <div key={resource.id} className="resource-container">
                                                 <a className="resource-link" href={resource.url} target="_blank" rel="noreferrer">
+                                                    <img src={`${resource.url}/favicon.ico`} alt="favicon" className="resource-favicon"></img>
                                                     <p className="resource-title">{resource.title}</p>
                                                 </a>
-                                                {/* <OpenModalButton buttonText={<i className="fa-solid fa-trash-can"></i>} modalComponent={<CreateResourceModal projectId={projectId} />} /> */}
-                                                <i className="fa-solid fa-trash-can delete-resource" onClick={() => handleDelete(resource.id)}></i>
+                                                    <i title="Delete Reosurce" className="fa-solid fa-trash-can delete-resource" onClick={(e) => {
+                                                        handleDelete(resource.id)
+                                                        }}></i>
                                             </div>
                                         )
 
