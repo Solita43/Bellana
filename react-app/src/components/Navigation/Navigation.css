@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-#profile-button {
+.profile-button {
   width: 2rem;
   height: 2rem;
   background-color: var(--main-pink);
@@ -68,7 +68,7 @@
   color: var(--background-color);
 }
 
-#profile-button img {
+.profile-button img {
   width: 2rem;
   height: 2rem;
   border-radius: 100%;

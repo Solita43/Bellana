@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
   return (
     <div className="profile-drop-container">
       <button id="profile-button-group" onClick={openMenu}>
-        {user.imageUrl ? (<div id="profile-button"><img src={user.imageUrl}></img></div>):(<div id="profile-button">
+        {user.imageUrl ? (<div className="profile-button"><img src={user.imageUrl}></img></div>):(<div className="profile-button">
           <p id="initials">{innerButton()} </p>
         </div>)}
         <i className="fa-solid fa-chevron-down"></i>
