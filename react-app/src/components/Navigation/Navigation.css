@@ -60,11 +60,18 @@
   height: 2rem;
   background-color: var(--main-pink);
   border-radius: 100%;
+  object-fit: cover;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--background-color);
+}
+
+#profile-button img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
 }
 
 #initials {
