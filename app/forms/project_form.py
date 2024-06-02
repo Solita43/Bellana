@@ -10,6 +10,6 @@ def name_length(form, field):
 
 class ProjectForm(FlaskForm):
     name = StringField("name", validators=[DataRequired(), name_length])
-    ownerId = IntegerField("ownerId", validators=[DataRequired()])
+    owner_id = IntegerField("ownerId", validators=[DataRequired()])
     details = StringField("details")
 
