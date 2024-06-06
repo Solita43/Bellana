@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b1bee18345d66abd747f48e2d330b4cd4429d8916c3935419fba99995968eec6"
+            "sha256": "d5d8a7d128756788ab60ca22895d4a0aa347002e4a1cc3fb927047c821ed9d70"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -10,6 +10,10 @@
         "sources": [
             {
                 "name": "pypi",
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            },
+            {
                 "url": "https://pypi.org/simple",
                 "verify_ssl": true
             }
@@ -38,7 +42,6 @@
                 "sha256:e8f0f9c23a7b7cb99ded64e6c3a6f3e701d78f50c55e002b839dea7225cff7cc"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
             "version": "==2.6.1"
         },
         "email-validator": {
@@ -51,11 +54,11 @@
         },
         "flask": {
             "hashes": [
-                "sha256:642c450d19c4ad482f96729bd2a8f6d32554aa1e231f4f6b4e7e5264b16cca2b",
-                "sha256:b9c46cc36662a7949f34b52d8ec7bb59c0d74ba08ba6cb9ce9adc1d8676d9526"
+                "sha256:58107ed83443e86067e41eff4631b058178191a355886f8e479e347fa1285fdf",
+                "sha256:edee9b0a7ff26621bd5a8c10ff484ae28737a2410d99b0bb9a6850c7fb977aa0"
             ],
             "index": "pypi",
-            "version": "==2.2.2"
+            "version": "==2.2.5"
         },
         "flask-cors": {
             "hashes": [
@@ -161,6 +164,7 @@
                 "sha256:fb412b7db83fe56847df9c47b6fe3f13911b06339c2aa02dcc09dce8bbf582cd"
             ],
             "index": "pypi",
+            "markers": "python_version >= '3' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32'))))))",
             "version": "==2.0.1"
         },
         "gunicorn": {
@@ -169,7 +173,6 @@
                 "sha256:4a0b436239ff76fb33f11c07a16482c521a7e09c1ce3cc293c2330afe01bec63"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7'",
             "version": "==22.0.0"
         },
         "idna": {
@@ -178,7 +181,6 @@
                 "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.5'",
             "version": "==3.7"
         },
         "importlib-metadata": {
@@ -187,6 +189,7 @@
                 "sha256:92501cdf9cc66ebd3e612f1b4f0c0765dfa42f0fa38ffb319b6bd84dd675d705"
             ],
             "index": "pypi",
+            "markers": "python_version < '3.10'",
             "version": "==6.6.0"
         },
         "itsdangerous": {
@@ -274,7 +277,6 @@
                 "sha256:2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5",
                 "sha256:eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"
             ],
-            "markers": "python_version >= '3.7'",
             "version": "==24.0"
         },
         "python-dateutil": {
@@ -303,14 +305,6 @@
             ],
             "index": "pypi",
             "version": "==1.0.4"
-        },
-        "setuptools": {
-            "hashes": [
-                "sha256:5df61bf30bb10c6f756eb19e7c9f3b473051f48db77fddbe06ff2ca307df9a6f",
-                "sha256:62642358adc77ffa87233bc4d2354c4b2682d214048f500964dbe760ccedf102"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==67.8.0"
         },
         "six": {
             "hashes": [
@@ -376,9 +370,6 @@
             "version": "==2.2.3"
         },
         "wtforms": {
-            "extras": [
-                "email"
-            ],
             "hashes": [
                 "sha256:6b351bbb12dd58af57ffef05bc78425d08d1914e0fd68ee14143b7ade023c5bc",
                 "sha256:837f2f0e0ca79481b92884962b914eba4e72b7a2daaf1f939c890ed0124b834b"
