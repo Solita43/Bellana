@@ -22,12 +22,11 @@ function SignupFormModal() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(image.files)
 
 		if (Object.keys(errors).length) return
 
 		const formData = new FormData();
-		formData.append("image", image);
+		if (image) formData.append("image", image);
 		formData.append("username", username);
 		formData.append("email", email);
 		formData.append("password", password);
